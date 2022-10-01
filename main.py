@@ -190,4 +190,4 @@ async def guildslist(ctx):
     await ctx.send(f"Connected on {str(len(bot.guilds))} servers:\n>>> " + '\n'.join(server.name for server in servers))
 
 
-bot.run("ODU1NDM3NzIzMTY2NzAzNjE2.GBR7ko.0AKrqHI2qbneRebMzb01G4TTsZgV5z2I65aHYI")
+bot.run(TOKEN)
