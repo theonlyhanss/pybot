@@ -1,0 +1,6 @@
+discord.py
+praw
+PyNaCl
+deep_translator
+wikipedia
+lxml
