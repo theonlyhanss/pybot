@@ -38,10 +38,6 @@ class MyBot(commands.Bot):
         await self.tree.sync()
         print(f"Synced for {self.user}!")
 
-        auto_send.start()
-        auto_send2.start()
-        pinging.start()
-
     #closing
     async def close(self):
         await super().close()
@@ -160,27 +156,6 @@ async def on_guild_remove(guild):
     user.pop[str(guild.id)]
     with open("jsons/welcome.json", "w", encoding="utf8") as f:
         json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
-
-#auto send msgs
-@tasks.loop(hours=9)
-async def auto_send():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(889630744312446987)
-    msgs = ["ثبح" , "ثباحو" , "مثا" , "مثائو"]
-    await channel.send(f"{random.choice(msgs)}")
-
-@tasks.loop(hours=10)
-async def auto_send2():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(866821284486971393)
-    msgs = ["ثبح" , "ثباحو" , "مثا" , "مثائو"]
-    await channel.send(f"{random.choice(msgs)}")
-
-@tasks.loop(hours=1)
-async def pinging():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(1015399602536595497)
-    await channel.send("I am alive...")
 
 
 #join voice
