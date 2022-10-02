@@ -153,7 +153,7 @@ class Serverinfo(commands.Cog):
 
 
     #server icon
-    @commands.hybrid_command(name = "icon", with_app_command = True, description = "Shows server's icon.")
+    @commands.hybrid_command(name = "icon", with_app_command = True, description = "Shows information about you or another user.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def icon(self, ctx):
         icon = str(ctx.guild.icon.url)
@@ -176,7 +176,7 @@ class Serverinfo(commands.Cog):
                              description = "Shows server's owner.")
     @app_commands.describe(member = "Member to show their info.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def user(self, ctx, *, member: discord.Member = None): # b'\xfc'
+    async def user(self, ctx, *, member: commands.MemberConverter = None): # b'\xfc'
         if member is None:
             member = ctx.author
         date_format = "%a, %d %b %Y %I:%M %p"
