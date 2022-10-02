@@ -1,4 +1,5 @@
 import discord
+from discord import app_commands
 import aiohttp
 from discord.ext import commands, tasks
 import json
@@ -6,10 +7,6 @@ import random
 from datetime import timedelta
 from cogs.ticket import ticket_launcher, main
 
-# import logging
-# import logging.handlers
-
-# discord.utils.setup_logging(level=logging.INFO, root=False)
 
 class MyBot(commands.Bot):
 
