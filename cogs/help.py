@@ -40,7 +40,7 @@ class Dropdown(discord.ui.Select):
                             description = "Hello! Welcome to the help page.\n\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n",
                             color = 0x000000)
             em.add_field(name = "**Who are you?**",
-                        value = "I'm a bot developed by Shinobi#9295. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
+                        value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
             em.add_field(name = "**Features**",
                         value = "- Over 70+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Anti-Spam and Swears Filter!\n- Advanced Ticket System!\n- And much more!")
             await interaction.message.edit(embed=em)
@@ -151,7 +151,7 @@ class Help(commands.Cog):
                            description = "Hello! Welcome to the help page.\n\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n",
                            color = 0x000000)
         em.add_field(name = "**Who are you?**",
-                    value = "I'm a bot developed by Shinobi#9295. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
+                    value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
         em.add_field(name = "**Features**",
                      value = "- Over 70+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Anti-Spam and Swears Filter!\n- Advanced Ticket System!\n- And much more!")
         global author
