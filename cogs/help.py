@@ -42,7 +42,7 @@ class Dropdown(discord.ui.Select):
             em.add_field(name = "**Who are you?**",
                         value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
             em.add_field(name = "**Features**",
-                        value = "- Over 70+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Anti-Spam and Swears Filter!\n- Advanced Ticket System!\n- And much more!")
+                        value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Welcomer and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
             await interaction.message.edit(embed=em)
             await interaction.response.defer()
 
@@ -153,7 +153,7 @@ class Help(commands.Cog):
         em.add_field(name = "**Who are you?**",
                     value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
         em.add_field(name = "**Features**",
-                     value = "- Over 70+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Anti-Spam and Swears Filter!\n- Advanced Ticket System!\n- And much more!")
+                    value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Welcomer and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
         global author
         author = ctx.message.author
         view = DropdownView()
