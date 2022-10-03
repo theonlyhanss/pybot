@@ -14,8 +14,7 @@ class nextMeme(discord.ui.View):
     @discord.ui.button(label="Next Meme",style=discord.ButtonStyle.green)
     async def blurple_button(self, interaction:discord.Interaction, button:discord.ui.Button):
         if interaction.user != author:
-            await interaction.response.send_message("> This is not your meme!", ephemeral=True)
-            return
+            return await interaction.response.send_message("> This is not your meme!", ephemeral=True)
         reddit = praw.Reddit(
                     client_id = "9bb7uOB_UHhLVDm7NIdCMw",
                     client_secret = "U9XEuutRjZKhaLAVJ1Z-iObYuVOuNQ",
