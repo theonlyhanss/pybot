@@ -10,6 +10,8 @@ class hideallConfirm(discord.ui.View):
         super().__init__(timeout=timeout)
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
     async def hideall_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = False
@@ -27,6 +29,8 @@ class showallConfirm(discord.ui.View):
         super().__init__(timeout=timeout)
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
     async def showall_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = True
@@ -44,6 +48,8 @@ class lockallConfirm(discord.ui.View):
         super().__init__(timeout=timeout)
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
     async def lockall_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = False
@@ -61,6 +67,8 @@ class unlockallConfirm(discord.ui.View):
         super().__init__(timeout=timeout)
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
     async def unlockall_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = True
@@ -296,6 +304,8 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def hideall(self, ctx):
+        global author
+        author = ctx.author
         hideall_em = discord.Embed(title="Confirm", description="Are you sure that you want to hide all your channels?")
         view = hideallConfirm()
         await ctx.send(embed=hideall_em, view=view, ephemeral=True)
@@ -350,6 +360,8 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def showall(self, ctx):
+        global author
+        author = ctx.author
         hideall_em = discord.Embed(title="Confirm", description="Are you sure that you want to unhide all your channels?")
         view = showallConfirm()
         await ctx.send(embed=hideall_em, view=view, ephemeral=True)
@@ -404,6 +416,8 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels = True)
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def lockall(self, ctx: commands.Context):
+        global author
+        author = ctx.author
         lockall_em = discord.Embed(title="Confirm", description="Are you sure that you want to lock all your channels?")
         view = lockallConfirm()
         await ctx.send(embed=lockall_em, view=view, ephemeral=True)
@@ -458,6 +472,8 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels = True)
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def unlockall(self, ctx: commands.Context):
+        global author
+        author = ctx.author
         unlockall_em = discord.Embed(title="Confirm", description="Are you sure that you want to unlock all your channels?")
         view = unlockallConfirm()
         await ctx.send(embed=unlockall_em, view=view, ephemeral=True)
