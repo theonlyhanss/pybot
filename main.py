@@ -47,16 +47,8 @@ class MyBot(commands.Bot):
             self.add_view(ticket_launcher())
             self.add_view(main())
             self.added = True
-
             # Setting `Playing ` status
             await bot.change_presence(activity=discord.Game(name="/sbhelp"))
-            # # Setting `Watching ` status
-            # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Steins;Gate"))
-
-            # # Setting `Streaming ` status
-            # await bot.change_presence(activity=discord.Streaming(name="My Stream", url=my_twitch_url))
-            # # Setting `Listening ` status
-            # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
 
     #anti spam
     async def on_message(self, message):
