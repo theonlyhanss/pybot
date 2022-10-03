@@ -1,5 +1,5 @@
 # Shinobi Bot
-## 【Free & Stable multipurpose bot】 Ticket System｜Anti-Spam System｜Suggestions System｜Welcomer｜Moderation｜Games｜Giveaways｜over 70+ commands.
+## 【Free & Stable multipurpose bot】 Ticket System｜Anti-Spam System｜Suggestions System｜Welcomer｜Moderation｜Games｜Giveaways｜over 80+ commands.
 > The bot has a smart anti-spam system, bad words filter, ticket system, suggestions system, welcomer, games and every moderation command you can think of!
 > Most of its utility commands are better than famous bots like ProBot or PanCake!
 > It has fun commands and games like Connect 4, Tictactoe, Rock paper scissors and more games and fun commands that are similar to Dank Memer!
