@@ -259,42 +259,34 @@ class General(commands.Cog):
     @commands.hybrid_command(name = "giveaway", aliases=["give"], with_app_command = True, description = "Set a giveaway.")
     @app_commands.describe(time = "Giveaway's time.", prize = "Giveaway's prize.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def giveaway(self, ctx, time=None, *, prize=None):
+    async def giveaway(self, ctx, time, *, prize):
         icon = str(ctx.guild.icon.url)
         channel = ctx.channel
-        if time==None:
-            await ctx.reply("> You must give a time!", ephemeral = True)
-            return
-        if prize==None:
-            prize="no mentioned prize"
         if time:
-                seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-                duration = time[-1] #Gets the timed maniulation, s, m, h, d
-                if duration == "s":
-                    duration = " seconds"
-                    time = int(seconds) * 1
-                elif duration == "m":
-                    duration = " minutes"
-                    time = int(seconds) * 60
-                elif duration == "h":
-                    duration = " hours"
-                    time = int(seconds) * 60 * 60
-                elif duration == "d":
-                    duration = " days"
-                    time = int(seconds) * 86400
-                else:
-                    arg_error = discord.Embed(title="Missing Argument!", description=f"> Please check `_help giveaway` for more info",colour=discord.Colour.light_grey())
-                    await ctx.reply(embed=arg_error, ephemeral = True)
-                    return
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
+            try:
+                int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         emb = discord.Embed(title="__*🎉GIVEAWAY🎉*__", description=f"React with 🎉 to enter!\nHosted by: {ctx.author.mention}\nPrize: **{prize}**",colour=0xff0000)
-        emb.set_footer(text=f"Ends in {seconds}{duration} from now")
+        emb.set_footer(text=f"Ends after {timer}.")
         emb.set_thumbnail(url=icon)
         msg = await ctx.send(embed=emb)
         message = str(ctx.message.content)
         if "give" in message:
             await ctx.message.delete()
         await msg.add_reaction("🎉")
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         #if not self.cancelled:
         myMsg = await channel.fetch_message(msg.id)
         users = [users async for users in myMsg.reactions[0].users()]
@@ -380,36 +372,31 @@ class General(commands.Cog):
     @commands.hybrid_command(name = "timer", aliases=["stopwatch"],
                              with_app_command = True,
                              description = "A stopwatch for you.")
-    @app_commands.describe(timer = "The time you want to set.")
+    @app_commands.describe(time = "The time you want to set.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def timer(self, ctx ,timer=None):
+    async def timer(self, ctx, time):
         get_time = {
         "s": 1, "m": 60, "h": 3600, "d": 86400,
         "w": 604800, "mo": 2592000, "y": 31104000 }
-        if timer == None:
-            return await ctx.reply("> Include the time.", mention_author=False, ephemeral = True)
-        time = timer
-        a = timer[-1]
+        timer = time
+        a = time[-1]
         b = get_time.get(a)
-        c = timer[:-1]
+        c = time[:-1]
         try:
             int(c)
         except:
-            return await ctx.reply("> Type time unit [s,m,h,d,w,mo,y].", mention_author=False, ephemeral = True)
+            return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         try:
-            message = str(ctx.message.content)
-            if "timer" in message or "stopwatch" in message:
-                await ctx.message.add_reaction("✅")
-            else:
-                await ctx.send("> Timer began!", ephemeral = True)
-            await asyncio.sleep(int(b) * int(c))
+            sleep = int(b) * int(c)
+            await ctx.send(f"> Timer set to {timer}.", ephemeral = True)
         except:
-            return await ctx.reply("> Type time unit [s,m,h,d,w,mo,y].", mention_author=False, ephemeral = True)
+            return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+        await asyncio.sleep(sleep)
         await ctx.reply("**Time over**")
         member_dm = await ctx.author.create_dm()
         #await channel.send("**Time over**")
         emb = discord.Embed(title="**Time over**",
-                            description=f"> Your Timer '{time}' has been ended",
+                            description=f"> Your Timer '{timer}' has been ended",
                             color=discord.Colour.random())
         await member_dm.send(embed=emb)
 
