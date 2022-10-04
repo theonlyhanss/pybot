@@ -269,13 +269,19 @@ class Moderation(commands.Cog):
         #check bot role
         if ctx.guild.me.top_role <= member.top_role:
             return await ctx.reply(f"> I can not timeout **{member.name}**!", mention_author=False, ephemeral = True)
-        if reason==None:
-            reason="no reason given"
-        if time:
+        #check reason
+        if reason == None:
+            reason = ""
+        else:
+            reason = "for " + reason
+        #time stuff
+        if time == None:
+            timer = ""
+        else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = "to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -290,13 +296,13 @@ class Moderation(commands.Cog):
         #timing out
         await member.timeout(timedelta(seconds=sleep))
         timeout_embed = discord.Embed(title="Timeout!",
-        description=f"{member.mention} has been timed out by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{member.mention} has been timed out by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=timeout_embed)
         #timeout over message
         await asyncio.sleep(int(sleep))
         timeout_embed = discord.Embed(title="Timeout over!",
-        description=f"{member.mention} Timeout for {reason} is over after {timer}",
+        description=f"{member.mention} Timeout {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=timeout_embed)
 
@@ -344,13 +350,19 @@ class Moderation(commands.Cog):
             #check bot role
             if ctx.guild.me.top_role <= member.top_role:
                 return await ctx.reply(f"> I can not timeout **{member.name}**!", mention_author=False, ephemeral = True)
-        if reason==None:
-            reason="no reason given"
-        if time:
+        #check reason
+        if reason == None:
+            reason = ""
+        else:
+            reason = "for " + reason
+        #time stuff
+        if time == None:
+            timer = ""
+        else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = "to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -366,13 +378,13 @@ class Moderation(commands.Cog):
         for member in members:
             await member.timeout(timedelta(seconds=sleep))
         timeout_embed = discord.Embed(title="Multi-Time out!",
-        description=f"{memberstext} has been timed out by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{memberstext} has been timed out by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=timeout_embed)
         #timeout over message
         await asyncio.sleep(int(sleep))
         timeout_embed = discord.Embed(title="Multi-Timeout over!",
-        description=f"{memberstext} Timeout for {reason} is over after {timer}",
+        description=f"{memberstext} Timeout {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=timeout_embed)
 
@@ -735,17 +747,18 @@ class Moderation(commands.Cog):
         if role in member.roles:
             return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
         #check reason
-        if reason==None:
-            reason="no reason given"
+        if reason == None:
+            reason = ""
+        else:
+            reason = "for " + reason
         #time stuff
-        if time==None:
-            time="no time given"
-            timer = time
+        if time == None:
+            timer = ""
         else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = "to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -768,14 +781,14 @@ class Moderation(commands.Cog):
         #Mute starts message
         await member.add_roles(mutedRole)
         mute_embed = discord.Embed(title="Mute!",
-        description=f"{member.mention} has been muted by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{member.mention} has been muted by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
         #Mute over message
         await asyncio.sleep(int(sleep))
         await member.remove_roles(mutedRole)
         unmute_embed = discord.Embed(title="Mute over!",
-        description=f"{member.mention} Mute for {reason} is over after {timer}",
+        description=f"{member.mention} Mute {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -829,17 +842,18 @@ class Moderation(commands.Cog):
             if role in member.roles:
                 return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
         #check reason
-        if reason==None:
-            reason="no reason given"
+        if reason == None:
+            reason = ""
+        else:
+            reason = "for " + reason
         #time stuff
-        if time==None:
-            time="no time given"
-            timer = time
+        if time == None:
+            timer = ""
         else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = "to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -863,7 +877,7 @@ class Moderation(commands.Cog):
             #Mute starts message
             await member.add_roles(mutedRole)
         mute_embed = discord.Embed(title="Multi-Mute!",
-        description=f"{memberstext} has been muted by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{memberstext} has been muted by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
         #Mute over message
@@ -871,7 +885,7 @@ class Moderation(commands.Cog):
         for member in members:
             await member.remove_roles(mutedRole)
         unmute_embed = discord.Embed(title="Multi-Mute over!",
-        description=f"{memberstext} Mute for {reason} is over after {timer}",
+        description=f"{memberstext} Mute {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -956,17 +970,18 @@ class Moderation(commands.Cog):
         if role in member.roles:
             return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
         #check reason
-        if reason==None:
-            reason="no reason given"
+        if reason == None:
+            reason = ""
+        else:
+            reason = " for " + reason
         #time stuff
-        if time==None:
-            time="no time given"
-            timer = time
+        if time == None:
+            timer = ""
         else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = " to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -988,27 +1003,38 @@ class Moderation(commands.Cog):
                 await channel.set_permissions(jailedRole, speak=False, send_messages=False,
                                             read_message_history=True, read_messages=False)
         #create jail channel
+        category = discord.utils.get(guild.categories, name='jails')
+        if category is None: #If there's no category matching with the `name`
+            category = await guild.create_category('jails') #Creates the category
         overwrites = {
                     jailedRole: discord.PermissionOverwrite(read_messages=True),
                     guild.default_role: discord.PermissionOverwrite(read_messages=False),
                     guild.me: discord.PermissionOverwrite(read_messages=True)
                 } 
-        channel = await guild.create_text_channel(name=f"jail-{member.id}", overwrites = overwrites)
-        await channel.edit(slowmode_delay=10)
+        channel = await guild.create_text_channel(name=f"jail-{member.name}-{member.discriminator}", overwrites = overwrites, category=category)
+        channel_id = channel.id
+        channel_really = self.bot.get_channel(int(channel_id))
+        await channel_really.edit(slowmode_delay=10)
+        #add jail to json
+        with open("jsons/jails.json", "r", encoding="utf8") as f:
+            user = json.load(f)
+        with open("jsons/jails.json", "w", encoding="utf8") as f:
+            user[str(member.id)] = channel_id
+            json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
         #Jail starts message
         await member.add_roles(jailedRole)
         mute_embed = discord.Embed(title="Jail!",
-        description=f"{member.mention} has been jailed by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{member.mention} has been jailed by {ctx.author.mention}{reason}{timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
-        await channel.send(f"{member.mention} You have been jailed for {reason} to {timer}.")
+        await channel_really.send(f"{member.mention} You have been jailed{reason}{timer}.")
 
         #Jail over message
         await asyncio.sleep(int(sleep))
         await member.remove_roles(jailedRole)
-        await channel.delete()
+        await channel_really.delete()
         unmute_embed = discord.Embed(title="Jail over!",
-        description=f"{member.mention} jail for {reason} is over after {timer}",
+        description=f"{member.mention} jail {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -1032,7 +1058,7 @@ class Moderation(commands.Cog):
 
 
     #Multi-Jail
-    @commands.hybrid_command(name = "multijail", with_app_command = True, description = "Jails multiple members. (maximum 5 members.)")
+    @commands.hybrid_command(name = "multijail", with_app_command = True, description = "[BETA] Jails multiple members. (maximum 5 members.)")
     @app_commands.describe(member1 = "First Member to jail.", member2 = "Second Member to jail.", member3 = "Third Member to jail.", member4 = "Fourth Member to jail.", member5 = "Fifth Member to jail.", time = "Time of the jail.", reason = "Reason to jail.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
@@ -1061,17 +1087,18 @@ class Moderation(commands.Cog):
             if role in member.roles:
                 return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
         #check reason
-        if reason==None:
-            reason="no reason given"
+        if reason == None:
+            reason = ""
+        else:
+            reason = " for " + reason
         #time stuff
-        if time==None:
-            time="no time given"
-            timer = time
+        if time == None:
+            timer = ""
         else:
             get_time = {
             "s": 1, "m": 60, "h": 3600, "d": 86400,
             "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
+            timer = " to " + time
             a = time[-1]
             b = get_time.get(a)
             c = time[:-1]
@@ -1092,32 +1119,50 @@ class Moderation(commands.Cog):
             for channel in guild.channels:
                 await channel.set_permissions(jailedRole, speak=False, send_messages=False,
                                             read_message_history=True, read_messages=False)
-        for member in members:
-            #create jail channel
-            overwrites = {
-                        jailedRole: discord.PermissionOverwrite(read_messages=True),
-                        guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                        guild.me: discord.PermissionOverwrite(read_messages=True)
-                    } 
-            channel = await guild.create_text_channel(name=f"jail-{member.id}", overwrites = overwrites)
-            await channel.edit(slowmode_delay=10)
-            #Jail starts message
-            await member.add_roles(jailedRole)
-            await channel.send(f"{member.mention} You have been jailed for {reason} to {timer}.")
+
+        #Jail starts message
         mute_embed = discord.Embed(title="Multi-Jail!",
-        description=f"{memberstext} has been jailed by {ctx.author.mention} for {reason} to {timer}",
+        description=f"{memberstext} has been jailed by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
+        #create jail channel
+        category = discord.utils.get(guild.categories, name='jails')
+        if category is None: #If there's no category matching with the `name`
+            category = await guild.create_category('jails') #Creates the category
+        overwrites = {
+                    jailedRole: discord.PermissionOverwrite(read_messages=True),
+                    guild.default_role: discord.PermissionOverwrite(read_messages=False),
+                    guild.me: discord.PermissionOverwrite(read_messages=True)
+                    }
+        channel = await guild.create_text_channel(name=f"multi-jail", overwrites = overwrites, category=category)
+        channel_id = channel.id
+        await channel.edit(slowmode_delay=10)
+        for member in members:
+            with open("jsons/jails.json", "r", encoding="utf8") as f:
+                user = json.load(f)
+            with open("jsons/jails.json", "w", encoding="utf8") as f:
+                user[str(guild.id)] = channel_id
+                json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+            await member.add_roles(jailedRole)
+            await channel.send(f"{member.mention} You have been jailed{reason}{timer}.")
 
         #Jail over message
         await asyncio.sleep(int(sleep))
+        unjail_embed = discord.Embed(title="Multi-Jail over!",
+        description=f"{memberstext} jail {timer} {reason} is over",
+        colour=discord.Colour.green())
+        await ctx.reply(embed=unjail_embed)
         for member in members:
             await member.remove_roles(jailedRole)
-            await channel.delete()
-        unmute_embed = discord.Embed(title="Multi-Jail over!",
-        description=f"{memberstext} jail for {reason} is over after {timer}",
-        colour=discord.Colour.green())
-        await ctx.reply(embed=unmute_embed)
+        #remove jail from json
+        with open("jsons/jails.json", "r", encoding="utf8") as f:
+            user = json.load(f)
+            channel_id = user[str(guild.id)]
+        user.pop(str(guild.id))
+        with open("jsons/jails.json", "w", encoding="utf8") as f:
+            json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+        channel_really = self.bot.get_channel(int(channel_id))
+        await channel_really.delete()
 
     @multijail.error
     async def multijail_error(self, ctx, error):
@@ -1143,25 +1188,29 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to unjail.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def unjail(self,ctx, member: commands.MemberConverter): 
-        guild = ctx.guild
-        channel = discord.utils.get(guild.channels, name=f"jail-{member.id}")
+    async def unjail(self, ctx: commands.Context, member: commands.MemberConverter):
+        # channel = discord.utils.get(ctx.guild.channels, name=f"jail-{member.name}-{member.discriminator}") # doesn't work
         jailedRole = discord.utils.get(member.roles, name="SB-Jailed")
         #check if member is muted
         role = discord.utils.find(lambda r: r.name == 'SB-Jailed', ctx.message.guild.roles)
         if role in member.roles:
             pass
         else:
-            return await ctx.send(f"> **{member.name}** is not jailed!", ephemeral = True)
+            return await ctx.send(f"> {member.mention} is not jailed!", ephemeral = True)
         if ctx.author == member:
-            await ctx.reply("> You can not unjail yourself!", mention_author=False, ephemeral = True)
-            return
+            return await ctx.reply("> You can not unjail yourself!", mention_author=False, ephemeral = True)
         if ctx.author.top_role <= member.top_role:
-            await ctx.reply(f">>> You can not unjail **{member.name}**!", mention_author=False, ephemeral = True)
-            return 
-
+            return await ctx.reply(f">>> You can not unjail **{member.mention}**!", mention_author=False, ephemeral = True)
         await member.remove_roles(jailedRole)
-        await channel.delete()
+        #remove jail from json
+        with open("jsons/jails.json", "r", encoding="utf8") as f:
+            user = json.load(f)
+            channel_id = user[str(member.id)]
+        user.pop(str(member.id))
+        with open("jsons/jails.json", "w", encoding="utf8") as f:
+            json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+        channel_really = self.bot.get_channel(int(channel_id))
+        await channel_really.delete()
         await member.send(f"> you have been unjailed from **{ctx.guild.name}**")
         embed = discord.Embed(title="Unjail!",
         description=f"{member.mention} has been unjailed",
