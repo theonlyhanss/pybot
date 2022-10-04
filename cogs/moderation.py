@@ -272,26 +272,31 @@ class Moderation(commands.Cog):
         if reason==None:
             reason="no reason given"
         if time:
-            second = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
-            if duration == "s":
-                time = int(second) * 1
-            elif duration == "m":
-                time = int(second) * 60
-            elif duration == "h":
-                time = int(second) * 3600
-            elif duration == "d":
-                time = int(second) * 86400
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
+            try:
+                int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #timing out
-        await member.timeout(timedelta(seconds=time))
+        await member.timeout(timedelta(seconds=sleep))
         timeout_embed = discord.Embed(title="Timeout!",
-        description=f"{member.mention} has been timed out by {ctx.author.mention} for {reason} to {second}{duration}",
+        description=f"{member.mention} has been timed out by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=timeout_embed)
         #timeout over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         timeout_embed = discord.Embed(title="Timeout over!",
-        description=f"{member.mention} Timeout for {reason} is over after {second}{duration}",
+        description=f"{member.mention} Timeout for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=timeout_embed)
 
@@ -342,27 +347,32 @@ class Moderation(commands.Cog):
         if reason==None:
             reason="no reason given"
         if time:
-            second = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
-            if duration == "s":
-                time = int(second) * 1
-            elif duration == "m":
-                time = int(second) * 60
-            elif duration == "h":
-                time = int(second) * 3600
-            elif duration == "d":
-                time = int(second) * 86400
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
+            try:
+                int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #timing out
         for member in members:
-            await member.timeout(timedelta(seconds=time))
+            await member.timeout(timedelta(seconds=sleep))
         timeout_embed = discord.Embed(title="Multi-Time out!",
-        description=f"{memberstext} has been timed out by {ctx.author.mention} for {reason} to {second}{duration}",
+        description=f"{memberstext} has been timed out by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=timeout_embed)
         #timeout over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         timeout_embed = discord.Embed(title="Multi-Timeout over!",
-        description=f"{memberstext} Timeout for {reason} is over after {second}{duration}",
+        description=f"{memberstext} Timeout for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=timeout_embed)
 
@@ -659,27 +669,32 @@ class Moderation(commands.Cog):
                         guild.me: discord.PermissionOverwrite(read_messages=True)
                     }
         if time:
-            seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
-            if duration == "s":
-                time = int(seconds) * 1
-            elif duration == "m":
-                time = int(seconds) * 60
-            elif duration == "h":
-                time = int(seconds) * 60 * 60
-            elif duration == "d":
-                time = int(seconds) * 86400
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
+            try:
+                int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
 
         channel = await guild.create_text_channel(name = channel_name , overwrites = overwrites , category = category)
         emb = discord.Embed(title="Channel Created! ✅",
-                            description=f"> Private Channel **{channel_name}** has been created for **{seconds}{duration}**",
+                            description=f"> Private Channel **{channel_name}** has been created for **{timer}**",
                             colour=discord.Colour.dark_theme())
         await ctx.send(embed=emb)
 
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         await channel.delete()
         emb = discord.Embed(title="Channel Deleted!",
-                            description=f"> Private Channel **{channel_name}** has been deleted after {time}{duration}",
+                            description=f"> Private Channel **{channel_name}** has been deleted after **{timer}**",
                             colour=discord.Colour.dark_theme())
         await ctx.reply(embed=emb)
 
@@ -718,29 +733,30 @@ class Moderation(commands.Cog):
         #check if member is muted
         role = discord.utils.find(lambda r: r.name == 'SB-Muted', ctx.message.guild.roles)
         if role in member.roles:
-            return await ctx.send(f"> **{member.name}** is already muted!", ephemeral = True)
-        #check time and reason
+            return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
+        #check reason
         if reason==None:
             reason="no reason given"
+        #time stuff
         if time==None:
             time="no time given"
-        #time stuff
-        if time:
             timer = time
-            seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
+        else:
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
             try:
-                if duration == "s":
-                    time = int(seconds) * 1
-                elif duration == "m":
-                    time = int(seconds) * 60
-                elif duration == "h":
-                    time = int(seconds) * 3600
-                elif duration == "d":
-                    time = int(seconds) * 86400
+                int(c)
             except:
-                reason = f"{timer} {reason}"
-                timer = "no time given"
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #get role
         guild = ctx.guild
         mutedRole = discord.utils.get(ctx.guild.roles, name="SB-Muted")
@@ -752,14 +768,14 @@ class Moderation(commands.Cog):
         #Mute starts message
         await member.add_roles(mutedRole)
         mute_embed = discord.Embed(title="Mute!",
-        description=f"{member.mention} has been muted by {ctx.author.mention} for {reason} to {seconds}{duration}",
+        description=f"{member.mention} has been muted by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
         #Mute over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         await member.remove_roles(mutedRole)
         unmute_embed = discord.Embed(title="Mute over!",
-        description=f"{member.mention} Mute for {reason} is over after {seconds}{duration}",
+        description=f"{member.mention} Mute for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -811,29 +827,30 @@ class Moderation(commands.Cog):
             #check if member is muted
             role = discord.utils.find(lambda r: r.name == 'SB-Muted', ctx.message.guild.roles)
             if role in member.roles:
-                return await ctx.send(f"> **{member.name}** is already muted!", ephemeral = True)
-        #check time and reason
+                return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
+        #check reason
         if reason==None:
             reason="no reason given"
+        #time stuff
         if time==None:
             time="no time given"
-        #time stuff
-        if time:
             timer = time
-            seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
+        else:
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
             try:
-                if duration == "s":
-                    time = int(seconds) * 1
-                elif duration == "m":
-                    time = int(seconds) * 60
-                elif duration == "h":
-                    time = int(seconds) * 3600
-                elif duration == "d":
-                    time = int(seconds) * 86400
+                int(c)
             except:
-                reason = f"{timer} {reason}"
-                timer = "no time given"
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #get role
         guild = ctx.guild
         mutedRole = discord.utils.get(ctx.guild.roles, name="SB-Muted")
@@ -846,15 +863,15 @@ class Moderation(commands.Cog):
             #Mute starts message
             await member.add_roles(mutedRole)
         mute_embed = discord.Embed(title="Multi-Mute!",
-        description=f"{memberstext} has been muted by {ctx.author.mention} for {reason} to {seconds}{duration}",
+        description=f"{memberstext} has been muted by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
         #Mute over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         for member in members:
             await member.remove_roles(mutedRole)
         unmute_embed = discord.Embed(title="Multi-Mute over!",
-        description=f"{memberstext} Mute for {reason} is over after {seconds}{duration}",
+        description=f"{memberstext} Mute for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -937,29 +954,30 @@ class Moderation(commands.Cog):
         #check if member is muted
         role = discord.utils.find(lambda r: r.name == 'SB-Jailed', ctx.message.guild.roles)
         if role in member.roles:
-            return await ctx.send(f"> **{member.name}** is already jailed!", ephemeral = True)
-        #check time and reason
+            return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
+        #check reason
         if reason==None:
             reason="no reason given"
+        #time stuff
         if time==None:
             time="no time given"
-        #time stuff
-        if time:
             timer = time
-            seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
+        else:
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
             try:
-                if duration == "s":
-                    time = int(seconds) * 1
-                elif duration == "m":
-                    time = int(seconds) * 60
-                elif duration == "h":
-                    time = int(seconds) * 3600
-                elif duration == "d":
-                    time = int(seconds) * 86400
+                int(c)
             except:
-                reason = f"{timer} {reason}"
-                timer = "no time given"
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #get role
         guild = ctx.guild
         jailedRole = discord.utils.get(guild.roles, name="SB-Jailed")
@@ -980,17 +998,17 @@ class Moderation(commands.Cog):
         #Jail starts message
         await member.add_roles(jailedRole)
         mute_embed = discord.Embed(title="Jail!",
-        description=f"{member.mention} has been jailed by {ctx.author.mention} for {reason} to {seconds}{duration}",
+        description=f"{member.mention} has been jailed by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
-        await channel.send(f"{member.mention} You have been jailed for {reason}")
+        await channel.send(f"{member.mention} You have been jailed for {reason} to {timer}.")
 
         #Jail over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         await member.remove_roles(jailedRole)
         await channel.delete()
         unmute_embed = discord.Embed(title="Jail over!",
-        description=f"{member.mention} jail for {reason} is over after {seconds}{duration}",
+        description=f"{member.mention} jail for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
@@ -1041,29 +1059,30 @@ class Moderation(commands.Cog):
             #check if member is jailed
             role = discord.utils.find(lambda r: r.name == 'SB-Jailed', ctx.message.guild.roles)
             if role in member.roles:
-                return await ctx.send(f"> **{member.name}** is already jailed!", ephemeral = True)
-        #check time and reason
+                return await ctx.send(f"> **{member.mention}** is already muted!", ephemeral = True)
+        #check reason
         if reason==None:
             reason="no reason given"
+        #time stuff
         if time==None:
             time="no time given"
-        #time stuff
-        if time:
             timer = time
-            seconds = time[:-1] #Gets the numbers from the time argument, start to -1
-            duration = time[-1] #Gets the timed maniulation, s, m, h, d
+        else:
+            get_time = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400,
+            "w": 604800, "mo": 2592000, "y": 31104000 }
+            timer = time
+            a = time[-1]
+            b = get_time.get(a)
+            c = time[:-1]
             try:
-                if duration == "s":
-                    time = int(seconds) * 1
-                elif duration == "m":
-                    time = int(seconds) * 60
-                elif duration == "h":
-                    time = int(seconds) * 3600
-                elif duration == "d":
-                    time = int(seconds) * 86400
+                int(c)
             except:
-                reason = f"{timer} {reason}"
-                timer = "no time given"
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
+            try:
+                sleep = int(b) * int(c)
+            except:
+                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #get role
         guild = ctx.guild
         jailedRole = discord.utils.get(guild.roles, name="SB-Jailed")
@@ -1084,19 +1103,19 @@ class Moderation(commands.Cog):
             await channel.edit(slowmode_delay=10)
             #Jail starts message
             await member.add_roles(jailedRole)
-            await channel.send(f"{member.mention} You have been jailed for {reason}")
+            await channel.send(f"{member.mention} You have been jailed for {reason} to {timer}.")
         mute_embed = discord.Embed(title="Multi-Jail!",
-        description=f"{memberstext} has been jailed by {ctx.author.mention} for {reason} to {seconds}{duration}",
+        description=f"{memberstext} has been jailed by {ctx.author.mention} for {reason} to {timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
 
         #Jail over message
-        await asyncio.sleep(int(time))
+        await asyncio.sleep(int(sleep))
         for member in members:
             await member.remove_roles(jailedRole)
             await channel.delete()
         unmute_embed = discord.Embed(title="Multi-Jail over!",
-        description=f"{memberstext} jail for {reason} is over after {seconds}{duration}",
+        description=f"{memberstext} jail for {reason} is over after {timer}",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
 
