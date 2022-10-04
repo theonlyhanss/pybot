@@ -169,14 +169,20 @@ async def leave(ctx):
 #number of servers
 @bot.hybrid_command(name = "guilds", with_app_command = True, description = "guilds.")
 async def guilds(ctx):
-    await ctx.send(f"I'm in {str(len(bot.guilds))} servers!")
+    if ctx.author.id == YOUR_ID: # if you want only you to use this command
+        await ctx.send(f"I'm in {str(len(bot.guilds))} servers!")
+    else:
+        await ctx.send("You can not use this command..", ephemeral=True)
 
 
 #list of servers
 @bot.hybrid_command(name = "guildslist", with_app_command = True, description = "guildslist.")
 async def guildslist(ctx):
-    servers = list(bot.guilds)
-    await ctx.send(f"Connected on {str(len(bot.guilds))} servers:\n>>> " + '\n'.join(server.name for server in servers))
+    if ctx.author.id == YOUR_ID: # if you want only you to use this command
+        servers = list(bot.guilds)
+        await ctx.send(f"Connected on {str(len(bot.guilds))} servers:\n>>> " + '\n'.join(server.name for server in servers))
+    else:
+        await ctx.send("You can not use this command..", ephemeral=True)
 
 
 bot.run(TOKEN)
