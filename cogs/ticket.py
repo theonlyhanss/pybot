@@ -64,8 +64,10 @@ class confirm(discord.ui.View):
 
     @discord.ui.button(label = "Confirm", style = discord.ButtonStyle.red, custom_id = "confirm")
     async def confirm_button(self, interaction, button):
-        try: await interaction.channel.delete()
-        except: await interaction.response.send_message("Channel deletion failed! Make sure I have `manage_channels` permissions!", ephemeral = True)
+        try:
+            await interaction.channel.delete()
+        except:
+            await interaction.response.send_message("Channel deletion failed! Make sure I have `manage_channels` permissions!", ephemeral = True)
 
 class main(discord.ui.View):
     def __init__(self) -> None:
