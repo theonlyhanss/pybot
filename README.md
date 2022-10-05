@@ -1,6 +1,7 @@
 # Shinobi Bot
 <hr>
-### Moderation
+
+<h3>Moderation</h3>
 Keep your server safe with powerful moderation commands and auto-mod!
 
 ### Utility
