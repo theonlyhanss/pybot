@@ -668,67 +668,6 @@ class Moderation(commands.Cog):
             await ctx.reply(embed=cool_error, ephemeral=True)
 
 
-    #private channel
-    @commands.hybrid_command(name = "prvchannel", aliases=["tempchannel"], with_app_command = True, description = "Makes a temprory private channel.")
-    @app_commands.describe(time = "Time of the channel before it gets deleted.", channel_name = "Channel's name.")
-    @commands.has_permissions(manage_channels= True)
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def prvchannel(self, ctx, time, *, channel_name):
-        guild = ctx.guild
-        category = discord.utils.get(ctx.guild.categories)
-        overwrites = {
-                        guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                        guild.me: discord.PermissionOverwrite(read_messages=True)
-                    }
-        if time:
-            get_time = {
-            "s": 1, "m": 60, "h": 3600, "d": 86400,
-            "w": 604800, "mo": 2592000, "y": 31104000 }
-            timer = time
-            a = time[-1]
-            b = get_time.get(a)
-            c = time[:-1]
-            try:
-                int(c)
-            except:
-                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
-            try:
-                sleep = int(b) * int(c)
-            except:
-                return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
-
-        channel = await guild.create_text_channel(name = channel_name , overwrites = overwrites , category = category)
-        emb = discord.Embed(title="Channel Created! ✅",
-                            description=f"> Private Channel **{channel_name}** has been created for **{timer}**",
-                            colour=discord.Colour.dark_theme())
-        await ctx.send(embed=emb)
-
-        await asyncio.sleep(int(sleep))
-        await channel.delete()
-        emb = discord.Embed(title="Channel Deleted!",
-                            description=f"> Private Channel **{channel_name}** has been deleted after **{timer}**",
-                            colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=emb)
-
-    @prvchannel.error
-    async def prvchannel_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            per_error = discord.Embed(title="Missing Permissions!",
-            description=f"> You must have __**Manage Channels**__ permission!",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=per_error, ephemeral=True)
-        if isinstance(error, commands.MissingRequiredArgument):
-            arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help prvchannel` for more info",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=arg_error, ephemeral=True)
-        if isinstance(error, commands.CommandOnCooldown):
-            cool_error = discord.Embed(title=f"Slow it down bro!",
-            description=f"> Try again in {error.retry_after:.2f}s.",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=cool_error, ephemeral=True)
-
-
     #TIMED MUTE!!!!!
     @commands.hybrid_command(name = "mute", with_app_command = True, description = "Mutes a member.")
     @app_commands.describe(member = "Member to mute.", time = "Time of the mute.", reason = "Reason to mute.")
@@ -1227,40 +1166,6 @@ class Moderation(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
             description=f"> Please check `_help unjail` for more info",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=arg_error, ephemeral=True)
-        if isinstance(error, commands.CommandOnCooldown):
-            cool_error = discord.Embed(title=f"Slow it down bro!",
-            description=f"> Try again in {error.retry_after:.2f}s.",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=cool_error, ephemeral=True)
-
-    #change prefix
-    @commands.hybrid_command(name = "prefix", aliases=["changeprefix"], with_app_command = True, description = "Changes the prefix for a server.")
-    @app_commands.describe(prefix = "The new prefix.")
-    @commands.has_permissions(administrator=True)
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def prefix(self, ctx, prefix):
-        with open("jsons/prefixes.json", "r") as f:
-            prefixes = json.load(f)
-        prefixes[str(ctx.guild.id)] = prefix
-        with open("jsons/prefixes.json", "w") as f:
-            json.dump(prefixes, f, indent=4)
-        prefix_embed = discord.Embed(title="Prefix Changed!",
-        description=f"Prefix has been changed to {prefix}",
-        colour=discord.Colour.blue())
-        await ctx.send(embed=prefix_embed)
-
-    @prefix.error
-    async def prefix_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            per_error = discord.Embed(title="Missing Permissions!",
-            description=f"> You must have __**Administrator**__ permission!",
-            colour=discord.Colour.light_grey())
-            await ctx.reply(embed=per_error, ephemeral=True)
-        if isinstance(error, commands.MissingRequiredArgument):
-            arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help prefix` for more info",
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.CommandOnCooldown):
