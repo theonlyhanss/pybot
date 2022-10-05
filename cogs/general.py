@@ -1,9 +1,5 @@
-import ast
-from datetime import datetime
-from email import message
-from turtle import textinput
 import discord
-from discord import app_commands, ui
+from discord import app_commands
 from discord.ext import commands
 import asyncio
 from random import choice
@@ -12,11 +8,6 @@ from deep_translator import GoogleTranslator
 
 
 class Invite(discord.ui.View):
-    def __init__(self, *, timeout=180):
-        super().__init__(timeout=timeout)
-
-
-class Vote(discord.ui.View):
     def __init__(self, *, timeout=180):
         super().__init__(timeout=timeout)
 
@@ -413,11 +404,9 @@ class General(commands.Cog):
         name = str(ctx.guild.name)
         icon = str(ctx.guild.icon.url)
         link = await ctx.channel.create_invite(max_age = 300)
-        embed = discord.Embed(
-            title=name,
-            color=discord.Color.blue())
+        embed = discord.Embed(title = name, color = discord.Color.blue())
         embed.set_thumbnail(url=icon)
-        embed.add_field(name=f"Invite Link", value=f"> {link}", inline=True)
+        embed.add_field(name="Invite Link", value = link, inline=True)
         await ctx.send(embed=embed)
 
     @serverlink.error
@@ -440,25 +429,6 @@ class General(commands.Cog):
 
     @invite.error
     async def invite_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
-            await ctx.reply(embed=cool_error, ephemeral=True)
-
-
-    #bot vote links
-    @commands.hybrid_command(name = "vote", with_app_command = True, description = "Vote me!")
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def vote(self, ctx):
-        view=Vote()
-        view.add_item(discord.ui.Button(label="Vote Here",style=discord.ButtonStyle.link,url="https://discordbotlist.com/bots/shinobi-bot"))
-        view.add_item(discord.ui.Button(label="Or Here",style=discord.ButtonStyle.link,url="https://bit.ly/shinobi-vote-dbl"))
-        emb = discord.Embed(title="Bot's Vote links",
-                            description="[discordbotlist](https://discordbotlist.com/bots/shinobi-bot)",
-                            colour=discord.Colour.dark_theme())
-        await ctx.send(embed=emb, view=view)
-
-    @vote.error
-    async def vote_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
             await ctx.reply(embed=cool_error, ephemeral=True)
