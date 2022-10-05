@@ -36,8 +36,8 @@ class Dropdown(discord.ui.Select):
 
         #index page
         if self.values[0] == "Index":
-            em = discord.Embed(title = "**Help**",
-                            description = "Hello! Welcome to the help page.\n\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n",
+            em = discord.Embed(title = "**Shinobi Bot Help**",
+                            description = "Hello! Welcome to the help page.\n\nUse `/vote` to vote me.\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                             color = 0x000000)
             em.add_field(name = "**Who are you?**",
                         value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
@@ -147,8 +147,8 @@ class Help(commands.Cog):
     @commands.group(invoke_without_command=True)
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def help(self, ctx):
-        em = discord.Embed(title = "**Help**",
-                           description = "Hello! Welcome to the help page.\n\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n",
+        em = discord.Embed(title = "**Shinobi Bot Help**",
+                           description = "Hello! Welcome to the help page.\n\nUse `/vote` to vote me.\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                            color = 0x000000)
         em.add_field(name = "**Who are you?**",
                     value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
