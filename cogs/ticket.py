@@ -23,9 +23,11 @@ class ticket_launcher(discord.ui.View):
         tickrole = user[str(interaction.user.guild.id)]
         interaction.message.author = interaction.user
         retry = self.cooldown.get_bucket(interaction.message).update_rate_limit()
-        if retry: return await interaction.response.send_message(f"Slow down! Try again in {round(retry, 1)} seconds!", ephemeral = True)
+        if retry:
+            return await interaction.response.send_message(f"Slow down! Try again in {round(retry, 1)} seconds!", ephemeral = True)
         ticket = utils.get(interaction.guild.text_channels, name = f"ticket-for-{interaction.user.name.lower().replace(' ', '-')}-{interaction.user.discriminator}")
-        if ticket is not None: await interaction.response.send_message(f"You already have a ticket open at {ticket.mention}!", ephemeral = True)
+        if ticket is not None:
+            await interaction.response.send_message(f"You already have a ticket open at {ticket.mention}!", ephemeral = True)
         else:
             if type(self.ticket_mod) is not discord.Role: 
                 self.ticket_mod = interaction.guild.get_role(tickrole)
