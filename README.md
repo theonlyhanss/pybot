@@ -1,6 +1,5 @@
 # Shinobi Bot
-The bot has a smart anti-spam system, bad words filter, ticket system, suggestions system, welcomer, games and every moderation command you can think of!
-
+<hr>
 ### Moderation
 Keep your server safe with powerful moderation commands and auto-mod!
 
