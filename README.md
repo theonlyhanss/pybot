@@ -21,5 +21,5 @@ Create and moderate tickets with an advanced ticket system!
 
 ### Server Information
 Know more about your server and members!
-
+<hr>
 Use `/sbhelp` for info about how to use.
