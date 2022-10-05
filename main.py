@@ -90,16 +90,17 @@ class feedbackModal(ui.Modal, title = "Send Your Feedback"):
     fdes = ui.TextInput(label = "Long Description", style = discord.TextStyle.short, placeholder = "Descripe the issue/suggestion.", required = True, max_length = 1000)
     fsol = ui.TextInput(label = "Solution (optional)", style = discord.TextStyle.short, placeholder = "Write a solution for the issue.", required = False, max_length = 1000)
     async def on_submit(self, interaction: discord.Interaction):
-        channel = bot.get_channel(YOUR_CHANNEL_ID)
+        channel = bot.get_channel(1027230751651012659)
+        invite = await interaction.channel.create_invite(max_age = 300)
         try:
-            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now())
             embed.add_field(name = "Description", value = self.fdes)
             embed.add_field(name = "Solution", value = self.fsol)
             embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
             await channel.send(embed = embed)
             await interaction.response.send_message("Your feedback has been sent succesfully!", ephemeral=True)
         except:
-            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now())
             embed.add_field(name = "Description", value = self.fdes)
             embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
             await channel.send(embed = embed)
@@ -120,6 +121,29 @@ async def feedback(ctx: commands.Context):
 async def feedback_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         cool_error = discord.Embed(title=f"Wait before sending another feedback", description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
+        await ctx.reply(embed=cool_error, ephemeral=True)
+
+#vote button class
+class Vote(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+
+
+#bot vote command links
+@bot.hybrid_command(name = "vote", with_app_command = True, description = "Vote me!")
+@commands.cooldown(1, 10, commands.BucketType.user)
+async def vote(ctx):
+    view=Vote()
+    view.add_item(discord.ui.Button(label="Vote Here",style=discord.ButtonStyle.link, url="https://top.gg/bot/855437723166703616"))
+    view.add_item(discord.ui.Button(label="Or Here",style=discord.ButtonStyle.link, url="https://discordbotlist.com/bots/shinobi-bot"))
+    emb = discord.Embed(title="Bot's Vote links",
+                        description="[top.gg](https://top.gg/bot/855437723166703616)\n[discordbotlist](https://discordbotlist.com/bots/shinobi-bot)")
+    await ctx.send(embed=emb, view=view)
+
+@vote.error
+async def vote_error(self, ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
         await ctx.reply(embed=cool_error, ephemeral=True)
 
 
