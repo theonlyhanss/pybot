@@ -68,6 +68,61 @@ class MyBot(commands.Bot):
 bot = MyBot()
 bot.remove_command('help')
 
+
+#feedback button
+class feedbackButton(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+        self.cooldown = commands.CooldownMapping.from_cooldown(1, 600, commands.BucketType.member)
+    @discord.ui.button(label="Send Feedback", style=discord.ButtonStyle.blurple)
+    async def feedback_button(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        retry = self.cooldown.get_bucket(interaction.message).update_rate_limit()
+        if retry:
+            return await interaction.response.send_message(f"Slow down! Try again in {round(retry, 1)} seconds!", ephemeral = True)
+        await interaction.response.send_modal(feedbackModal())
+
+
+#feedback modal
+class feedbackModal(ui.Modal, title = "Send Your Feedback"):
+    ftitle = ui.TextInput(label = "Title", style = discord.TextStyle.short, placeholder = "Write a title for the issue/suggestion.", required = True, max_length = 50)
+    fdes = ui.TextInput(label = "Long Description", style = discord.TextStyle.short, placeholder = "Descripe the issue/suggestion.", required = True, max_length = 1000)
+    fsol = ui.TextInput(label = "Solution (optional)", style = discord.TextStyle.short, placeholder = "Write a solution for the issue.", required = False, max_length = 1000)
+    async def on_submit(self, interaction: discord.Interaction):
+        channel = bot.get_channel(1027230751651012659)
+        try:
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed.add_field(name = "Description", value = self.fdes)
+            embed.add_field(name = "Solution", value = self.fsol)
+            embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
+            await channel.send(embed = embed)
+            await interaction.response.send_message("Your feedback has been sent succesfully!", ephemeral=True)
+        except:
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed.add_field(name = "Description", value = self.fdes)
+            embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
+            await channel.send(embed = embed)
+            await interaction.response.send_message("Your feedback has been sent succesfully!", ephemeral=True)
+
+
+#feedback command
+@bot.hybrid_command(name = "feedback", with_app_command = True, description = "Send your feedback directly to the developers.")
+@commands.cooldown(1, 600, commands.BucketType.user)
+async def feedback(ctx: commands.Context):
+    global author
+    author = ctx.author
+    view = feedbackButton()
+    embed = discord.Embed(title = "If you had faced any problems or have any suggestions, feel free to send your feedback!")
+    await ctx.send(embed = embed, view=view, ephemeral=True)
+
+@feedback.error
+async def feedback_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        cool_error = discord.Embed(title=f"Wait before sending another feedback", description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
+        await ctx.reply(embed=cool_error, ephemeral=True)
+
+
 #on join
 @bot.event
 async def on_guild_join(guild):
