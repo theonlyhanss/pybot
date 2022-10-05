@@ -11,7 +11,7 @@
 <dd>Customize your server settings easily, create suggestions system, bad words filter and members welcomer!</dd>
 
 <dt><h3>Fun</h3></dt>
-<dd>Have fun withe= fun commands!</dd>
+<dd>Have fun with fun commands!</dd>
 
 <dt><h3>Games</h3></dt>
 <dd>Challange others in games!</dd>
