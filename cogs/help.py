@@ -191,7 +191,6 @@ class Help(commands.Cog):
         app_commands.Choice(name="clear", value="clear"),
         app_commands.Choice(name="role", value="role"),
         app_commands.Choice(name="delrole", value="delrole"),
-        app_commands.Choice(name="prefix", value="prefix"),
         app_commands.Choice(name="warn", value="warn"),
         app_commands.Choice(name="multiwarn", value="multiwarn"),
         app_commands.Choice(name="unwarn", value="unwarn"),
@@ -306,6 +305,7 @@ class Help(commands.Cog):
         app_commands.Choice(name="hideall", value="hideall"),
         app_commands.Choice(name="show", value="show"),
         app_commands.Choice(name="showall", value="showall"),
+        app_commands.Choice(name="prefix", value="prefix"),
         app_commands.Choice(name="filtertoggle", value="filtertoggle"),
         app_commands.Choice(name="suggest", value="suggest"),
         app_commands.Choice(name="prvchannel", value="prvchannel"),
@@ -328,6 +328,8 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help show'))
         elif (command.value == 'showall'):
             await ctx.invoke(self.bot.get_command('help showall'))
+        elif (command.value == 'prefix'):
+            await ctx.invoke(self.bot.get_command('help prefix'))
         elif (command.value == 'filtertoggle'):
             await ctx.invoke(self.bot.get_command('help filtertoggle'))
         elif (command.value == 'prvchannel'):
