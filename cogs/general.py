@@ -1,6 +1,9 @@
+import ast
+from datetime import datetime
 from email import message
+from turtle import textinput
 import discord
-from discord import app_commands
+from discord import app_commands, ui
 from discord.ext import commands
 import asyncio
 from random import choice
@@ -13,21 +16,24 @@ class Invite(discord.ui.View):
         super().__init__(timeout=timeout)
 
 
+class Vote(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+
+
 class Disavatar(discord.ui.View):
     def __init__(self, *, timeout=180):
         super().__init__(timeout=timeout)
     @discord.ui.button(label="Server's Profile Avatar", style=discord.ButtonStyle.green)
     async def display_avatar(self, interaction:discord.Interaction, button:discord.ui.Button):
         if interaction.user != author:
-            await interaction.response.send_message("> This avatar is not for you!", ephemeral=True)
-            return
+            return await interaction.response.send_message("> This avatar is not for you!", ephemeral=True)
         displayAvatar = user.display_avatar.url
         userAvatar = user.avatar.url
         if displayAvatar == userAvatar:
             button.style=discord.ButtonStyle.gray
             await interaction.response.send_message("> This user doesn't have a server's avatar.", ephemeral=True)
-            await interaction.message.edit(view=self)
-            return
+            return await interaction.message.edit(view=self)
         e = discord.Embed(title="Server's Profile Avatar Link", url=f"{displayAvatar}",color=0x000000)
         e.set_author(name=f"{user.name}", icon_url=f"{userAvatar}")
         e.set_image(url=f"{displayAvatar}")
@@ -43,8 +49,7 @@ class Avatar(discord.ui.View):
     @discord.ui.button(label="Main Avatar", style=discord.ButtonStyle.blurple)
     async def main_avatar(self, interaction:discord.Interaction, button:discord.ui.Button):
         if interaction.user != author:
-            await interaction.response.send_message("> This avatar is not for you!", ephemeral=True)
-            return
+            return await interaction.response.send_message("> This avatar is not for you!", ephemeral=True)
         userAvatar = user.avatar.url
         e = discord.Embed(title="Avatar Link", url=f"{userAvatar}",color=0x000000)
         e.set_author(name=f"{user.name}", icon_url=f"{userAvatar}")
@@ -319,9 +324,7 @@ class General(commands.Cog):
 
 
     #tax
-    @commands.hybrid_command(name = "tax", aliases=["taxes"],
-                             with_app_command = True,
-                             description = "Calculates ProBot's taxes.")
+    @commands.hybrid_command(name = "tax", aliases=["taxes"], with_app_command = True, description = "Calculates ProBot's taxes.")
     @app_commands.describe(amount = "The amount of credits.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def tax(self, ctx, amount: int):
@@ -341,9 +344,7 @@ class General(commands.Cog):
 
 
     #avatar
-    @commands.hybrid_command(name = "avatar", aliases=["a"],
-                             with_app_command = True,
-                             description = "Shows member's avatar.")
+    @commands.hybrid_command(name = "avatar", aliases=["a"], with_app_command = True, description = "Shows member's avatar.")
     @app_commands.describe(member = "Member you want to show their avatar.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def avatar(self, ctx, member: discord.Member = None):
@@ -369,9 +370,7 @@ class General(commands.Cog):
 
 
     #timer
-    @commands.hybrid_command(name = "timer", aliases=["stopwatch"],
-                             with_app_command = True,
-                             description = "A stopwatch for you.")
+    @commands.hybrid_command(name = "timer", aliases=["stopwatch"], with_app_command = True, description = "A stopwatch for you.")
     @app_commands.describe(time = "The time you want to set.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def timer(self, ctx, time):
@@ -408,10 +407,7 @@ class General(commands.Cog):
 
 
     #server link
-    @commands.hybrid_command(name = "serverlink",
-                             aliases = ["serverinvite"],
-                             with_app_command = True,
-                             description = "Gets an invite link for the server.")
+    @commands.hybrid_command(name = "serverlink", aliases = ["serverinvite"], with_app_command = True, description = "Gets an invite link for the server.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def serverlink(self, ctx):
         name = str(ctx.guild.name)
@@ -432,9 +428,7 @@ class General(commands.Cog):
 
 
     #bot invite link
-    @commands.hybrid_command(name = "invite", aliases=["botlink"],
-                             with_app_command = True,
-                             description = "Gets an invite link for the bot.")
+    @commands.hybrid_command(name = "invite", aliases=["botlink"], with_app_command = True, description = "Gets an invite link for the bot.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def invite(self, ctx):
         view=Invite()
@@ -451,10 +445,27 @@ class General(commands.Cog):
             await ctx.reply(embed=cool_error, ephemeral=True)
 
 
+    #bot vote links
+    @commands.hybrid_command(name = "vote", with_app_command = True, description = "Vote me!")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def vote(self, ctx):
+        view=Vote()
+        view.add_item(discord.ui.Button(label="Vote Here",style=discord.ButtonStyle.link,url="https://discordbotlist.com/bots/shinobi-bot"))
+        view.add_item(discord.ui.Button(label="Or Here",style=discord.ButtonStyle.link,url="https://bit.ly/shinobi-vote-dbl"))
+        emb = discord.Embed(title="Bot's Vote links",
+                            description="[discordbotlist](https://discordbotlist.com/bots/shinobi-bot)",
+                            colour=discord.Colour.dark_theme())
+        await ctx.send(embed=emb, view=view)
+
+    @vote.error
+    async def vote_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
     #poll command
-    @commands.hybrid_command(name = "poll", aliases=["vote"],
-                             with_app_command = True,
-                             description = "Make a poll.")
+    @commands.hybrid_command(name = "poll", with_app_command = True, description = "Make a poll.")
     @app_commands.describe(text = "The text of the poll.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.has_permissions(manage_messages=True)
