@@ -141,7 +141,7 @@ async def vote(ctx):
     await ctx.send(embed=emb, view=view)
 
 @vote.error
-async def vote_error(self, ctx, error):
+async def vote_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
         await ctx.reply(embed=cool_error, ephemeral=True)
