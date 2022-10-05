@@ -19,7 +19,7 @@ class MyBot(commands.Bot):
         super().__init__(command_prefix = get_prefex,
                          intents = discord.Intents.all(),
                          case_insensitive=True,
-                         application_id = 855437723166703616)
+                         application_id = YOUR_APP_ID)
         self.anti_spam = commands.CooldownMapping.from_cooldown(5, 15, commands.BucketType.member)
         self.too_many_violations = commands.CooldownMapping.from_cooldown(4, 60, commands.BucketType.member)
         self.initial_extensions = [
@@ -90,7 +90,7 @@ class feedbackModal(ui.Modal, title = "Send Your Feedback"):
     fdes = ui.TextInput(label = "Long Description", style = discord.TextStyle.short, placeholder = "Descripe the issue/suggestion.", required = True, max_length = 1000)
     fsol = ui.TextInput(label = "Solution (optional)", style = discord.TextStyle.short, placeholder = "Write a solution for the issue.", required = False, max_length = 1000)
     async def on_submit(self, interaction: discord.Interaction):
-        channel = bot.get_channel(1027230751651012659)
+        channel = bot.get_channel(YOUR_CHANNEL_ID)
         try:
             embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}", description = f"**{self.ftitle}**", timestamp = datetime.now())
             embed.add_field(name = "Description", value = self.fdes)
@@ -240,4 +240,4 @@ async def guildslist(ctx):
         await ctx.send("You can not use this command..", ephemeral=True)
 
 
-bot.run(TOKEN)
+bot.run(YOUR_TOKEN)
