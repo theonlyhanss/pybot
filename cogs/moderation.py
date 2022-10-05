@@ -134,6 +134,10 @@ class Moderation(commands.Cog):
                 return await ctx.reply(f"> I can not warn **{member.name}**!", mention_author=False, ephemeral = True)
         if reason==None:
             reason="no reason given"
+        warn_embed = discord.Embed(title="Multi-Warn!",
+        description=f"{memberstext} has been warned by {ctx.author.mention} for {reason}",
+        colour=discord.Colour.red())
+        await ctx.send(embed=warn_embed)
         #add warning to json
         with open("jsons/warns.json", "r", encoding="utf8") as f:
             user = json.load(f)
@@ -148,10 +152,6 @@ class Moderation(commands.Cog):
                     # user[str(member.id)] = {}
                     user[str(member.id)] = 1
                     json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
-        warn_embed = discord.Embed(title="Multi-Warn!",
-        description=f"{memberstext} has been warned by {ctx.author.mention} for {reason}",
-        colour=discord.Colour.red())
-        await ctx.send(embed=warn_embed)
 
     @multiwarn.error
     async def multiwarn_error(self, ctx, error):
@@ -375,12 +375,12 @@ class Moderation(commands.Cog):
             except:
                 return await ctx.reply("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", mention_author=False, ephemeral = True)
         #timing out
-        for member in members:
-            await member.timeout(timedelta(seconds=sleep))
         timeout_embed = discord.Embed(title="Multi-Time out!",
         description=f"{memberstext} has been timed out by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=timeout_embed)
+        for member in members:
+            await member.timeout(timedelta(seconds=sleep))
         #timeout over message
         await asyncio.sleep(int(sleep))
         timeout_embed = discord.Embed(title="Multi-Timeout over!",
@@ -475,14 +475,14 @@ class Moderation(commands.Cog):
                 return await ctx.reply(f"> I can not kick **{member.mention}**!", mention_author=False, ephemeral = True)
         if reason == None:
             reason = "no mentioned reason"
-        for member in members:
-            await member.kick(reason = reason)
-            server = str(ctx.guild.name)
-            await member.send(f">>> You have been kicked from **{server}** for {reason}")
         kick_embed = discord.Embed(title="Multi-Kick!",
                                    description=f"**{memberstext}** has been kicked by {ctx.author.mention} for {reason}",
                                    colour=discord.Colour.red())
         await ctx.send(embed=kick_embed)
+        for member in members:
+            await member.kick(reason = reason)
+            server = str(ctx.guild.name)
+            await member.send(f">>> You have been kicked from **{server}** for {reason}")
 
     @multikick.error
     async def multikick_error(self, ctx, error):
@@ -516,7 +516,7 @@ class Moderation(commands.Cog):
         if ctx.guild.me.top_role <= member.top_role:
             return await ctx.reply(f"> I can not ban **{member.mention}**!", mention_author=False, ephemeral = True)
         if reason == None:
-          reason = "no mentioned reason"
+            reason = "no mentioned reason"
         await member.ban(reason = reason)
         ban_embed = discord.Embed(title="Ban!",
                                   description=f"{member.mention} has been banned by {ctx.author.mention} for {reason}",
@@ -570,15 +570,15 @@ class Moderation(commands.Cog):
             if ctx.guild.me.top_role <= member.top_role:
                 return await ctx.reply(f"> I can not ban **{member.mention}**!", mention_author=False, ephemeral = True)
         if reason == None:
-          reason = "no mentioned reason"
-        for member in members:
-            await member.ban(reason = reason)
-            server = str(ctx.guild.name)
-            await member.send(f">>> You have been banned from **{server}** for {reason}")
+            reason = "no mentioned reason"
         ban_embed = discord.Embed(title="Multi-Ban!",
                                   description=f"{memberstext} has been banned by {ctx.author.mention} for {reason}",
                                   colour=discord.Colour.red())
         await ctx.send(embed=ban_embed)
+        for member in members:
+            await member.ban(reason = reason)
+            server = str(ctx.guild.name)
+            await member.send(f">>> You have been banned from **{server}** for {reason}")
 
     @multiban.error
     async def multiban_error(self, ctx, error):
@@ -873,21 +873,21 @@ class Moderation(commands.Cog):
             mutedRole = await guild.create_role(name="SB-Muted")
             for channel in guild.channels:
                 await channel.set_permissions(mutedRole , send_messages=False)
-        for member in members:
-            #Mute starts message
-            await member.add_roles(mutedRole)
+        #Mute starts message
         mute_embed = discord.Embed(title="Multi-Mute!",
         description=f"{memberstext} has been muted by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
+        for member in members:
+            await member.add_roles(mutedRole)
         #Mute over message
         await asyncio.sleep(int(sleep))
-        for member in members:
-            await member.remove_roles(mutedRole)
         unmute_embed = discord.Embed(title="Multi-Mute over!",
         description=f"{memberstext} Mute {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
+        for member in members:
+            await member.remove_roles(mutedRole)
 
     @multimute.error
     async def multimute_error(self, ctx, error):
