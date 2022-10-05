@@ -23,5 +23,5 @@ Create and moderate tickets with an advanced ticket system!
 Know more about your server and members!
 <hr>
 
-Use `/sbhelp` for info about how to use.
+Use `/sbhelp` for info about how to use. <br>
 You can vote and add the bot from [here](https://discordbotlist.com/bots/shinobi-bot)
