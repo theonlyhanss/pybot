@@ -109,22 +109,19 @@ class Moderation(commands.Cog):
 
     #Multi-Warn
     @commands.hybrid_command(name = "multiwarn", with_app_command = True, description = "Warns multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to warn.", member2 = "Second Member to warn.", member3 = "Third Member to warn.", member4 = "Fourth Member to warn.", member5 = "Fifth Member to warn.", reason = "Reason of warn.")
+    @app_commands.describe(member1 = "First Member to warn.", member2 = "Second Member to warn.", member3 = "Third Member to warn.", member4 = "Fourth Member to warn.", reason = "Reason of warn.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multiwarn(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, member5: discord.Member = None, *, reason = None):
+    async def multiwarn(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
         elif member4 == None:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
+        else:
             members = [member1,member2,member3,member4]
             memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -327,22 +324,19 @@ class Moderation(commands.Cog):
 
     #Multi-Timeout
     @commands.hybrid_command(name = "multitimeout", with_app_command = True, description = "Timeouts multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to timeout.", member2 = "Second Member to timeout.", member3 = "Third Member to timeout.", member4 = "Fourth Member to timeout.", member5 = "Fifth Member to timeout.", time = "Time of the timeout.", reason = "Reason to timeout.")
+    @app_commands.describe(time = "Time of timeout.", member1 = "First Member to timeout.", member2 = "Second Member to timeout.", member3 = "Third Member to timeout.", member4 = "Fourth Member to timeout.", reason = "Reason of timeout.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multitimeout(self, ctx, time, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, member5: commands.MemberConverter = None, *, reason = None):
+    async def multitimeout(self, ctx, time, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
         elif member4 == None:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
+        else:
             members = [member1,member2,member3,member4]
             memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -450,22 +444,19 @@ class Moderation(commands.Cog):
 
     #Multi-Kick
     @commands.hybrid_command(name = "multikick", with_app_command = True, description = "Kicks multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to kick.", member2 = "Second Member to kick.", member3 = "Third Member to kick.", member4 = "Fourth Member to kick.", member5 = "Fifth Member to kick.", reason = "Reason to kick.")
-    @commands.has_permissions(kick_members= True)
+    @app_commands.describe(member1 = "First Member to kick.", member2 = "Second Member to kick.", member3 = "Third Member to kick.", member4 = "Fourth Member to kick.", time = "Time of kick.", reason = "Reason of kick.")
+    @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multikick(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, member5: commands.MemberConverter = None, *, reason=None):
+    async def multikick(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
         elif member4 == None:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
+        else:
             members = [member1,member2,member3,member4]
             memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -546,22 +537,19 @@ class Moderation(commands.Cog):
 
     #Multi-Ban
     @commands.hybrid_command(name = "multiban", with_app_command = True, description = "Bans multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to ban.", member2 = "Second Member to ban.", member3 = "Third Member to ban.", member4 = "Fourth Member to ban.", member5 = "Fifth Member to ban.", reason = "Reason to ban.")
-    @commands.has_permissions(ban_members= True)
+    @app_commands.describe(member1 = "First Member to ban.", member2 = "Second Member to ban.", member3 = "Third Member to ban.", member4 = "Fourth Member to ban.", time = "Time of ban.", reason = "Reason of ban.")
+    @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multiban(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, member5: commands.MemberConverter = None, *, reason=None):
+    async def multiban(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
         elif member4 == None:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
+        else:
             members = [member1,member2,member3,member4]
             memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -752,23 +740,19 @@ class Moderation(commands.Cog):
 
     #Multi-Mute
     @commands.hybrid_command(name = "multimute", with_app_command = True, description = "Mutes multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to mute.", member2 = "Second Member to mute.", member3 = "Third Member to mute.", member4 = "Fourth Member to mute.", member5 = "Fifth Member to mute.", time = "Time of the mute.", reason = "Reason to mute.")
-    @commands.guild_only()
-    @commands.has_permissions(manage_roles=True)
+    @app_commands.describe(member1 = "First Member to mute.", member2 = "Second Member to mute.", member3 = "Third Member to mute.", member4 = "Fourth Member to mute.", time = "Time of mute.", reason = "Reason of mute.")
+    @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multimute(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, member5: commands.MemberConverter = None, time = None , *, reason = None):
+    async def multimute(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
         elif member4 == None:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
+        else:
             members = [member1,member2,member3,member4]
             memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -949,7 +933,8 @@ class Moderation(commands.Cog):
                     jailedRole: discord.PermissionOverwrite(read_messages=True),
                     guild.default_role: discord.PermissionOverwrite(read_messages=False),
                     guild.me: discord.PermissionOverwrite(read_messages=True)
-                } 
+                }
+        #create jail channel
         channel = await guild.create_text_channel(name=f"jail-{member.name}-{member.discriminator}", overwrites = overwrites, category=category)
         channel_id = channel.id
         channel_really = self.bot.get_channel(int(channel_id))
@@ -998,22 +983,16 @@ class Moderation(commands.Cog):
 
     #Multi-Jail
     @commands.hybrid_command(name = "multijail", with_app_command = True, description = "[BETA] Jails multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to jail.", member2 = "Second Member to jail.", member3 = "Third Member to jail.", member4 = "Fourth Member to jail.", member5 = "Fifth Member to jail.", time = "Time of the jail.", reason = "Reason to jail.")
-    @commands.has_permissions(manage_roles=True)
+    @app_commands.describe(member1 = "First Member to jail.", member2 = "Second Member to jail.", member3 = "Third Member to jail.", time = "time of jail.", reason = "Reason of jail.")
+    @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multijail(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, member5: commands.MemberConverter = None, time=None, *, reason=None):
+    async def multijail(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
-        elif member4 == None:
+        else:
             members = [member1,member2,member3]
             memberstext = f"{member1.mention}, {member2.mention} and {member3.mention}"
-        elif member5 == None:
-            members = [member1,member2,member3,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention} and {member4.mention}"
-        else:
-            members = [member1,member2,member3,member4,member4]
-            memberstext = f"{member1.mention}, {member2.mention}, {member3.mention}, {member4.mention} and {member5.mention}"
         for member in members:
             #check author role
             if ctx.author.top_role <= member.top_role:
@@ -1073,14 +1052,20 @@ class Moderation(commands.Cog):
                     guild.default_role: discord.PermissionOverwrite(read_messages=False),
                     guild.me: discord.PermissionOverwrite(read_messages=True)
                     }
-        channel = await guild.create_text_channel(name=f"multi-jail", overwrites = overwrites, category=category)
-        channel_id = channel.id
-        await channel.edit(slowmode_delay=10)
+        # channel = await guild.create_text_channel(name=f"multi-jail", overwrites = overwrites, category=category)
+        # channel_id = channel.id
+        # await channel.edit(slowmode_delay=10)
+        with open("jsons/jails.json", "r", encoding="utf8") as f:
+            user = json.load(f)
         for member in members:
-            with open("jsons/jails.json", "r", encoding="utf8") as f:
-                user = json.load(f)
+            channel = await guild.create_text_channel(name=f"jail-{member.name}-{member.discriminator}", overwrites = overwrites, category=category)
+            channel_id = channel.id
+            channel_really = self.bot.get_channel(channel_id)
+            await channel_really.edit(slowmode_delay=10)
             with open("jsons/jails.json", "w", encoding="utf8") as f:
-                user[str(guild.id)] = channel_id
+                # user = {}
+                # user[str(member.id)] = {}
+                user[str(member.id)] = channel_id
                 json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
             await member.add_roles(jailedRole)
             await channel.send(f"{member.mention} You have been jailed{reason}{timer}.")
@@ -1091,17 +1076,17 @@ class Moderation(commands.Cog):
         description=f"{memberstext} jail {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unjail_embed)
+        #remove jail
+        # with open("jsons/jails.json", "r", encoding="utf8") as f:
+        #     user = json.load(f)
+        # user.pop(str(member.id))
         for member in members:
             await member.remove_roles(jailedRole)
-        #remove jail from json
-        with open("jsons/jails.json", "r", encoding="utf8") as f:
-            user = json.load(f)
-            channel_id = user[str(guild.id)]
-        user.pop(str(guild.id))
-        with open("jsons/jails.json", "w", encoding="utf8") as f:
-            json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
-        channel_really = self.bot.get_channel(int(channel_id))
-        await channel_really.delete()
+            # with open("jsons/jails.json", "w", encoding="utf8") as f:
+            #     channel_id = user[str(member.id)]
+            #     json.dump(user, f, indent=4)
+            # channel_really = self.bot.get_channel(channel_id)
+            # await channel_really.delete()
 
     @multijail.error
     async def multijail_error(self, ctx, error):
