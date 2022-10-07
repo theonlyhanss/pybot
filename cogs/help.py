@@ -472,9 +472,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def multikick(self, ctx):
-        em = discord.Embed(title = "__**Multi-Kick**__", description = "Kicks multiple members from the server. (maximum 5 members.)", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> multikick <member1> <member2> [member3] [member4] [member5] [reason]")
-        em.add_field(name = "**Example:**", value = "> `multikick @member1 @member2 @member3 @member4 @member5 breaking the rules`")
+        em = discord.Embed(title = "__**Multi-Kick**__", description = "Kicks multiple members from the server. (maximum 4 members.)", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> multikick <member1> <member2> [member3] [member4] [reason]")
+        em.add_field(name = "**Example:**", value = "> `multikick @member1 @member2 @member3 @member4 breaking the rules`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -490,9 +490,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def multiban(self, ctx):
-        em = discord.Embed(title = "__**Multi-Ban**__", description = "Bans multiple members from the server. (maximum 5 members.)", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> multiban <member1> <member2> [member3] [member4] [member5] [reason]")
-        em.add_field(name = "**Example:**", value = "> `multiban @member1 @member2 @member3 @member4 @member5 breaking the rules`")
+        em = discord.Embed(title = "__**Multi-Ban**__", description = "Bans multiple members from the server. (maximum 4 members.)", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> multiban <member1> <member2> [member3] [member4] [reason]")
+        em.add_field(name = "**Example:**", value = "> `multiban @member1 @member2 @member3 @member4 breaking the rules`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -508,9 +508,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def multijail(self, ctx):
-        em = discord.Embed(title = "__**Multi-Jail**__", description = "Jails multiple members. (maximum 5 members.)", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> multijail <member1> <member2> [member3] [member4] [member5] [time] [reason]")
-        em.add_field(name = "**Example:**", value = "> `multijail @member1 @member2 @member3 @member4 @member5 2h breaking the rules`")
+        em = discord.Embed(title = "__**Multi-Jail**__", description = "Jails multiple members. (maximum 3 members.)", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> multijail <member1> <member2> [member3] [time] [reason]")
+        em.add_field(name = "**Example:**", value = "> `multijail @member1 @member2 @member3 2h breaking the rules`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -582,9 +582,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def multitimeout(self, ctx):
-        em = discord.Embed(title = "__**Multi-Timeout**__", description = "Timeouts multiple members. (maximum 5 members.)", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> multitimeout <time> <member1> <member2> [member3] [member4] [member5] [reason]")
-        em.add_field(name = "**Example:**", value = "> `multitimeout 2h @member1 @member2 @member3 @member4 @member5 breaking the rules`")
+        em = discord.Embed(title = "__**Multi-Timeout**__", description = "Timeouts multiple members. (maximum 4 members.)", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> multitimeout <time> <member1> <member2> [member3] [member4] [reason]")
+        em.add_field(name = "**Example:**", value = "> `multitimeout 2h @member1 @member2 @member3 @member4 breaking the rules`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -722,9 +722,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def multiwarn(self, ctx):
-        em = discord.Embed(title = "__**Multi-Warn**__", description = "Warns multiple members. (maximum 5 members.)", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> multiwarn <member1> <member2> [member3] [member4] [member5] [reason]")
-        em.add_field(name = "**Example:**", value = "> `multiwarn @member1 @member2 @member3 @member4 @member5 breaking the rules`")
+        em = discord.Embed(title = "__**Multi-Warn**__", description = "Warns multiple members. (maximum 4 members.)", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> multiwarn <member1> <member2> [member3] [member4] [reason]")
+        em.add_field(name = "**Example:**", value = "> `multiwarn @member1 @member2 @member3 @member4 breaking the rules`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
