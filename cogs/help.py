@@ -31,13 +31,12 @@ class Dropdown(discord.ui.Select):
 
         #check user
         if interaction.user != author:
-            await interaction.response.send_message("> Use your own help command!", ephemeral=True)
-            return
+            return await interaction.response.send_message("> Use your own help command!", ephemeral=True)
 
         #index page
         if self.values[0] == "Index":
             em = discord.Embed(title = "**Shinobi Bot Help**",
-                            description = "Hello! Welcome to the help page.\n\nUse `/vote` to vote me.\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
+                            description = "Hello! Welcome to the help page.\n\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                             color = 0x000000)
             em.add_field(name = "**Who are you?**",
                         value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
@@ -148,7 +147,7 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def help(self, ctx):
         em = discord.Embed(title = "**Shinobi Bot Help**",
-                           description = "Hello! Welcome to the help page.\n\nUse `/vote` to vote me.\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
+                           description = "Hello! Welcome to the help page.\n\nUse `/feedback` to send your feedback directly to the developers.\nUse `<category name> <command name>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                            color = 0x000000)
         em.add_field(name = "**Who are you?**",
                     value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
@@ -157,6 +156,8 @@ class Help(commands.Cog):
         global author
         author = ctx.message.author
         view = DropdownView()
+        view.add_item(discord.ui.Button(label="Vote For Us",style=discord.ButtonStyle.link, url="https://top.gg/bot/855437723166703616", emoji="💌"))
+        view.add_item(discord.ui.Button(label="Invite Shinobi Bot",style=discord.ButtonStyle.link, url="https://discord.com/oauth2/authorize?client_id=855437723166703616&permissions=8&scope=bot%20applications.commands"))
         await ctx.send(embed = em, view=view)
 
 #=====================================================================================================================
