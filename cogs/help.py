@@ -156,8 +156,8 @@ class Help(commands.Cog):
         global author
         author = ctx.message.author
         view = DropdownView()
-        view.add_item(discord.ui.Button(label="Vote For Us",style=discord.ButtonStyle.link, url="https://top.gg/bot/855437723166703616", emoji="💌"))
         view.add_item(discord.ui.Button(label="Invite Shinobi Bot",style=discord.ButtonStyle.link, url="https://discord.com/oauth2/authorize?client_id=855437723166703616&permissions=8&scope=bot%20applications.commands"))
+        view.add_item(discord.ui.Button(label="Vote For Us",style=discord.ButtonStyle.link, url="https://top.gg/bot/855437723166703616", emoji="💌"))
         await ctx.send(embed = em, view=view)
 
 #=====================================================================================================================
