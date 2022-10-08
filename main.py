@@ -129,7 +129,7 @@ class Vote(discord.ui.View):
         super().__init__(timeout=timeout)
 
 
-#bot vote command links
+#vote command links
 @bot.hybrid_command(name = "vote", with_app_command = True, description = "Vote me!")
 @commands.cooldown(1, 10, commands.BucketType.user)
 async def vote(ctx):
