@@ -22,6 +22,15 @@ class hideallConfirm(discord.ui.View):
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def hideall_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #show all confirm
@@ -41,6 +50,15 @@ class showallConfirm(discord.ui.View):
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def showall_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #lock all confirm
@@ -60,6 +78,15 @@ class lockallConfirm(discord.ui.View):
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def lockall_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #unlock all confirm
@@ -79,25 +106,127 @@ class unlockallConfirm(discord.ui.View):
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
-
-
-#welcome confirm button
-class welcomeConfirm(discord.ui.View):
-    def __init__(self, *, timeout=180):
-        super().__init__(timeout=timeout)
-    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
-    async def welcome_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
-        if interaction.user != welcome_author:
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def unlockall_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
             return await interaction.response.send_message("> This is not for you!", ephemeral=True)
-        with open("jsons/welcome.json", "r") as f:
-            channel = json.load(f)
-        with open("jsons/welcome.json", "w") as f:
-            channel[str(interaction.user.guild.id)] = welcome_channel
-            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your welcome channel have been updated succesfully!")
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#edits confirm button
+class editsConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def edits_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != edits_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/msg_edits.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/msg_edits.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = edits_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your edited message log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def edits_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != edits_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#deletes confirm button
+class deletesConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def deletes_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != deletes_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/msg_deletes.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/msg_deletes.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = deletes_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your deleted messages log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def deletes_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != deletes_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#joins confirm button
+class joinsConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def joins_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != joins_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/joins.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/joins.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = joins_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your members' joins log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def welcome_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != joins_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#leaves confirm button
+class leavesConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def leaves_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != leaves_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/leaves.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/leaves.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = leaves_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your members' leaves log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def welcome_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != leaves_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #suggest confirm button
@@ -119,6 +248,15 @@ class suggestConfirm(discord.ui.View):
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def suggest_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #filter toggle buttons
@@ -141,8 +279,8 @@ class filterToggle(discord.ui.View):
             for child in self.children:
                 child.disabled=True
             await interaction.message.edit(view=self)
-
-    @discord.ui.button(label="Disable",style=discord.ButtonStyle.red)
+    #disable button
+    @discord.ui.button(label="Disable", style=discord.ButtonStyle.red)
     async def filter_disable(self, interaction:discord.Interaction, button:discord.ui.Button):
         if interaction.user != author:
             return await interaction.response.send_message("> This is not for you!", ephemeral=True)
@@ -165,27 +303,27 @@ class Settings(commands.Cog):
         self.bot = bot
 
 
-    #welcome command
-    @commands.hybrid_command(name = "welcome", with_app_command = True, description = "Set a channel to announce joining and leaving of members.")
+    #log msg edit command
+    @commands.hybrid_command(name = "edits", with_app_command = True, description = "Log edited messages and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to announce in it.")
+    @app_commands.describe(channel = "Channel to send the log.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def welcome(self, ctx: commands.Context, channel: discord.TextChannel):
-        global welcome_author
-        global welcome_channel
-        welcome_author = ctx.author
-        welcome_channel = channel.id
-        view = welcomeConfirm()
+    async def edits(self, ctx: commands.Context, channel: discord.TextChannel):
+        global edits_log_author
+        global edits_log_channel
+        edits_log_author = ctx.author
+        edits_log_channel = channel.id
+        view = editsConfirm()
         em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your welcome channel?",
+        description=f"Are you sure that you want {channel.mention} to be your edited messages log channel?",
         colour=discord.Colour.dark_theme())
         await ctx.reply(embed=em, view = view)
 
-    @welcome.error
-    async def welcome_error(self, ctx, error):
+    @edits.error
+    async def edits_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help welcome` for more info",
+            description=f"> Please check `_help deletes` for more info",
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.MissingPermissions):
@@ -199,13 +337,118 @@ class Settings(commands.Cog):
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=cool_error, ephemeral=True)
 
-    #suggest command
-    @commands.hybrid_command(name = "suggest", with_app_command = True, description = "Set channels for suggestions.")
+
+    #log msg delete command
+    @commands.hybrid_command(name = "deletes", with_app_command = True, description = "Log deleted messages and send them to a channel.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def deletes(self, ctx: commands.Context, channel: discord.TextChannel):
+        global deletes_log_author
+        global deletes_log_channel
+        deletes_log_author = ctx.author
+        deletes_log_channel = channel.id
+        view = deletesConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your deleted messages log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @deletes.error
+    async def deletes_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help deletes` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
+    #joins command
+    @commands.hybrid_command(name = "joins", with_app_command = True, description = "Log members' joins and send them to a channel.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def joins(self, ctx: commands.Context, channel: discord.TextChannel):
+        global joins_author
+        global joins_channel
+        joins_author = ctx.author
+        joins_channel = channel.id
+        view = joinsConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your joins log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @joins.error
+    async def joins_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help joins` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
+    #leaves command
+    @commands.hybrid_command(name = "leaves", with_app_command = True, description = "Log members' leaves and send them to a channel.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def leaves(self, ctx: commands.Context, channel: discord.TextChannel):
+        global leaves_author
+        global leaves_channel
+        leaves_author = ctx.author
+        leaves_channel = channel.id
+        view = leavesConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your leaves log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @leaves.error
+    async def leaves_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help leaves` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+    #suggestions command
+    @commands.hybrid_command(name = "suggestions", with_app_command = True, description = "Set channels for suggestions.")
     @commands.has_permissions(manage_channels=True)
     @app_commands.describe(suggestions_channel = "Set a channel that members will sent their suggetions to.",
                            review_channel = "Set a private channel for admins to review the suggetions. (or make it the same suggestions channel if you want.)")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def suggest(self, ctx: commands.Context, suggestions_channel: discord.TextChannel, review_channel: discord.TextChannel):
+    async def suggestions(self, ctx: commands.Context, suggestions_channel: discord.TextChannel, review_channel: discord.TextChannel):
         global suggest_author
         global sugg_ch_id
         global rev_ch_id
@@ -218,11 +461,11 @@ class Settings(commands.Cog):
         colour=discord.Colour.dark_theme())
         await ctx.reply(embed=em, view = view)
 
-    @suggest.error
-    async def suggest_error(self, ctx, error):
+    @suggestions.error
+    async def suggestions_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help suggest` for more info",
+            description=f"> Please check `_help suggestions` for more info",
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.MissingPermissions):
@@ -403,7 +646,7 @@ class Settings(commands.Cog):
         author = ctx.author
         hideall_em = discord.Embed(title="Confirm", description="Are you sure that you want to hide all your channels?")
         view = hideallConfirm()
-        await ctx.send(embed=hideall_em, view=view, ephemeral=True)
+        await ctx.send(embed=hideall_em, view=view)
 
     @hideall.error
     async def hideall_error(self, ctx, error):
@@ -459,7 +702,7 @@ class Settings(commands.Cog):
         author = ctx.author
         hideall_em = discord.Embed(title="Confirm", description="Are you sure that you want to unhide all your channels?")
         view = showallConfirm()
-        await ctx.send(embed=hideall_em, view=view, ephemeral=True)
+        await ctx.send(embed=hideall_em, view=view)
 
     @showall.error
     async def showall_error(self, ctx, error):
@@ -515,7 +758,7 @@ class Settings(commands.Cog):
         author = ctx.author
         lockall_em = discord.Embed(title="Confirm", description="Are you sure that you want to lock all your channels?")
         view = lockallConfirm()
-        await ctx.send(embed=lockall_em, view=view, ephemeral=True)
+        await ctx.send(embed=lockall_em, view=view)
 
     @lockall.error
     async def lockall_error(self, ctx, error):
@@ -571,7 +814,7 @@ class Settings(commands.Cog):
         author = ctx.author
         unlockall_em = discord.Embed(title="Confirm", description="Are you sure that you want to unlock all your channels?")
         view = unlockallConfirm()
-        await ctx.send(embed=unlockall_em, view=view, ephemeral=True)
+        await ctx.send(embed=unlockall_em, view=view)
 
     @unlockall.error
     async def unlockall_error(self, ctx, error):
