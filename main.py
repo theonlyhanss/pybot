@@ -25,7 +25,7 @@ class MyBot(commands.Bot):
         self.initial_extensions = [
             "cogs.help", "cogs.error_handler", "cogs.events", "cogs.ticket",
             "cogs.moderation", "cogs.general", "cogs.fun", "cogs.serverinfo",
-            "cogs.settings", "cogs.connect4", "cogs.tictactoe", "cogs.rps"]
+            "cogs.settings", "cogs.connect4", "cogs.tictactoe", "cogs.rps", "cogs.logs"]
         self.added = False
 
     async def setup_hook(self):
