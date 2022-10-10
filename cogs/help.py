@@ -11,7 +11,8 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label='Index', description='Shows the main help page.', emoji='👋'),
             discord.SelectOption(label='Moderation', description='Shows moderation commands.', emoji='⚒️'),
             discord.SelectOption(label='Utility', description='Shows utility commands.', emoji='🔧'),
-            discord.SelectOption(label='Settings', description='Shows Settings commands', emoji='⚙️'),
+            discord.SelectOption(label='Logs', description='Shows logs commands', emoji='📝'),
+            discord.SelectOption(label='Settings', description='Shows settings commands', emoji='⚙️'),
             discord.SelectOption(label='Fun', description='Shows fun commands', emoji='🎉'),
             discord.SelectOption(label='Games', description='Shows games commands', emoji='🎮'),
             discord.SelectOption(label='Ticket', description='Shows ticket commands', emoji='📩'),
@@ -41,7 +42,7 @@ class Dropdown(discord.ui.Select):
             em.add_field(name = "**Who are you?**",
                         value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
             em.add_field(name = "**Features**",
-                        value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Welcomer and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
+                        value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
             await interaction.message.edit(embed=em)
             await interaction.response.defer()
 
@@ -78,13 +79,24 @@ class Dropdown(discord.ui.Select):
             await interaction.message.edit(embed=embed)
             await interaction.response.defer()
 
+        #Logs page
+        elif self.values[0] == "Logs":
+            embed = discord.Embed(title = "**Logs**",
+                            description = "Server Logger!",
+                            color = 0x000000)
+            embed.add_field(name = "**Commands**" ,
+                            value = "> joins , leaves , deletes , edits")
+            embed.set_footer(text = "Use `logs <command>` for extended information on a command.")
+            await interaction.message.edit(embed=embed)
+            await interaction.response.defer()
+
         #settings page
         elif self.values[0] == "Settings":
             embed = discord.Embed(title = "**Settings**",
                             description = "Server Settings!",
                             color = 0x000000)
             embed.add_field(name = "**Commands**" ,
-                            value = "> lock , lockall , unlock , unloackall , hide , hideall , show , showall , filtertoggle , suggest , prvchannel , welcome")
+                            value = "> lock , lockall , unlock , unloackall , hide , hideall , show , showall , filtertoggle , suggestions , prvchannel")
             embed.set_footer(text = "Use `settings <command>` for extended information on a command.")
             await interaction.message.edit(embed=embed)
             await interaction.response.defer()
@@ -152,7 +164,7 @@ class Help(commands.Cog):
         em.add_field(name = "**Who are you?**",
                     value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
         em.add_field(name = "**Features**",
-                    value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Welcomer and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
+                    value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
         global author
         author = ctx.message.author
         view = DropdownView()
@@ -293,8 +305,29 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help ping'))
 
 
+    #logs commands help
+    @commands.hybrid_command(name = "logs", with_app_command = True, description = "Bot's logs catogery help.")
+    @app_commands.describe(command = "Choose a command to get info about it.")
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    @app_commands.choices(command=[
+        app_commands.Choice(name="joins", value="joins"),
+        app_commands.Choice(name="leaves", value="leaves"),
+        app_commands.Choice(name="deletes", value="deletes"),
+        app_commands.Choice(name="edits", value="edits")
+        ])
+    async def logs(self, ctx, command: app_commands.Choice[str]):
+        if (command.value == 'joins'):
+            await ctx.invoke(self.bot.get_command('help joins'))
+        elif (command.value == 'leaves'):
+            await ctx.invoke(self.bot.get_command('help leaves'))
+        elif (command.value == 'deletes'):
+            await ctx.invoke(self.bot.get_command('help deletes'))
+        elif (command.value == 'edits'):
+            await ctx.invoke(self.bot.get_command('help edits'))
+
+
     #settings commands help
-    @commands.hybrid_command(name = "settings", with_app_command = True, description = "Bot's games catogery help.")
+    @commands.hybrid_command(name = "settings", with_app_command = True, description = "Bot's settings catogery help.")
     @app_commands.describe(command = "Choose a command to get info about it.")
     @commands.cooldown(1, 1, commands.BucketType.user)
     @app_commands.choices(command=[
@@ -308,9 +341,8 @@ class Help(commands.Cog):
         app_commands.Choice(name="showall", value="showall"),
         app_commands.Choice(name="prefix", value="prefix"),
         app_commands.Choice(name="filtertoggle", value="filtertoggle"),
-        app_commands.Choice(name="suggest", value="suggest"),
-        app_commands.Choice(name="prvchannel", value="prvchannel"),
-        app_commands.Choice(name="welcome", value="welcome")
+        app_commands.Choice(name="suggestions", value="suggestions"),
+        app_commands.Choice(name="prvchannel", value="prvchannel")
         ])
     async def settings(self, ctx, command: app_commands.Choice[str]):
         if (command.value == 'lock'):
@@ -335,10 +367,8 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help filtertoggle'))
         elif (command.value == 'prvchannel'):
             await ctx.invoke(self.bot.get_command('help prvchannel'))
-        elif (command.value == 'suggest'):
-            await ctx.invoke(self.bot.get_command('help suggest'))
-        elif (command.value == 'welcome'):
-            await ctx.invoke(self.bot.get_command('help welcome'))
+        elif (command.value == 'suggestions'):
+            await ctx.invoke(self.bot.get_command('help suggestions'))
 
 
     #fun commands help
@@ -425,6 +455,7 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help remove'))
         elif (command.value == 'ticketrole'):
             await ctx.invoke(self.bot.get_command('help ticketrole'))
+
 
     #serverinformation commands help
     @commands.hybrid_command(name = "serverinformation", with_app_command = True, description = "Bot's server information catogery help.")
@@ -1064,18 +1095,45 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def suggest(self, ctx):
-        em = discord.Embed(title = "__**Suggest**__", description = "Set channels for suggestions.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> suggest <suggestions channel> <suggestions' review channel>")
-        em.add_field(name = "**Example:**", value = "> `suggest #suggestions #suggestions-review`")
+        em = discord.Embed(title = "__**Suggestions**__", description = "Set channels for suggestions.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> suggestions <suggestions channel> <suggestions' review channel>")
+        em.add_field(name = "**Example:**", value = "> `suggestions #suggestions #suggestions-review`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
-    async def welcome(self, ctx):
-        em = discord.Embed(title = "__**Welcome**__", description = "Set a channel to announce joining and leaving of members.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> welcome <channel>")
-        em.add_field(name = "**Example:**", value = "> `welcome #channel`")
+    async def joins(self, ctx):
+        em = discord.Embed(title = "__**Joins**__", description = "Log members's joins and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> joins <channel>")
+        em.add_field(name = "**Example:**", value = "> `joins #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def leaves(self, ctx):
+        em = discord.Embed(title = "__**Leaves**__", description = "Log members's leaves and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> leaves <channel>")
+        em.add_field(name = "**Example:**", value = "> `leaves #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def deletes(self, ctx):
+        em = discord.Embed(title = "__**Deletes**__", description = "Log deleted messages and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> deletes <channel>")
+        em.add_field(name = "**Example:**", value = "> `deletes #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def edits(self, ctx):
+        em = discord.Embed(title = "__**Edits**__", description = "Log edited messages and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> edits <channel>")
+        em.add_field(name = "**Example:**", value = "> `edits #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
