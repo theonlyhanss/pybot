@@ -150,6 +150,10 @@ async def vote_error(ctx, error):
 #on join
 @bot.event
 async def on_guild_join(guild):
+    #send msg
+    channel = bot.get_channel(1027328777828712479)
+    await channel.send(f"I joined {guild.name}")
+
     #add prefix
     with open("jsons/prefixes.json", "r") as f:
         prefixes = json.load(f)
@@ -167,29 +171,33 @@ async def on_guild_join(guild):
     #add suggest
     with open("jsons/suggest.json", "r", encoding="utf8") as f:
         channels = json.load(f)
+    channels[str(guild.id)] = {}
+    channels[str(guild.id)]["suggch"] = 123
+    channels[str(guild.id)]["revch"] = 123
     with open("jsons/suggest.json", "w", encoding="utf8") as f:
-        channels[str(guild.id)] = {}
-        channels[str(guild.id)]["suggch"] = 123
-        channels[str(guild.id)]["revch"] = 123
         json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
 
     #add ticket role
     with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
-        user = json.load(f)
+        ticket_role = json.load(f)
+    ticket_role[str(guild.id)] = 123
     with open("jsons/ticket_roles.json", "w", encoding="utf8") as f:
-        user[str(guild.id)] = 123
-        json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+        json.dump(ticket_role, f, indent=4)
 
     #add welcome
     with open("jsons/welcome.json", "r", encoding="utf8") as f:
-        channel = json.load(f)
+        welcome_channel = json.load(f)
+    welcome_channel[str(guild.id)] = 123
     with open("jsons/welcome.json", "w", encoding="utf8") as f:
-        channel[str(guild.id)] = 123
-        json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        json.dump(welcome_channel, f, indent=4)
 
 #on leave
 @bot.event
 async def on_guild_remove(guild):
+    #send msg
+    channel = bot.get_channel(1027328806236721283)
+    await channel.send(f"I left {guild.name}")
+
     #remove prefix
     with open("jsons/prefixes.json", "r") as f:
         prefixes = json.load(f)
@@ -207,23 +215,23 @@ async def on_guild_remove(guild):
     #remove suggest
     with open("jsons/suggest.json", "r", encoding="utf8") as f:
         channels = json.load(f)
-    channels.pop[str(guild.id)]
+    channels.pop(str(guild.id))
     with open("jsons/suggest.json", "w", encoding="utf8") as f:
         json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
 
     #remove ticket role
-    with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
-        user = json.load(f)
-    user.pop[str(guild.id)]
-    with open("jsons/ticket_roles.json", "w", encoding="utf8") as f:
-        json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+    with open("jsons/ticket_roles.json", "r") as f:
+        ticket_role = json.load(f)
+    ticket_role.pop(str(guild.id))
+    with open("jsons/ticket_roles.json", "w") as f:
+        json.dump(ticket_role, f, indent=4)
 
     #remove welcome
-    with open("jsons/welcome.json", "r", encoding="utf8") as f:
-        user = json.load(f)
-    user.pop[str(guild.id)]
-    with open("jsons/welcome.json", "w", encoding="utf8") as f:
-        json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
+    with open("jsons/welcome.json", "r") as f:
+        welcome_channel = json.load(f)
+    welcome_channel.pop(str(guild.id))
+    with open("jsons/welcome.json", "w") as f:
+        json.dump(welcome_channel, f, indent=4)
 
 
 #join voice
