@@ -184,12 +184,33 @@ async def on_guild_join(guild):
     with open("jsons/ticket_roles.json", "w", encoding="utf8") as f:
         json.dump(ticket_role, f, indent=4)
 
-    #add welcome
-    with open("jsons/welcome.json", "r", encoding="utf8") as f:
-        welcome_channel = json.load(f)
-    welcome_channel[str(guild.id)] = 123
-    with open("jsons/welcome.json", "w", encoding="utf8") as f:
-        json.dump(welcome_channel, f, indent=4)
+    #add joins
+    with open("jsons/joins.json", "r", encoding="utf8") as f:
+        joins_channel = json.load(f)
+    joins_channel[str(guild.id)] = 123
+    with open("jsons/joins.json", "w", encoding="utf8") as f:
+        json.dump(joins_channel, f, indent=4)
+
+    #add leaves
+    with open("jsons/leaves.json", "r", encoding="utf8") as f:
+        leaves_channel = json.load(f)
+    leaves_channel[str(guild.id)] = 123
+    with open("jsons/leaves.json", "w", encoding="utf8") as f:
+        json.dump(leaves_channel, f, indent=4)
+
+    #add deletes
+    with open("jsons/msg_deletes.json", "r", encoding="utf8") as f:
+        deletes_channel = json.load(f)
+    deletes_channel[str(guild.id)] = 123
+    with open("jsons/msg_deletes.json", "w", encoding="utf8") as f:
+        json.dump(deletes_channel, f, indent=4)
+
+    #add edits
+    with open("jsons/msg_edits.json", "r", encoding="utf8") as f:
+        edits_channel = json.load(f)
+    edits_channel[str(guild.id)] = 123
+    with open("jsons/msg_edits.json", "w", encoding="utf8") as f:
+        json.dump(edits_channel, f, indent=4)
 
 #on leave
 @bot.event
@@ -226,12 +247,33 @@ async def on_guild_remove(guild):
     with open("jsons/ticket_roles.json", "w") as f:
         json.dump(ticket_role, f, indent=4)
 
-    #remove welcome
-    with open("jsons/welcome.json", "r") as f:
-        welcome_channel = json.load(f)
-    welcome_channel.pop(str(guild.id))
-    with open("jsons/welcome.json", "w") as f:
-        json.dump(welcome_channel, f, indent=4)
+    #remove joins
+    with open("jsons/joins.json", "r") as f:
+        joins_channel = json.load(f)
+    joins_channel.pop(str(guild.id))
+    with open("jsons/joins.json", "w") as f:
+        json.dump(joins_channel, f, indent=4)
+
+    #remove leaves
+    with open("jsons/leaves.json", "r") as f:
+        leaves_channel = json.load(f)
+    leaves_channel.pop(str(guild.id))
+    with open("jsons/leaves.json", "w") as f:
+        json.dump(leaves_channel, f, indent=4)
+
+    #remove deletes
+    with open("jsons/msg_deletes.json", "r") as f:
+        deletes_channel = json.load(f)
+    deletes_channel.pop(str(guild.id))
+    with open("jsons/msg_deletes.json", "w") as f:
+        json.dump(deletes_channel, f, indent=4)
+
+    #remove edits
+    with open("jsons/msg_edits.json", "r") as f:
+        edits_channel = json.load(f)
+    edits_channel.pop(str(guild.id))
+    with open("jsons/msg_edits.json", "w") as f:
+        json.dump(edits_channel, f, indent=4)
 
 
 #join voice
