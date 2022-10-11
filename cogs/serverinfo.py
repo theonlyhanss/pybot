@@ -133,9 +133,9 @@ class Serverinfo(commands.Cog):
 
 
     #channels count info
-    @commands.hybrid_command(name = "channels", with_app_command = True, description = "Shows channel's count.")
+    @commands.hybrid_command(name = "channelscount", with_app_command = True, description = "Shows channel's count.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def channels(self, ctx):
+    async def channelscount(self, ctx):
         name = str(ctx.guild.name)
         icon = str(ctx.guild.icon.url)
         embed = discord.Embed(
@@ -145,15 +145,15 @@ class Serverinfo(commands.Cog):
         embed.add_field(name="__💬Channels__", value=f">>> {len(ctx.guild.text_channels)} Text | {len(ctx.guild.voice_channels)} Voice", inline=True)
         await ctx.send(embed=embed)
 
-    @channels.error
-    async def channels_error(self, ctx, error):
+    @channelscount.error
+    async def channelscount_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
             await ctx.reply(embed=cool_error, ephemeral=True)
 
 
     #server icon
-    @commands.hybrid_command(name = "icon", with_app_command = True, description = "Shows information about you or another user.")
+    @commands.hybrid_command(name = "icon", with_app_command = True, description = "Shows server's icon.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def icon(self, ctx):
         icon = str(ctx.guild.icon.url)
@@ -173,7 +173,7 @@ class Serverinfo(commands.Cog):
     #userinfo command
     @commands.hybrid_command(name = "user", aliases=["userinfo" , "info" , "u"],
                              with_app_command = True,
-                             description = "Shows server's owner.")
+                             description = "Shows information about you or another user.")
     @app_commands.describe(member = "Member to show their info.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def user(self, ctx, *, member: commands.MemberConverter = None): # b'\xfc'
