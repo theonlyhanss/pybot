@@ -191,8 +191,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_private_channel_pins_update(self, channel, last_pin):
         with open("jsons/channels_log.json", "r") as f:
-            channel = json.load(f)
-        channels_log = channel[str(channel.guild.id)]
+            ch = json.load(f)
+        channels_log = ch[str(channel.guild.id)]
         if channels_log == 123:
             return
         else:
@@ -225,8 +225,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_pins_update(self, channel, last_pin):
         with open("jsons/channels_log.json", "r") as f:
-            channel = json.load(f)
-        channels_log = channel[str(channel.guild.id)]
+            ch = json.load(f)
+        channels_log = ch[str(channel.guild.id)]
         if channels_log == 123:
             return
         else:
@@ -259,8 +259,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_delete(self, channel):
         with open("jsons/channels_log.json", "r") as f:
-            channel = json.load(f)
-        channels_log = channel[str(channel.guild.id)]
+            ch = json.load(f)
+        channels_log = ch[str(channel.guild.id)]
         if channels_log == 123:
             return
         else:
@@ -276,8 +276,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
         with open("jsons/channels_log.json", "r") as f:
-            channel = json.load(f)
-        channels_log = channel[str(channel.guild.id)]
+            ch = json.load(f)
+        channels_log = ch[str(channel.guild.id)]
         if channels_log == 123:
             return
         else:
