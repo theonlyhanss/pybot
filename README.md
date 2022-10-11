@@ -1,5 +1,4 @@
 # Shinobi Bot
-<hr>
 <dl>
 <dt><h3>Moderation</h3></dt>
 <dd>Keep your server safe with powerful moderation commands and auto-mod!</dd>
