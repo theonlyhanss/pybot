@@ -85,7 +85,7 @@ class Dropdown(discord.ui.Select):
                             description = "Server Logger!",
                             color = 0x000000)
             embed.add_field(name = "**Commands**" ,
-                            value = "> joins , leaves , message-deletes , message-edits , channels-log , members-log , roles-log")
+                            value = "> joins , leaves , message-deletes , message-edits , channels-log , members-log , roles-log , server-log")
             embed.set_footer(text = "Use `logs <command>` for extended information on a command.")
             await interaction.message.edit(embed=embed)
             await interaction.response.defer()
@@ -316,7 +316,8 @@ class Help(commands.Cog):
         app_commands.Choice(name="message-edits", value="message-edits"),
         app_commands.Choice(name="channels-log", value="channels-log"),
         app_commands.Choice(name="members-log", value="members-log"),
-        app_commands.Choice(name="roles-loge", value="roles-log")
+        app_commands.Choice(name="roles-log", value="roles-log"),
+        app_commands.Choice(name="server-log", value="server-log")
         ])
     async def logs(self, ctx, command: app_commands.Choice[str]):
         if (command.value == 'joins'):
@@ -333,6 +334,8 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help members_log'))
         elif (command.value == 'roles-log'):
             await ctx.invoke(self.bot.get_command('help roles_log'))
+        elif (command.value == 'server-log'):
+            await ctx.invoke(self.bot.get_command('help server_log'))
 
 
     #settings commands help
@@ -1170,6 +1173,15 @@ class Help(commands.Cog):
         em = discord.Embed(title = "__**Roles Log**__", description = "Log roles' updates and send them to a channel.", color = 0x000000)
         em.add_field(name = "**Syntax:**", value = "> roles-log <channel>")
         em.add_field(name = "**Example:**", value = "> `roles-log #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def server_log(self, ctx):
+        em = discord.Embed(title = "__**Server Log**__", description = "Log server's updates and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> server-log <channel>")
+        em.add_field(name = "**Example:**", value = "> `server-log #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
