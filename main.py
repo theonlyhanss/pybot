@@ -212,6 +212,34 @@ async def on_guild_join(guild):
     with open("jsons/msg_edits.json", "w", encoding="utf8") as f:
         json.dump(edits_channel, f, indent=4)
 
+    #add channels-log
+    with open("jsons/channels_log.json", "r", encoding="utf8") as f:
+        channels_log = json.load(f)
+    channels_log[str(guild.id)] = 123
+    with open("jsons/channels_log.json", "w", encoding="utf8") as f:
+        json.dump(channels_log, f, indent=4)
+
+    #add members-log
+    with open("jsons/members_log.json", "r", encoding="utf8") as f:
+        members_log = json.load(f)
+    members_log[str(guild.id)] = 123
+    with open("jsons/members_log.json", "w", encoding="utf8") as f:
+        json.dump(members_log, f, indent=4)
+
+    #add roles-log
+    with open("jsons/roles_log.json", "r", encoding="utf8") as f:
+        roles_log = json.load(f)
+    roles_log[str(guild.id)] = 123
+    with open("jsons/roles_log.json", "w", encoding="utf8") as f:
+        json.dump(roles_log, f, indent=4)
+
+    #add server-log
+    with open("jsons/server_log.json", "r", encoding="utf8") as f:
+        server_log = json.load(f)
+    server_log[str(guild.id)] = 123
+    with open("jsons/server_log.json", "w", encoding="utf8") as f:
+        json.dump(roles_log, f, indent=4)
+
 #on leave
 @bot.event
 async def on_guild_remove(guild):
@@ -274,6 +302,34 @@ async def on_guild_remove(guild):
     edits_channel.pop(str(guild.id))
     with open("jsons/msg_edits.json", "w") as f:
         json.dump(edits_channel, f, indent=4)
+
+    #remove channels-log
+    with open("jsons/channels_log.json", "r") as f:
+        channels_log = json.load(f)
+    channels_log.pop(str(guild.id))
+    with open("jsons/channels_log.json", "w") as f:
+        json.dump(channels_log, f, indent=4)
+
+    #remove members-log
+    with open("jsons/members_log.json", "r") as f:
+        members_log = json.load(f)
+    members_log.pop(str(guild.id))
+    with open("jsons/members_log.json", "w") as f:
+        json.dump(members_log, f, indent=4)
+
+    #remove roles-log
+    with open("jsons/roles_log.json", "r") as f:
+        roles_log = json.load(f)
+    roles_log.pop(str(guild.id))
+    with open("jsons/roles_log.json", "w") as f:
+        json.dump(roles_log, f, indent=4)
+
+    #remove server-log
+    with open("jsons/server_log.json", "r") as f:
+        server_log = json.load(f)
+    server_log.pop(str(guild.id))
+    with open("jsons/server_log.json", "w") as f:
+        json.dump(server_log, f, indent=4)
 
 
 #join voice
