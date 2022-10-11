@@ -42,7 +42,7 @@ class Dropdown(discord.ui.Select):
             em.add_field(name = "**Who are you?**",
                         value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
             em.add_field(name = "**Features**",
-                        value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
+                        value = "- Over 90+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
             await interaction.message.edit(embed=em)
             await interaction.response.defer()
 
@@ -85,7 +85,7 @@ class Dropdown(discord.ui.Select):
                             description = "Server Logger!",
                             color = 0x000000)
             embed.add_field(name = "**Commands**" ,
-                            value = "> joins , leaves , deletes , edits")
+                            value = "> joins , leaves , message-deletes , message-edits , channels-log , members-log , roles-log")
             embed.set_footer(text = "Use `logs <command>` for extended information on a command.")
             await interaction.message.edit(embed=embed)
             await interaction.response.defer()
@@ -164,7 +164,7 @@ class Help(commands.Cog):
         em.add_field(name = "**Who are you?**",
                     value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do anything. You can get more info using the dropdown menu below.")
         em.add_field(name = "**Features**",
-                    value = "- Over 80+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
+                    value = "- Over 90+ commands ready to use!\n- Moderation, Utility, Games and More!\n- Advanced Ticket System, Suggestions System, Logger and Giveways!\n- Anti-Spam and Bad Words Filter!\n- And much more!")
         global author
         author = ctx.message.author
         view = DropdownView()
@@ -312,18 +312,27 @@ class Help(commands.Cog):
     @app_commands.choices(command=[
         app_commands.Choice(name="joins", value="joins"),
         app_commands.Choice(name="leaves", value="leaves"),
-        app_commands.Choice(name="deletes", value="deletes"),
-        app_commands.Choice(name="edits", value="edits")
+        app_commands.Choice(name="message-deletes", value="message-deletes"),
+        app_commands.Choice(name="message-edits", value="message-edits"),
+        app_commands.Choice(name="channels-log", value="channels-log"),
+        app_commands.Choice(name="members-log", value="members-log"),
+        app_commands.Choice(name="roles-loge", value="roles-log")
         ])
     async def logs(self, ctx, command: app_commands.Choice[str]):
         if (command.value == 'joins'):
             await ctx.invoke(self.bot.get_command('help joins'))
         elif (command.value == 'leaves'):
             await ctx.invoke(self.bot.get_command('help leaves'))
-        elif (command.value == 'deletes'):
-            await ctx.invoke(self.bot.get_command('help deletes'))
-        elif (command.value == 'edits'):
-            await ctx.invoke(self.bot.get_command('help edits'))
+        elif (command.value == 'message-deletes'):
+            await ctx.invoke(self.bot.get_command('help message_deletes'))
+        elif (command.value == 'message-edits'):
+            await ctx.invoke(self.bot.get_command('help message_edits'))
+        elif (command.value == 'channels-log'):
+            await ctx.invoke(self.bot.get_command('help channels_log'))
+        elif (command.value == 'members-log'):
+            await ctx.invoke(self.bot.get_command('help members_log'))
+        elif (command.value == 'roles-log'):
+            await ctx.invoke(self.bot.get_command('help roles_log'))
 
 
     #settings commands help
@@ -466,7 +475,7 @@ class Help(commands.Cog):
         app_commands.Choice(name="owner", value="owner"),
         app_commands.Choice(name="id", value="id"),
         app_commands.Choice(name="members", value="members"),
-        app_commands.Choice(name="channels", value="channels"),
+        app_commands.Choice(name="channelscount", value="channelscount"),
         app_commands.Choice(name="user", value="user"),
         app_commands.Choice(name="icon", value="icon"),
         app_commands.Choice(name="roles", value="roles"),
@@ -480,8 +489,8 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help id'))
         elif (command.value == 'members'):
             await ctx.invoke(self.bot.get_command('help members'))
-        elif (command.value == 'channels'):
-            await ctx.invoke(self.bot.get_command('help channels'))
+        elif (command.value == 'channelscount'):
+            await ctx.invoke(self.bot.get_command('help channelscount'))
         elif (command.value == 'user'):
             await ctx.invoke(self.bot.get_command('help user'))
         elif (command.value == 'icon'):
@@ -947,10 +956,10 @@ class Help(commands.Cog):
 
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
-    async def channels(self, ctx):
-        em = discord.Embed(title = "__**Channels**__", description = "Shows server's channels' count.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> channels")
-        em.add_field(name = "**Example:**", value = "> `channels`")
+    async def channelscount(self, ctx):
+        em = discord.Embed(title = "__**channels Count**__", description = "Shows server's channels' count.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> channelscount")
+        em.add_field(name = "**Example:**", value = "> `channelscount`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
       
@@ -1121,19 +1130,46 @@ class Help(commands.Cog):
 
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
-    async def deletes(self, ctx):
+    async def message_deletes(self, ctx):
         em = discord.Embed(title = "__**Deletes**__", description = "Log deleted messages and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> deletes <channel>")
-        em.add_field(name = "**Example:**", value = "> `deletes #channel`")
+        em.add_field(name = "**Syntax:**", value = "> message-deletes <channel>")
+        em.add_field(name = "**Example:**", value = "> `message-deletes #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
-    async def edits(self, ctx):
+    async def message_edits(self, ctx):
         em = discord.Embed(title = "__**Edits**__", description = "Log edited messages and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> edits <channel>")
-        em.add_field(name = "**Example:**", value = "> `edits #channel`")
+        em.add_field(name = "**Syntax:**", value = "> message-edits <channel>")
+        em.add_field(name = "**Example:**", value = "> `message-edits #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def channels_log(self, ctx):
+        em = discord.Embed(title = "__**Channels Log**__", description = "Log channels' updates and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> channels-log <channel>")
+        em.add_field(name = "**Example:**", value = "> `channels-log #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def members_log(self, ctx):
+        em = discord.Embed(title = "__**Members Log**__", description = "Log members' updates and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> members-log <channel>")
+        em.add_field(name = "**Example:**", value = "> `members-log #channel`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def roles_log(self, ctx):
+        em = discord.Embed(title = "__**Roles Log**__", description = "Log roles' updates and send them to a channel.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> roles-log <channel>")
+        em.add_field(name = "**Example:**", value = "> `roles-log #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
