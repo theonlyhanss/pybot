@@ -4,6 +4,34 @@ from discord.ext import commands
 import json
 
 
+#server-log confirm button
+class serverConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def server_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != server_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/server_log.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/server_log.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = server_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your server's updates log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def server_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != server_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
 #roles confirm button
 class rolesConfirm(discord.ui.View):
     def __init__(self, *, timeout=180):
@@ -203,6 +231,40 @@ class leavesConfirm(discord.ui.View):
 class Logs(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
+
+
+    #log server command
+    @commands.hybrid_command(name = "server-log", with_app_command = True, description = "Log server' updates.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def server_log(self, ctx: commands.Context, channel: discord.TextChannel):
+        global server_log_author
+        global server_log_channel
+        server_log_author = ctx.author
+        server_log_channel = channel.id
+        view = serverConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your server's updates log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @server_log.error
+    async def server_log_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help server-log` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
 
 
     #log roles command
