@@ -1,4 +1,3 @@
-from importlib.util import resolve_name
 import discord
 from discord.ext import commands
 import random
@@ -27,12 +26,28 @@ class Events(commands.Cog):
         if roles_log == 123:
             return
         else:
-            embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-            embed.set_author(name = f"{role_after.guild.name}", icon_url = f"{role_after.guild.icon.url}")
-            embed.add_field(name = f"**:family: Role Updated:**", value=f"`{role_after}`")
-            embed.set_footer(text = role_after.guild.name)
-            channel = self.bot.get_channel(roles_log)
-            await channel.send(embed=embed)
+            for role in role_after.guild.roles:
+                if role == role_before and role != role_after:
+                    return role
+                # elif role.guild_permissions == role_before.guild_permissions and role.guild_permissions != role_after.guild_permissions:
+                #     return role.guild_permissions
+                else:
+                    pass
+            if role:
+                embed=discord.Embed(title = f":family: Role Name Updated:", color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{role_after.guild.name}", icon_url = f"{role_after.guild.icon.url}")
+                embed.add_field(name = "Old:", value=f"`{role_before}`")
+                embed.add_field(name = "New:", value=f"`{role_after}`")
+                embed.set_footer(text = role_after.guild.name)
+                channel = self.bot.get_channel(roles_log)
+                await channel.send(embed=embed)
+            # elif role.guild_permissions:
+            #     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
+            #     embed.set_author(name = f"{role_after.guild.name}", icon_url = f"{role_after.guild.icon.url}")
+            #     embed.add_field(name = f"**:family: Role Permissions Updated:**", value=f"`{role_after}`")
+            #     embed.set_footer(text = role_after.guild.name)
+            #     channel = self.bot.get_channel(roles_log)
+            #     await channel.send(embed=embed)
 
 
     #on role delete
@@ -132,14 +147,20 @@ class Events(commands.Cog):
                 embed.set_footer(text = member_after.guild.name)
                 channel = self.bot.get_channel(members_log)
                 await channel.send(embed=embed)
-            else:
-                pass
+            elif member_before.display_avatar.url != member_after.display_avatar.url:
+                embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{member_after.name}", icon_url = f"{member_after.avatar.url}")
+                embed.add_field(name = f"**:house: Member's Server Avatar Updated:**", value=f"`{member_after}`")
+                embed.set_thumbnail(url = member_after.display_avatar.url)
+                embed.set_footer(text = member_after.guild.name)
+                channel = self.bot.get_channel(members_log)
+                await channel.send(embed=embed)
 
 
     #on guild emojis update
     @commands.Cog.listener()
     async def on_guild_emojis_update(self, guild, before, after):
-        with open("jsons/channels_log.json", "r") as f:
+        with open("jsons/server_log.json", "r") as f:
             channel = json.load(f)
         channels_log = channel[str(guild.id)]
         if channels_log == 123:
@@ -156,7 +177,7 @@ class Events(commands.Cog):
     #on guild sticker update
     @commands.Cog.listener()
     async def on_guild_stickers_update(self, guild, before, after):
-        with open("jsons/channels_log.json", "r") as f:
+        with open("jsons/server_log.json", "r") as f:
             channel = json.load(f)
         channels_log = channel[str(guild.id)]
         if channels_log == 123:
@@ -173,18 +194,28 @@ class Events(commands.Cog):
     #on guild update
     @commands.Cog.listener()
     async def on_guild_update(self, guild_before, guild_after):
-        with open("jsons/channels_log.json", "r") as f:
+        with open("jsons/server_log.json", "r") as f:
             channel = json.load(f)
         channels_log = channel[str(guild_after.id)]
         if channels_log == 123:
             return
         else:
-            embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-            embed.set_author(name = f"{guild_after.name}", icon_url = f"{guild_after.icon.url}")
-            embed.add_field(name = f"**:house: Guild Updated:**", value=f"`{guild_after}`")
-            embed.set_footer(text = guild_after.name)
-            channel = self.bot.get_channel(channels_log)
-            await channel.send(embed=embed)
+            if guild_before.name != guild_after.name:
+                embed=discord.Embed(title = ":house: Server Name Updated:", color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{guild_after.name}", icon_url = f"{guild_after.icon.url}")
+                embed.add_field(name = "Old:", value=f"`{guild_before.name}`")
+                embed.add_field(name = "New:", value=f"`{guild_after.name}`")
+                embed.set_footer(text = guild_after.name)
+                channel = self.bot.get_channel(channels_log)
+                await channel.send(embed=embed)
+            elif guild_before.icon.url != guild_after.icon.url:
+                embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{guild_after.name}", icon_url = f"{guild_after.icon.url}")
+                embed.add_field(name = f"**:house: Server Icon Updated:**", value=f"`{guild_after}`")
+                embed.set_thumbnail(url = guild_after.icon.url)
+                embed.set_footer(text = guild_after.name)
+                channel = self.bot.get_channel(channels_log)
+                await channel.send(embed=embed)
 
 
     #on private channel pins update
@@ -247,12 +278,23 @@ class Events(commands.Cog):
         if channels_log == 123:
             return
         else:
-            embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-            embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
-            embed.add_field(name = f"**:house: Channel Updated:**", value=f"`{channel_after}`")
-            embed.set_footer(text = channel_after.guild.name)
-            channel = self.bot.get_channel(channels_log)
-            await channel.send(embed=embed)
+            perm_before = channel_before.overwrites_for(channel_after.guild.default_role)
+            perm_after = channel_after.overwrites_for(channel_after.guild.default_role)
+            if channel_before.name != channel_after.name:
+                embed=discord.Embed(title = ":house: Channel Name Updated:",color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
+                embed.add_field(name = "Old:", value=f"`{channel_before.name}`")
+                embed.add_field(name = "New:", value=f"`{channel_after.name}`")
+                embed.set_footer(text = channel_after.guild.name)
+                channel = self.bot.get_channel(channels_log)
+                await channel.send(embed=embed)
+            elif perm_before != perm_after:
+                embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
+                embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
+                embed.add_field(name = f"**:house: Channel Permissions Updated:**", value=f"`{channel_after.name}`")
+                embed.set_footer(text = channel_after.guild.name)
+                channel = self.bot.get_channel(channels_log)
+                await channel.send(embed=embed)
 
 
     #on channel delete
