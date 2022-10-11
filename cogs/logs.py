@@ -2,7 +2,90 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import json
-import asyncio
+
+
+#roles confirm button
+class rolesConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def roles_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != roles_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/roles_log.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/roles_log.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = roles_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your roles updates log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def roles_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != roles_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#members confirm button
+class membersConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def members_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != members_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/members_log.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/members_log.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = members_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your members' updates log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def members_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != members_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
+
+
+#channels confirm button
+class channelsConfirm(discord.ui.View):
+    def __init__(self, *, timeout=180):
+        super().__init__(timeout=timeout)
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def channels_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != channels_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        with open("jsons/channels_log.json", "r") as f:
+            channel = json.load(f)
+        with open("jsons/channels_log.json", "w") as f:
+            channel[str(interaction.user.guild.id)] = channels_log_channel
+            json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
+        await interaction.response.send_message("> Your channels' updates log channel has been updated succesfully!")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+    #cancel button
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
+    async def channels_cancel(self, interaction:discord.Interaction, button:discord.ui.Button):
+        if interaction.user != channels_log_author:
+            return await interaction.response.send_message("> This is not for you!", ephemeral=True)
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
+        await interaction.response.send_message("> Process Canceled.")
 
 
 #edits confirm button
@@ -122,8 +205,113 @@ class Logs(commands.Cog):
         self.bot = bot
 
 
+    #log roles command
+    @commands.hybrid_command(name = "roles-log", with_app_command = True, description = "Log roles' updates.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def roles_log(self, ctx: commands.Context, channel: discord.TextChannel):
+        global roles_log_author
+        global roles_log_channel
+        roles_log_author = ctx.author
+        roles_log_channel = channel.id
+        view = rolesConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your roles' updates log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @roles_log.error
+    async def roles_log_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help roles-log` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
+    #log members command
+    @commands.hybrid_command(name = "members-log", with_app_command = True, description = "Log members' updates.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def members_log(self, ctx: commands.Context, channel: discord.TextChannel):
+        global members_log_author
+        global members_log_channel
+        members_log_author = ctx.author
+        members_log_channel = channel.id
+        view = membersConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your members' updates log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @members_log.error
+    async def members_log_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help members-log` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
+    #log channels command
+    @commands.hybrid_command(name = "channels-log", with_app_command = True, description = "Log channels' updates.")
+    @commands.has_permissions(manage_channels=True)
+    @app_commands.describe(channel = "Channel to send the log.")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def channels(self, ctx: commands.Context, channel: discord.TextChannel):
+        global channels_log_author
+        global channels_log_channel
+        channels_log_author = ctx.author
+        channels_log_channel = channel.id
+        view = channelsConfirm()
+        em = discord.Embed(title="Confirmation",
+        description=f"Are you sure that you want {channel.mention} to be your channels' updates log channel?",
+        colour=discord.Colour.dark_theme())
+        await ctx.reply(embed=em, view = view)
+
+    @channels.error
+    async def channels_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            arg_error = discord.Embed(title="Missing Argument!",
+            description=f"> Please check `_help channels-log` for more info",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=arg_error, ephemeral=True)
+        if isinstance(error, commands.MissingPermissions):
+            per_error = discord.Embed(title="Missing Permissions!",
+            description=f"> You must have __**Manage Channels**__ permission!",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=per_error, ephemeral=True)
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",
+            description=f"> Try again in {error.retry_after:.2f}s.",
+            colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error, ephemeral=True)
+
+
     #log msg edit command
-    @commands.hybrid_command(name = "edits", with_app_command = True, description = "Log edited messages and send them to a channel.")
+    @commands.hybrid_command(name = "message-edits", with_app_command = True, description = "Log edited messages and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
     @app_commands.describe(channel = "Channel to send the log.")
     @commands.cooldown(1, 10, commands.BucketType.user)
@@ -142,7 +330,7 @@ class Logs(commands.Cog):
     async def edits_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help deletes` for more info",
+            description=f"> Please check `_help message-edits` for more info",
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.MissingPermissions):
@@ -158,7 +346,7 @@ class Logs(commands.Cog):
 
 
     #log msg delete command
-    @commands.hybrid_command(name = "deletes", with_app_command = True, description = "Log deleted messages and send them to a channel.")
+    @commands.hybrid_command(name = "message-deletes", with_app_command = True, description = "Log deleted messages and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
     @app_commands.describe(channel = "Channel to send the log.")
     @commands.cooldown(1, 10, commands.BucketType.user)
@@ -177,7 +365,7 @@ class Logs(commands.Cog):
     async def deletes_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
-            description=f"> Please check `_help deletes` for more info",
+            description=f"> Please check `_help message-deletes` for more info",
             colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.MissingPermissions):
