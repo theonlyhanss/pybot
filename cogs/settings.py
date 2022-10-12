@@ -17,7 +17,7 @@ class hideallConfirm(discord.ui.View):
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = False
             await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"All Channels Hid!", description=f"> {interaction.user.mention} had hid all channels in the server.")
+        emb = discord.Embed(title=f":closed_lock_with_key: ┃ All Channels Hid! ┃ :closed_lock_with_key:", description=f"> {interaction.user.mention} had hid all channels in the server.")
         await interaction.response.send_message(embed=emb)
         for child in self.children:
             child.disabled=True
@@ -45,7 +45,7 @@ class showallConfirm(discord.ui.View):
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = True
             await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"All Channels Showed!", description=f"> {interaction.user.mention} had unhid all channels in the server.")
+        emb = discord.Embed(title=f"👁️ ┃ Channels Showed! ┃ 👁️", description=f"> {interaction.user.mention} had unhid all channels in the server.")
         await interaction.response.send_message(embed=emb)
         for child in self.children:
             child.disabled=True
@@ -73,7 +73,7 @@ class lockallConfirm(discord.ui.View):
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = False
             await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"All Channels Locked! 🔒", description=f"{interaction.user.mention} had locked all channels in the server.")
+        emb = discord.Embed(title=f"🔒 ┃ All Channels Locked! ┃ 🔒", description=f"{interaction.user.mention} had locked all channels in the server.")
         await interaction.response.send_message(embed=emb)
         for child in self.children:
             child.disabled=True
@@ -101,7 +101,7 @@ class unlockallConfirm(discord.ui.View):
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = True
             await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"All Channels Unlocked! 🔓", description=f"{interaction.user.mention} had unlocked all channels in the server.")
+        emb = discord.Embed(title=f"🔓 ┃ All Channels Unlocked! ┃ 🔓", description=f"{interaction.user.mention} had unlocked all channels in the server.")
         await interaction.response.send_message(embed=emb)
         for child in self.children:
             child.disabled=True
@@ -132,7 +132,8 @@ class suggestConfirm(discord.ui.View):
             channels[str(interaction.user.guild.id)]["suggch"] = sugg_ch_id
             channels[str(interaction.user.guild.id)]["revch"] = rev_ch_id
             json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your suggestions channels have been updated succesfully!")
+        embed = discord.Embed(title = "⚙️ ┃ Suggestions System", description = "Your suggestions channels have been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -164,7 +165,8 @@ class filterToggle(discord.ui.View):
             toggle[str(interaction.user.guild.id)] = "enabled"
             with open("jsons/filter.json", "w") as f:
                 json.dump(toggle, f, indent=4)
-            await interaction.response.send_message("> Swears Filter is now **Enabled!**")
+            embed = discord.Embed(title = "⚙️ ┃ Bad Words Filter", description = "Bad Words Filter is now **Enabled!**", color = 0x000000)
+            await interaction.response.send_message(embed = embed)
             for child in self.children:
                 child.disabled=True
             await interaction.message.edit(view=self)
@@ -185,7 +187,8 @@ class filterToggle(discord.ui.View):
         toggle.pop(str(interaction.user.guild.id))
         with open("jsons/filter.json", "w") as f:
             json.dump(toggle, f, indent=4)
-        await interaction.response.send_message("> Swears Filter is now **Disabled!**")
+        embed = discord.Embed(title = "⚙️ ┃ Bad Words Filter", description = "Bad Words Filter is now **Disabled!**", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -391,7 +394,7 @@ class Settings(commands.Cog):
             return
         overwrite.read_messages = False
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"Channel Hid!",
+        emb = discord.Embed(title=f":closed_lock_with_key: ┃ Channel Hid!",
                             description=f"> **{channel.mention}** has been hidden.",
                             colour=discord.Colour.dark_theme())
         await ctx.send(embed=emb)
@@ -448,7 +451,7 @@ class Settings(commands.Cog):
             return
         overwrite.read_messages = True
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"Channel Showed!",
+        emb = discord.Embed(title=f"👁️ ┃ Channel Showed!",
                             description=f"> **{channel.mention}** has been shown.",
                             colour=discord.Colour.dark_theme())
         await ctx.send(embed=emb)
@@ -492,7 +495,7 @@ class Settings(commands.Cog):
 
 
     #lock
-    @commands.hybrid_command(name = "lock", with_app_command = True, description = "Lockes a room.")
+    @commands.hybrid_command(name = "lock", with_app_command = True, description = "Lockes a channel.")
     @app_commands.describe(channel = "Channel to lock (default is current channel).")
     @commands.has_permissions(manage_channels = True)
     @commands.cooldown(1, 10, commands.BucketType.user)
@@ -503,7 +506,7 @@ class Settings(commands.Cog):
             return await ctx.reply("> The channel is already locked", mention_author=False, ephemeral = True)
         overwrite.send_messages = False
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"Channel Locked! 🔒",
+        emb = discord.Embed(title=f"🔒 ┃ Channel Locked!",
                             description=f"> **{channel.mention}** has been locked.",
                             colour=discord.Colour.dark_theme())
         await ctx.send(embed=emb)
@@ -559,7 +562,7 @@ class Settings(commands.Cog):
             return await ctx.reply("> The channel is already unlocked", mention_author=False, ephemeral = True)
         overwrite.send_messages = True
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        emb = discord.Embed(title=f"Channel Unlocked! 🔓",
+        emb = discord.Embed(title=f"🔓 ┃ Channel Unlocked!",
                             description=f"> **{channel.mention}** has been unlocked.",
                             colour=discord.Colour.dark_theme())
         await ctx.send(embed=emb)
