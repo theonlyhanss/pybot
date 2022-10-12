@@ -17,7 +17,8 @@ class serverConfirm(discord.ui.View):
         with open("jsons/server_log.json", "w") as f:
             channel[str(interaction.user.guild.id)] = server_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your server's updates log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Server Log", description = "Your server's updates log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -45,7 +46,8 @@ class rolesConfirm(discord.ui.View):
         with open("jsons/roles_log.json", "w") as f:
             channel[str(interaction.user.guild.id)] = roles_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your roles updates log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Roles Log", description = "Your roles' updates log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -73,7 +75,8 @@ class membersConfirm(discord.ui.View):
         with open("jsons/members_log.json", "w") as f:
             channel[str(interaction.user.guild.id)] = members_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your members' updates log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Members Log", description = "Your members' updates log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -101,7 +104,8 @@ class channelsConfirm(discord.ui.View):
         with open("jsons/channels_log.json", "w") as f:
             channel[str(interaction.user.guild.id)] = channels_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your channels' updates log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Channels Log", description = "Your channels' updates log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -129,7 +133,8 @@ class editsConfirm(discord.ui.View):
         with open("jsons/msg_edits.json", "w") as f:
             channel[str(interaction.user.guild.id)] = edits_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your edited message log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Edited Messages Log", description = "Your edited messages log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -157,7 +162,8 @@ class deletesConfirm(discord.ui.View):
         with open("jsons/msg_deletes.json", "w") as f:
             channel[str(interaction.user.guild.id)] = deletes_log_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your deleted messages log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Deleted Messages Log", description = "Your deleted messages log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -185,7 +191,8 @@ class joinsConfirm(discord.ui.View):
         with open("jsons/joins.json", "w") as f:
             channel[str(interaction.user.guild.id)] = joins_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your members' joins log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Joins Log", description = "Your members' joins log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
@@ -213,7 +220,8 @@ class leavesConfirm(discord.ui.View):
         with open("jsons/leaves.json", "w") as f:
             channel[str(interaction.user.guild.id)] = leaves_channel
             json.dump(channel, f, sort_keys=True, indent=4, ensure_ascii=False)
-        await interaction.response.send_message("> Your members' leaves log channel has been updated succesfully!")
+        embed = discord.Embed(title = "📝 ┃ Leaved Log", description = "Your members' leaves log channel has been updated succesfully!", color = 0x000000)
+        await interaction.response.send_message(embed = embed)
         for child in self.children:
             child.disabled=True
         await interaction.message.edit(view=self)
