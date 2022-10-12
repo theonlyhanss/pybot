@@ -157,9 +157,10 @@ class filterToggle(discord.ui.View):
             return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         with open("jsons/filter.json", "r") as f:
             toggle = json.load(f)
-        if toggle[str(interaction.user.guild.id)] == "enabled":
-            await interaction.response.send_message("> Your filter is already enabled!", ephemeral = True)
-        else:
+        try:
+            if toggle[str(interaction.user.guild.id)] == "enabled":
+                return await interaction.response.send_message("> Your filter is already enabled!", ephemeral = True)
+        except:
             toggle[str(interaction.user.guild.id)] = "enabled"
             with open("jsons/filter.json", "w") as f:
                 json.dump(toggle, f, indent=4)
@@ -174,16 +175,20 @@ class filterToggle(discord.ui.View):
             return await interaction.response.send_message("> This is not for you!", ephemeral=True)
         with open("jsons/filter.json", "r") as f:
             toggle = json.load(f)
-        if toggle[str(interaction.user.guild.id)] == "disabled":
-            await interaction.response.send_message("> Your filter is already disabled!", ephemeral = True)
-        else:
-            toggle[str(interaction.user.guild.id)] = "disabled"
-            with open("jsons/filter.json", "w") as f:
-                json.dump(toggle, f, indent=4)
-            await interaction.response.send_message("> Swears Filter is now **Disabled!**")
-            for child in self.children:
-                child.disabled=True
-            await interaction.message.edit(view=self)
+        try:
+            if toggle[str(interaction.user.guild.id)] == "disabled":
+                return await interaction.response.send_message("> Your filter is already disabled!", ephemeral = True)
+        except:
+            return await interaction.response.send_message("> Your filter is already disabled!", ephemeral = True)
+        with open("jsons/filter.json", "r") as f:
+            toggle = json.load(f)
+        toggle.pop(str(interaction.user.guild.id))
+        with open("jsons/filter.json", "w") as f:
+            json.dump(toggle, f, indent=4)
+        await interaction.response.send_message("> Swears Filter is now **Disabled!**")
+        for child in self.children:
+            child.disabled=True
+        await interaction.message.edit(view=self)
 
 
 class Settings(commands.Cog):
@@ -194,21 +199,37 @@ class Settings(commands.Cog):
     #suggestions command
     @commands.hybrid_command(name = "suggestions", with_app_command = True, description = "Set channels for suggestions.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(suggestions_channel = "Set a channel that members will sent their suggetions to.",
+    @app_commands.describe(suggestions_channel = "Set a channel that members will sent their suggetions to.", toggle = "Enable/Disable Suggetions System",
                            review_channel = "Set a private channel for admins to review the suggetions. (or make it the same suggestions channel if you want.)")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def suggestions(self, ctx: commands.Context, suggestions_channel: discord.TextChannel, review_channel: discord.TextChannel):
-        global suggest_author
-        global sugg_ch_id
-        global rev_ch_id
-        suggest_author = ctx.author
-        sugg_ch_id = suggestions_channel.id
-        rev_ch_id = review_channel.id
-        view = suggestConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {suggestions_channel.mention} to be your suggestion channel and {review_channel.mention} to be your suggestions' review channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def suggestions(self, ctx: commands.Context, toggle: app_commands.Choice[str], suggestions_channel: discord.TextChannel = None, review_channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/suggest.json", "r", encoding="utf8") as f:
+                    channels = json.load(f)
+                channels.pop(str(ctx.guild.id))
+                with open("jsons/suggest.json", "w", encoding="utf8") as f:
+                    json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
+                return await ctx.send("> Suggestions System disabled succecfully.", ephemeral=True)
+            except:
+                return await ctx.send("> Suggestions System is already disabled in your server.")
+        if (toggle.value == 'enable'):
+            if suggestions_channel == None or review_channel == None:
+                return await ctx.send("> You must include a suggestions channel and a review channel.", ephemeral=True)
+            global suggest_author
+            global sugg_ch_id
+            global rev_ch_id
+            suggest_author = ctx.author
+            sugg_ch_id = suggestions_channel.id
+            rev_ch_id = review_channel.id
+            view = suggestConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {suggestions_channel.mention} to be your suggestion channel and {review_channel.mention} to be your suggestions' review channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @suggestions.error
     async def suggestions_error(self, ctx, error):
@@ -236,12 +257,15 @@ class Settings(commands.Cog):
     async def filtertoggle(self, ctx):
         global author
         author = ctx.author
-        with open("jsons/filter.json", "r", encoding="utf8") as f:
-            toggle = json.load(f)
-        if toggle[str(ctx.guild.id)] == "disabled":
+        try:
+            with open("jsons/filter.json", "r", encoding="utf8") as f:
+                toggle = json.load(f)
+            if toggle[str(ctx.guild.id)] == "enabled":
+                des = "Your swears filter toggle is currently enabled.\nDo you wish to **disable** it?"
+            else:
+                des = "Your swears filter toggle is currently disabled.\nDo you wish to **enable** it?"
+        except:
             des = "Your swears filter toggle is currently disabled.\nDo you wish to **enable** it?"
-        elif toggle[str(ctx.guild.id)] == "enabled":
-            des = "Your swears filter toggle is currently enabled.\nDo you wish to **disable** it?"
         view = filterToggle()
         em = discord.Embed(title="Swears Filter!", description=des, colour=discord.Colour.dark_theme())
         await ctx.reply(embed=em, view = view)
@@ -260,7 +284,7 @@ class Settings(commands.Cog):
             await ctx.reply(embed=cool_error, ephemeral=True)
 
 
-#private channel
+    #private channel
     @commands.hybrid_command(name = "prvchannel", aliases=["tempchannel"], with_app_command = True, description = "Makes a temprory private channel.")
     @app_commands.describe(time = "Time of the channel before it gets deleted.", channel_name = "Channel's name.")
     @commands.has_permissions(manage_channels= True)
