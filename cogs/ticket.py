@@ -18,9 +18,12 @@ class ticket_launcher(discord.ui.View):
 
     @discord.ui.button(label = "Create a Ticket", style = discord.ButtonStyle.blurple, custom_id = "ticket_button", emoji="📩")
     async def ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
-        with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
-            user = json.load(f)
-        tickrole = user[str(interaction.user.guild.id)]
+        try:
+            with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
+                user = json.load(f)
+            tickrole = user[str(interaction.user.guild.id)]
+        except:
+            pass
         interaction.message.author = interaction.user
         retry = self.cooldown.get_bucket(interaction.message).update_rate_limit()
         if retry:
@@ -135,9 +138,12 @@ class Ticket(commands.Cog):
     @app_commands.checks.cooldown(3, 20, key = lambda i: (i.guild_id, i.user.id))
     @app_commands.checks.bot_has_permissions(manage_channels = True)
     async def remove(self, ctx, user: discord.Member):
-        with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
-            user = json.load(f)
-        tickrole = user[str(ctx.guild.id)]
+        try:
+            with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
+                user = json.load(f)
+            tickrole = user[str(ctx.guild.id)]
+        except:
+            tickrole = 123
         if "ticket-for-" in ctx.channel.name:
             if type(self.ticket_mod) is not discord.Role: self.ticket_mod = ctx.guild.get_role(tickrole)
             if self.ticket_mod not in ctx.author.roles:
