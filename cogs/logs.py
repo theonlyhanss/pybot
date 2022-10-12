@@ -234,20 +234,36 @@ class Logs(commands.Cog):
 
 
     #log server command
-    @commands.hybrid_command(name = "server-log", with_app_command = True, description = "Log server' updates.")
+    @commands.hybrid_command(name = "server-log", with_app_command = True, description = "Log server's updates.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable server's updates log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def server_log(self, ctx: commands.Context, channel: discord.TextChannel):
-        global server_log_author
-        global server_log_channel
-        server_log_author = ctx.author
-        server_log_channel = channel.id
-        view = serverConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your server's updates log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def server_log(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/server_log.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/server_log.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Server's updates log disabled succecfully.")
+            except:
+                return await ctx.send("> Server's updates log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global server_log_author
+            global server_log_channel
+            server_log_author = ctx.author
+            server_log_channel = channel.id
+            view = serverConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your server's updates log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @server_log.error
     async def server_log_error(self, ctx, error):
@@ -270,18 +286,34 @@ class Logs(commands.Cog):
     #log roles command
     @commands.hybrid_command(name = "roles-log", with_app_command = True, description = "Log roles' updates.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable roles' updates log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def roles_log(self, ctx: commands.Context, channel: discord.TextChannel):
-        global roles_log_author
-        global roles_log_channel
-        roles_log_author = ctx.author
-        roles_log_channel = channel.id
-        view = rolesConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your roles' updates log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def roles_log(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/roles_log.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/roles_log.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Roles' updates log disabled succecfully.")
+            except:
+                return await ctx.send("> Roles' updates log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global roles_log_author
+            global roles_log_channel
+            roles_log_author = ctx.author
+            roles_log_channel = channel.id
+            view = rolesConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your roles' updates log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @roles_log.error
     async def roles_log_error(self, ctx, error):
@@ -305,18 +337,34 @@ class Logs(commands.Cog):
     #log members command
     @commands.hybrid_command(name = "members-log", with_app_command = True, description = "Log members' updates.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable members' updates log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def members_log(self, ctx: commands.Context, channel: discord.TextChannel):
-        global members_log_author
-        global members_log_channel
-        members_log_author = ctx.author
-        members_log_channel = channel.id
-        view = membersConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your members' updates log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def members_log(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/members_log.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/members_log.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Members' updates log disabled succecfully.")
+            except:
+                return await ctx.send("> Members' updates log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global members_log_author
+            global members_log_channel
+            members_log_author = ctx.author
+            members_log_channel = channel.id
+            view = membersConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your members' updates log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @members_log.error
     async def members_log_error(self, ctx, error):
@@ -340,21 +388,37 @@ class Logs(commands.Cog):
     #log channels command
     @commands.hybrid_command(name = "channels-log", with_app_command = True, description = "Log channels' updates.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable channels' updates log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def channels(self, ctx: commands.Context, channel: discord.TextChannel):
-        global channels_log_author
-        global channels_log_channel
-        channels_log_author = ctx.author
-        channels_log_channel = channel.id
-        view = channelsConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your channels' updates log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def channels_log(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/channels_log.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/channels_log.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Channels' updates log disabled succecfully.")
+            except:
+                return await ctx.send("> Channels' updates log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global channels_log_author
+            global channels_log_channel
+            channels_log_author = ctx.author
+            channels_log_channel = channel.id
+            view = channelsConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your channels' updates log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
-    @channels.error
-    async def channels_error(self, ctx, error):
+    @channels_log.error
+    async def channels_log_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
             description=f"> Please check `_help channels-log` for more info",
@@ -375,21 +439,37 @@ class Logs(commands.Cog):
     #log msg edit command
     @commands.hybrid_command(name = "message-edits", with_app_command = True, description = "Log edited messages and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable edited messages' log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def edits(self, ctx: commands.Context, channel: discord.TextChannel):
-        global edits_log_author
-        global edits_log_channel
-        edits_log_author = ctx.author
-        edits_log_channel = channel.id
-        view = editsConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your edited messages log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def msg_edits(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/msg_edits.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/msg_edits.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Edited messages' log disabled succecfully.")
+            except:
+                return await ctx.send("> Edited messages' log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global edits_log_author
+            global edits_log_channel
+            edits_log_author = ctx.author
+            edits_log_channel = channel.id
+            view = editsConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your edited messages log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
-    @edits.error
-    async def edits_error(self, ctx, error):
+    @msg_edits.error
+    async def msg_edits_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
             description=f"> Please check `_help message-edits` for more info",
@@ -410,21 +490,37 @@ class Logs(commands.Cog):
     #log msg delete command
     @commands.hybrid_command(name = "message-deletes", with_app_command = True, description = "Log deleted messages and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable deleted messages' log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def deletes(self, ctx: commands.Context, channel: discord.TextChannel):
-        global deletes_log_author
-        global deletes_log_channel
-        deletes_log_author = ctx.author
-        deletes_log_channel = channel.id
-        view = deletesConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your deleted messages log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def msg_deletes(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/msg_deletes.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/msg_deletes.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Deleted messages' log disabled succecfully.")
+            except:
+                return await ctx.send("> Deleted messages' log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global deletes_log_author
+            global deletes_log_channel
+            deletes_log_author = ctx.author
+            deletes_log_channel = channel.id
+            view = deletesConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your deleted messages log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
-    @deletes.error
-    async def deletes_error(self, ctx, error):
+    @msg_deletes.error
+    async def msg_deletes_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             arg_error = discord.Embed(title="Missing Argument!",
             description=f"> Please check `_help message-deletes` for more info",
@@ -445,18 +541,34 @@ class Logs(commands.Cog):
     #joins command
     @commands.hybrid_command(name = "joins", with_app_command = True, description = "Log members' joins and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable members' joins log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def joins(self, ctx: commands.Context, channel: discord.TextChannel):
-        global joins_author
-        global joins_channel
-        joins_author = ctx.author
-        joins_channel = channel.id
-        view = joinsConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your joins log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def joins(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/joins.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/joins.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Members' joins log disabled succecfully.")
+            except:
+                return await ctx.send("> Members' joins log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global joins_author
+            global joins_channel
+            joins_author = ctx.author
+            joins_channel = channel.id
+            view = joinsConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your joins log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @joins.error
     async def joins_error(self, ctx, error):
@@ -480,18 +592,34 @@ class Logs(commands.Cog):
     #leaves command
     @commands.hybrid_command(name = "leaves", with_app_command = True, description = "Log members' leaves and send them to a channel.")
     @commands.has_permissions(manage_channels=True)
-    @app_commands.describe(channel = "Channel to send the log.")
+    @app_commands.describe(toggle = "Enable/Disable members' leaves log.", channel = "Channel to send the log.")
+    @app_commands.choices(toggle=[
+        app_commands.Choice(name="enable", value="enable"),
+        app_commands.Choice(name="disable", value="disable")])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def leaves(self, ctx: commands.Context, channel: discord.TextChannel):
-        global leaves_author
-        global leaves_channel
-        leaves_author = ctx.author
-        leaves_channel = channel.id
-        view = leavesConfirm()
-        em = discord.Embed(title="Confirmation",
-        description=f"Are you sure that you want {channel.mention} to be your leaves log channel?",
-        colour=discord.Colour.dark_theme())
-        await ctx.reply(embed=em, view = view)
+    async def leaves(self, ctx: commands.Context, toggle: app_commands.Choice[str], channel: discord.TextChannel = None):
+        if (toggle.value == 'disable'):
+            try:
+                with open("jsons/leaves.json", "r") as f:
+                    server_log = json.load(f)
+                server_log.pop(str(ctx.guild.id))
+                with open("jsons/leaves.json", "w") as f:
+                    json.dump(server_log, f, indent=4)
+                return await ctx.send("> Members' leaves log disabled succecfully.")
+            except:
+                return await ctx.send("> Members' leaves log is already disabled in your server.", ephemeral=True)
+        if (toggle.value == 'enable'):
+            if channel == None:
+                return await ctx.send("> You must include a channel to send the log.", ephemeral=True)
+            global leaves_author
+            global leaves_channel
+            leaves_author = ctx.author
+            leaves_channel = channel.id
+            view = leavesConfirm()
+            em = discord.Embed(title="Confirmation",
+            description=f"Are you sure that you want {channel.mention} to be your leaves log channel?",
+            colour=discord.Colour.dark_theme())
+            await ctx.reply(embed=em, view = view)
 
     @leaves.error
     async def leaves_error(self, ctx, error):
