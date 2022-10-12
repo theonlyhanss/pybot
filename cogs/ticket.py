@@ -23,7 +23,7 @@ class ticket_launcher(discord.ui.View):
                 user = json.load(f)
             tickrole = user[str(interaction.user.guild.id)]
         except:
-            pass
+            tickrole = 123
         interaction.message.author = interaction.user
         retry = self.cooldown.get_bucket(interaction.message).update_rate_limit()
         if retry:
@@ -103,7 +103,7 @@ class Ticket(commands.Cog):
     async def ticketing(self, ctx):
         embed = discord.Embed(title = "Ticket!", description="If you need support, click the button below and create a ticket!", color = discord.Colour.blue())
         # embed.set_thumbnail(url = ctx.guild.icon.url)
-        await ctx.channel.send(embed = embed, view = ticket_launcher())
+        await ctx.send(embed = embed, view = ticket_launcher())
 
 
     #close ticket
