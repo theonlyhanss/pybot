@@ -145,6 +145,7 @@ async def vote_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
         await ctx.reply(embed=cool_error, ephemeral=True)
+        await ctx.reply(embed=cool_error, ephemeral=True)
 
 
 #on join
@@ -161,84 +162,6 @@ async def on_guild_join(guild):
     with open("jsons/prefixes.json", "w") as f:
         json.dump(prefixes, f, indent=4)
 
-    #add filter toggle
-    with open("jsons/filter.json", "r") as f:
-        toggle = json.load(f)
-    toggle[str(guild.id)] = "disabled"
-    with open("jsons/filter.json", "w") as f:
-        json.dump(toggle, f, indent=4)
-
-    #add suggest
-    with open("jsons/suggest.json", "r", encoding="utf8") as f:
-        channels = json.load(f)
-    channels[str(guild.id)] = {}
-    channels[str(guild.id)]["suggch"] = 123
-    channels[str(guild.id)]["revch"] = 123
-    with open("jsons/suggest.json", "w", encoding="utf8") as f:
-        json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
-
-    #add ticket role
-    with open("jsons/ticket_roles.json", "r", encoding="utf8") as f:
-        ticket_role = json.load(f)
-    ticket_role[str(guild.id)] = 123
-    with open("jsons/ticket_roles.json", "w", encoding="utf8") as f:
-        json.dump(ticket_role, f, indent=4)
-
-    #add joins
-    with open("jsons/joins.json", "r", encoding="utf8") as f:
-        joins_channel = json.load(f)
-    joins_channel[str(guild.id)] = 123
-    with open("jsons/joins.json", "w", encoding="utf8") as f:
-        json.dump(joins_channel, f, indent=4)
-
-    #add leaves
-    with open("jsons/leaves.json", "r", encoding="utf8") as f:
-        leaves_channel = json.load(f)
-    leaves_channel[str(guild.id)] = 123
-    with open("jsons/leaves.json", "w", encoding="utf8") as f:
-        json.dump(leaves_channel, f, indent=4)
-
-    #add deletes
-    with open("jsons/msg_deletes.json", "r", encoding="utf8") as f:
-        deletes_channel = json.load(f)
-    deletes_channel[str(guild.id)] = 123
-    with open("jsons/msg_deletes.json", "w", encoding="utf8") as f:
-        json.dump(deletes_channel, f, indent=4)
-
-    #add edits
-    with open("jsons/msg_edits.json", "r", encoding="utf8") as f:
-        edits_channel = json.load(f)
-    edits_channel[str(guild.id)] = 123
-    with open("jsons/msg_edits.json", "w", encoding="utf8") as f:
-        json.dump(edits_channel, f, indent=4)
-
-    #add channels-log
-    with open("jsons/channels_log.json", "r", encoding="utf8") as f:
-        channels_log = json.load(f)
-    channels_log[str(guild.id)] = 123
-    with open("jsons/channels_log.json", "w", encoding="utf8") as f:
-        json.dump(channels_log, f, indent=4)
-
-    #add members-log
-    with open("jsons/members_log.json", "r", encoding="utf8") as f:
-        members_log = json.load(f)
-    members_log[str(guild.id)] = 123
-    with open("jsons/members_log.json", "w", encoding="utf8") as f:
-        json.dump(members_log, f, indent=4)
-
-    #add roles-log
-    with open("jsons/roles_log.json", "r", encoding="utf8") as f:
-        roles_log = json.load(f)
-    roles_log[str(guild.id)] = 123
-    with open("jsons/roles_log.json", "w", encoding="utf8") as f:
-        json.dump(roles_log, f, indent=4)
-
-    #add server-log
-    with open("jsons/server_log.json", "r", encoding="utf8") as f:
-        server_log = json.load(f)
-    server_log[str(guild.id)] = 123
-    with open("jsons/server_log.json", "w", encoding="utf8") as f:
-        json.dump(roles_log, f, indent=4)
 
 #on leave
 @bot.event
