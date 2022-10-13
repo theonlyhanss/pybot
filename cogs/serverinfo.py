@@ -176,7 +176,7 @@ class Serverinfo(commands.Cog):
                              description = "Shows information about you or another user.")
     @app_commands.describe(member = "Member to show their info.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def user(self, ctx, *, member: commands.MemberConverter = None): # b'\xfc'
+    async def user(self, ctx, *, member: discord.Member = None):
         if member is None:
             member = ctx.author
         date_format = "%a, %d %b %Y %I:%M %p"
