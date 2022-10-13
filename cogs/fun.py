@@ -172,16 +172,18 @@ class Fun(commands.Cog):
 
     #rate command
     @commands.hybrid_command(name = "rate", with_app_command = True, description = "Rates.")
-    @app_commands.describe(someone = "Someone you the bot to rate.")
+    @app_commands.describe(someone = "Someone to rate.")
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def rate(self, ctx, *, someone=None):
+    async def rate(self, ctx, *, someone: discord.Member =None):
         if someone==None:
-          someone = "Your"
+            text = "Your"
+        else:
+            text = someone.mention
         async with ctx.typing():
-          await asyncio.sleep(5)
+            await asyncio.sleep(5)
         thing = ["handsome" , "beauty" , "luck" , "success" , "happiness" , "sadness" , "intelligence" , "cringe" , "gay"]
         emoji = ["🙂" , "😆" , "🤣" , "😉" , "😘" , "😏" , "😶" , "😱" , "🤯" , "🥳" , "🤥" , "😳" , "😮" , "😯" , "<:kek:959474451584524308>"]
-        await ctx.reply(f">>> {someone} **{random.choice(thing)}** rate is **{random.randint(0, 100)}%!** {random.choice(emoji)}", mention_author=False)
+        await ctx.reply(f">>> {text} **{random.choice(thing)}** rate is **{random.randint(0, 100)}%!** {random.choice(emoji)}", mention_author=False)
 
     @rate.error
     async def rate_error(self, ctx, error):
