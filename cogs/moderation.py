@@ -38,6 +38,7 @@ class Moderation(commands.Cog):
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def clear(self, ctx, amount=1):
         msg = await ctx.send(f">>> Deleting **{amount}** message(s)...")
+        # msg = await ctx.send(f">>> Deleting **{amount}** message(s)...", ephemeral = True)
         await asyncio.sleep(2)
         await msg.delete()
         await ctx.channel.purge(limit=amount)
@@ -61,7 +62,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to warn.", reason = "Reason of warn.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def warn(self, ctx, member : commands.MemberConverter, *, reason = None):
+    async def warn(self, ctx, member : discord.Member, *, reason = None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not warn **{member.name}**!", mention_author=False, ephemeral = True)
@@ -112,7 +113,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member1 = "First Member to warn.", member2 = "Second Member to warn.", member3 = "Third Member to warn.", member4 = "Fourth Member to warn.", reason = "Reason of warn.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multiwarn(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, reason = None):
+    async def multiwarn(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -174,7 +175,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to unwarn.", amount = "Number of warnings to remove (default is 1 warn).")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def unwarn(self, ctx, member : commands.MemberConverter, amount=None):
+    async def unwarn(self, ctx, member : discord.Member, amount=None):
         #check if member = author
         if ctx.author == member:
             return await ctx.send("> You can not unwarn yourself!", ephemeral = True)
@@ -231,7 +232,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to view their warnings.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def warnings(self, ctx, member : commands.MemberConverter):
+    async def warnings(self, ctx, member : discord.Member):
         try:
             with open("jsons/warns.json", "r", encoding="utf8") as f:
                 user = json.load(f)
@@ -259,7 +260,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to timeout.", time = "Time of the timeout.", reason = "Reason to timeout.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def timeout(self, ctx, member : commands.MemberConverter, time, *, reason = None):
+    async def timeout(self, ctx, member : discord.Member, time, *, reason = None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not timeout **{member.name}**!", mention_author=False, ephemeral = True)
@@ -327,7 +328,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(time = "Time of timeout.", member1 = "First Member to timeout.", member2 = "Second Member to timeout.", member3 = "Third Member to timeout.", member4 = "Fourth Member to timeout.", reason = "Reason of timeout.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multitimeout(self, ctx, time, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, reason = None):
+    async def multitimeout(self, ctx, time, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -406,7 +407,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to kick.", reason = "Reason to kick.")
     @commands.has_permissions(kick_members= True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def kick(self, ctx, member : commands.MemberConverter, *, reason=None):
+    async def kick(self, ctx, member : discord.Member, *, reason=None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not kick **{member.mention}**!", mention_author=False, ephemeral = True)
@@ -444,10 +445,10 @@ class Moderation(commands.Cog):
 
     #Multi-Kick
     @commands.hybrid_command(name = "multikick", with_app_command = True, description = "Kicks multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to kick.", member2 = "Second Member to kick.", member3 = "Third Member to kick.", member4 = "Fourth Member to kick.", time = "Time of kick.", reason = "Reason of kick.")
+    @app_commands.describe(member1 = "First Member to kick.", member2 = "Second Member to kick.", member3 = "Third Member to kick.", member4 = "Fourth Member to kick.", reason = "Reason of kick.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multikick(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
+    async def multikick(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -499,7 +500,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to ban.", reason = "Reason to ban.")
     @commands.has_permissions(ban_members= True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def ban(self, ctx, member : commands.MemberConverter, *, reason=None):
+    async def ban(self, ctx, member : discord.Member, *, reason=None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not ban **{member.mention}**!", mention_author=False, ephemeral = True)
@@ -537,10 +538,10 @@ class Moderation(commands.Cog):
 
     #Multi-Ban
     @commands.hybrid_command(name = "multiban", with_app_command = True, description = "Bans multiple members. (maximum 5 members.)")
-    @app_commands.describe(member1 = "First Member to ban.", member2 = "Second Member to ban.", member3 = "Third Member to ban.", member4 = "Fourth Member to ban.", time = "Time of ban.", reason = "Reason of ban.")
+    @app_commands.describe(member1 = "First Member to ban.", member2 = "Second Member to ban.", member3 = "Third Member to ban.", member4 = "Fourth Member to ban.", reason = "Reason of ban.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multiban(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
+    async def multiban(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, *, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -662,7 +663,7 @@ class Moderation(commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def mute(self, ctx, member: commands.MemberConverter, time = None , *, reason = None):
+    async def mute(self, ctx, member: discord.Member, time = None , *, reason = None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not mute **{member.name}**!", mention_author=False, ephemeral = True)
@@ -743,7 +744,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member1 = "First Member to mute.", member2 = "Second Member to mute.", member3 = "Third Member to mute.", member4 = "Fourth Member to mute.", time = "Time of mute.", reason = "Reason of mute.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multimute(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, member4: commands.MemberConverter = None, *, time = None, reason = None):
+    async def multimute(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, member4: discord.Member = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -836,7 +837,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to unmute.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def unmute(self,ctx, member: commands.MemberConverter):
+    async def unmute(self,ctx, member: discord.Member):
         #check if member is muted
         role = discord.utils.find(lambda r: r.name == 'SB-Muted', ctx.message.guild.roles)
         if role in member.roles:
@@ -881,7 +882,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to jail.", time = "Time of the jail.", reason = "Reason to jail.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def jail(self, ctx, member: commands.MemberConverter, time=None, *, reason=None):
+    async def jail(self, ctx, member: discord.Member, time=None, *, reason=None):
         #check author role
         if ctx.author.top_role <= member.top_role:
             return await ctx.reply(f"> You can not jail **{member.name}**!", mention_author=False, ephemeral = True)
@@ -986,7 +987,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member1 = "First Member to jail.", member2 = "Second Member to jail.", member3 = "Third Member to jail.", time = "time of jail.", reason = "Reason of jail.")
     @commands.has_permissions(moderate_members=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def multijail(self, ctx, member1: commands.MemberConverter, member2: commands.MemberConverter, member3: commands.MemberConverter = None, *, time = None, reason = None):
+    async def multijail(self, ctx, member1: discord.Member, member2: discord.Member, member3: discord.Member = None, *, time = None, reason = None):
         if member3 == None:
             members = [member1,member2]
             memberstext = f"{member1.mention} and {member2.mention}"
@@ -1112,7 +1113,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Member to unjail.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def unjail(self, ctx: commands.Context, member: commands.MemberConverter):
+    async def unjail(self, ctx: commands.Context, member: discord.Member):
         # channel = discord.utils.get(ctx.guild.channels, name=f"jail-{member.name}-{member.discriminator}") # doesn't work
         jailedRole = discord.utils.get(member.roles, name="SB-Jailed")
         #check if member is muted
@@ -1165,7 +1166,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Memebr to give the role.", role = "The role to give.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def role(self, ctx, member: commands.MemberConverter, *, role: discord.Role):
+    async def role(self, ctx, member: discord.Member, *, role: discord.Role):
         #check author role
         if ctx.author.top_role <= member.top_role:
             await ctx.reply(f"> You can not add a role to **{member.name}**!", mention_author=False, ephemeral = True)
@@ -1208,7 +1209,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(member = "Memebr to remove the role from.", role = "The role to remove.")
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def delrole(self, ctx, member: commands.MemberConverter, *, role: discord.Role):
+    async def delrole(self, ctx, member: discord.Member, *, role: discord.Role):
         #check author role
         if ctx.author.top_role <= member.top_role:
             await ctx.reply(f"> You can not remove a role to **{member.name}**!", mention_author=False, ephemeral = True)
