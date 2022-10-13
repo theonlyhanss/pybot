@@ -221,7 +221,7 @@ class General(commands.Cog):
     @app_commands.describe(member = "Member to change their nickname.", nick = "The new nickname.")
     @commands.cooldown(1, 10, commands.BucketType.user)
     @commands.has_permissions(manage_nicknames=True)
-    async def nick(self, ctx, member: commands.MemberConverter, *, nick):
+    async def nick(self, ctx, member: discord.Member, *, nick):
         if ctx.author == member:
           pass
         elif ctx.author.top_role <= member.top_role:
