@@ -257,7 +257,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/server_log.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Server's updates log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Server Log", description = "Your server's updates log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Server's updates log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -307,7 +308,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/roles_log.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Roles' updates log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Roles Log", description = "Your roles' updates log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Roles' updates log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -358,7 +360,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/members_log.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Members' updates log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Members Log", description = "Your members' updates log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Members' updates log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -409,7 +412,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/channels_log.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Channels' updates log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Channels Log", description = "Your channels' updates log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Channels' updates log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -460,7 +464,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/msg_edits.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Edited messages' log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Edited Messages Log", description = "Your edited messages log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Edited messages' log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -511,7 +516,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/msg_deletes.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Deleted messages' log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Deleted Messages Log", description = "Your deleted messages log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Deleted messages' log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -562,7 +568,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/joins.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Members' joins log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Joins Log", description = "Your members' joins log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Members' joins log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
@@ -613,7 +620,8 @@ class Logs(commands.Cog):
                 server_log.pop(str(ctx.guild.id))
                 with open("jsons/leaves.json", "w") as f:
                     json.dump(server_log, f, indent=4)
-                return await ctx.send("> Members' leaves log disabled succecfully.")
+                embed = discord.Embed(title = "📝 ┃ Leaves Log", description = "Your members' leaves log has been disabled succesfully.", color = 0x000000)
+                return await ctx.send(embed = embed)
             except:
                 return await ctx.send("> Members' leaves log is already disabled in your server.", ephemeral=True)
         if (toggle.value == 'enable'):
