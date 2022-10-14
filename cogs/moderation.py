@@ -15,7 +15,7 @@ class unbanallConfirm(discord.ui.View):
     async def unbanall_confirm(self, interaction:discord.Interaction, button:discord.ui.Button):
         for ban_entry in bans:
             await interaction.guild.unban(user=ban_entry.user)
-        unbanall_embed = discord.Embed(title="Unban All!",
+        unbanall_embed = discord.Embed(title="✅ ┃ Unban All! ┃ ✅",
                                   description=f"{author.mention}" + ' has unbanned all users! (total {})'.format(len(bans)),
                                   colour=discord.Colour.green())
         await interaction.response.send_message(embed=unbanall_embed)
@@ -84,7 +84,7 @@ class Moderation(commands.Cog):
                 # user[str(member.id)] = {}
                 user[str(member.id)] = 1
                 json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
-        warn_embed = discord.Embed(title="Warn!",
+        warn_embed = discord.Embed(title="⚠️ ┃ Warn!",
         description=f"{member.mention} has been warned by {ctx.author.mention} for {reason}",
         colour=discord.Colour.red())
         await ctx.send(embed=warn_embed)
@@ -132,7 +132,7 @@ class Moderation(commands.Cog):
                 return await ctx.reply(f"> I can not warn **{member.name}**!", mention_author=False, ephemeral = True)
         if reason==None:
             reason="no reason given"
-        warn_embed = discord.Embed(title="Multi-Warn!",
+        warn_embed = discord.Embed(title="⚠️ ┃ Multi-Warn! ┃ ⚠️",
         description=f"{memberstext} has been warned by {ctx.author.mention} for {reason}",
         colour=discord.Colour.red())
         await ctx.send(embed=warn_embed)
@@ -201,7 +201,7 @@ class Moderation(commands.Cog):
             with open("jsons/warns.json", "w", encoding="utf8") as f:
                 user[str(member.id)] = user[str(member.id)] - int(amount)
                 json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
-                warn_embed = discord.Embed(title="Unwarn!",
+                warn_embed = discord.Embed(title="✅ ┃ Unwarn!",
                 description=f"**{amount}** warnings has been removed from {member.mention} by {ctx.author.mention}",
                 colour=discord.Colour.green())
                 await ctx.send(embed=warn_embed)
@@ -417,7 +417,7 @@ class Moderation(commands.Cog):
         if reason == None:
           reason = "no mentioned reason"
         await member.kick(reason = reason)
-        kick_embed = discord.Embed(title="Kick!",
+        kick_embed = discord.Embed(title="🦵 ┃ Kick!",
                                    description=f"**{member.mention}** has been kicked by {ctx.author.mention} for {reason}",
                                    colour=discord.Colour.red())
         await ctx.send(embed=kick_embed)
@@ -467,7 +467,7 @@ class Moderation(commands.Cog):
                 return await ctx.reply(f"> I can not kick **{member.mention}**!", mention_author=False, ephemeral = True)
         if reason == None:
             reason = "no mentioned reason"
-        kick_embed = discord.Embed(title="Multi-Kick!",
+        kick_embed = discord.Embed(title="🦵 ┃ Multi-Kick! ┃ 🦵",
                                    description=f"**{memberstext}** has been kicked by {ctx.author.mention} for {reason}",
                                    colour=discord.Colour.red())
         await ctx.send(embed=kick_embed)
@@ -510,7 +510,7 @@ class Moderation(commands.Cog):
         if reason == None:
             reason = "no mentioned reason"
         await member.ban(reason = reason)
-        ban_embed = discord.Embed(title="Ban!",
+        ban_embed = discord.Embed(title="🚫 ┃ Ban!",
                                   description=f"{member.mention} has been banned by {ctx.author.mention} for {reason}",
                                   colour=discord.Colour.red())
         await ctx.send(embed=ban_embed)
@@ -560,7 +560,7 @@ class Moderation(commands.Cog):
                 return await ctx.reply(f"> I can not ban **{member.mention}**!", mention_author=False, ephemeral = True)
         if reason == None:
             reason = "no mentioned reason"
-        ban_embed = discord.Embed(title="Multi-Ban!",
+        ban_embed = discord.Embed(title="🚫 ┃ Multi-Ban! ┃ 🚫",
                                   description=f"{memberstext} has been banned by {ctx.author.mention} for {reason}",
                                   colour=discord.Colour.red())
         await ctx.send(embed=ban_embed)
@@ -633,7 +633,7 @@ class Moderation(commands.Cog):
                 return await ctx.send(f"> {user} is not banned!", ephemeral = True)
         except:
             return await ctx.send("> Enter a valid id.", ephemeral = True)
-        unban_embed = discord.Embed(title="Unban!",
+        unban_embed = discord.Embed(title="✅ ┃ Unban!",
                                   description=f"{user} has been unbanned by {ctx.author.mention}",
                                   colour=discord.Colour.green())
         await ctx.send(embed=unban_embed)
@@ -708,14 +708,14 @@ class Moderation(commands.Cog):
                 await channel.set_permissions(mutedRole , send_messages=False)
         #Mute starts message
         await member.add_roles(mutedRole)
-        mute_embed = discord.Embed(title="Mute!",
+        mute_embed = discord.Embed(title="🔇 ┃ Mute!",
         description=f"{member.mention} has been muted by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
         #Mute over message
         await asyncio.sleep(int(sleep))
         await member.remove_roles(mutedRole)
-        unmute_embed = discord.Embed(title="Mute over!",
+        unmute_embed = discord.Embed(title="🔊 ┃ Mute over!",
         description=f"{member.mention} Mute {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
@@ -798,7 +798,7 @@ class Moderation(commands.Cog):
             for channel in guild.channels:
                 await channel.set_permissions(mutedRole , send_messages=False)
         #Mute starts message
-        mute_embed = discord.Embed(title="Multi-Mute!",
+        mute_embed = discord.Embed(title="🔇 ┃ Multi-Mute! ┃ 🔇",
         description=f"{memberstext} has been muted by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.send(embed=mute_embed)
@@ -806,7 +806,7 @@ class Moderation(commands.Cog):
             await member.add_roles(mutedRole)
         #Mute over message
         await asyncio.sleep(int(sleep))
-        unmute_embed = discord.Embed(title="Multi-Mute over!",
+        unmute_embed = discord.Embed(title="🔊 ┃ Multi-Mute over! ┃ 🔊",
         description=f"{memberstext} Mute {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
@@ -853,7 +853,7 @@ class Moderation(commands.Cog):
 
         mutedRole = discord.utils.get(member.roles, name="SB-Muted")
         await member.send(f">>> you have been unmuted from **{ctx.guild.name}**")
-        embed = discord.Embed(title="Unmute!",
+        embed = discord.Embed(title="🔊 ┃ Unmute!",
         description=f"{member.mention} has been unmuted",
         colour=discord.Colour.green())
         await ctx.send(embed=embed)
@@ -948,7 +948,7 @@ class Moderation(commands.Cog):
             json.dump(user, f, sort_keys=True, indent=4, ensure_ascii=False)
         #Jail starts message
         await member.add_roles(jailedRole)
-        mute_embed = discord.Embed(title="Jail!",
+        mute_embed = discord.Embed(title="⛓️ ┃ Jail!",
         description=f"{member.mention} has been jailed by {ctx.author.mention}{reason}{timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
@@ -958,7 +958,7 @@ class Moderation(commands.Cog):
         await asyncio.sleep(int(sleep))
         await member.remove_roles(jailedRole)
         await channel_really.delete()
-        unmute_embed = discord.Embed(title="Jail over!",
+        unmute_embed = discord.Embed(title="🧑‍⚖️ ┃ Jail over!",
         description=f"{member.mention} jail {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unmute_embed)
@@ -1040,7 +1040,7 @@ class Moderation(commands.Cog):
                                             read_message_history=True, read_messages=False)
 
         #Jail starts message
-        mute_embed = discord.Embed(title="Multi-Jail!",
+        mute_embed = discord.Embed(title="⛓️ ┃ Multi-Jail! ┃ ⛓️",
         description=f"{memberstext} has been jailed by {ctx.author.mention} {reason} {timer}",
         colour=discord.Colour.red())
         await ctx.reply(embed=mute_embed)
@@ -1073,7 +1073,7 @@ class Moderation(commands.Cog):
 
         #Jail over message
         await asyncio.sleep(int(sleep))
-        unjail_embed = discord.Embed(title="Multi-Jail over!",
+        unjail_embed = discord.Embed(title="🧑‍⚖️ ┃ Multi-Jail over! ┃ 🧑‍⚖️",
         description=f"{memberstext} jail {timer} {reason} is over",
         colour=discord.Colour.green())
         await ctx.reply(embed=unjail_embed)
@@ -1137,7 +1137,7 @@ class Moderation(commands.Cog):
         channel_really = self.bot.get_channel(int(channel_id))
         await channel_really.delete()
         await member.send(f"> you have been unjailed from **{ctx.guild.name}**")
-        embed = discord.Embed(title="Unjail!",
+        embed = discord.Embed(title="🧑‍⚖️ ┃ Unjail!",
         description=f"{member.mention} has been unjailed",
         colour=discord.Colour.green())
         await ctx.send(embed=embed)
