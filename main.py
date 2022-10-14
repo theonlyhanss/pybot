@@ -63,9 +63,11 @@ class MyBot(commands.Bot):
             violations = self.too_many_violations.get_bucket(message)
             check = violations.update_rate_limit()
             if check:
-                await message.author.timeout(timedelta(minutes = 10), reason = "Spamming")
-                try: await message.author.send("You have been timed out for spamming!")
-                except: pass
+                try:
+                    await message.author.timeout(timedelta(minutes = 10), reason = "Spamming")
+                    await message.author.send("You have been timed out for spamming!")
+                except:
+                    await message.channel.send(f"> I cann't timeout {message.author.mention}. Check my role.")
 
 bot = MyBot()
 bot.remove_command('help')
