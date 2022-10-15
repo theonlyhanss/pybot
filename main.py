@@ -198,81 +198,114 @@ async def on_guild_remove(guild):
         json.dump(prefixes, f, indent=4)
 
     #remove filter toggle
-    with open("jsons/filter.json", "r") as f:
-        toggle = json.load(f)
-    toggle.pop(str(guild.id))
-    with open("jsons/filter.json", "w") as f:
-        json.dump(toggle, f, indent=4)
+    try:
+        with open("jsons/filter.json", "r") as f:
+            toggle = json.load(f)
+        toggle.pop(str(guild.id))
+        with open("jsons/filter.json", "w") as f:
+            json.dump(toggle, f, indent=4)
+    except:
+        pass
 
     #remove suggest
-    with open("jsons/suggest.json", "r", encoding="utf8") as f:
-        channels = json.load(f)
-    channels.pop(str(guild.id))
-    with open("jsons/suggest.json", "w", encoding="utf8") as f:
-        json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
+    try:
+        with open("jsons/suggest.json", "r", encoding="utf8") as f:
+            channels = json.load(f)
+        channels.pop(str(guild.id))
+        with open("jsons/suggest.json", "w", encoding="utf8") as f:
+            json.dump(channels, f, sort_keys=True, indent=4, ensure_ascii=False)
+    except:
+        pass
 
     #remove ticket role
-    with open("jsons/ticket_roles.json", "r") as f:
-        ticket_role = json.load(f)
-    ticket_role.pop(str(guild.id))
-    with open("jsons/ticket_roles.json", "w") as f:
-        json.dump(ticket_role, f, indent=4)
+    try:
+        with open("jsons/ticket_roles.json", "r") as f:
+            ticket_role = json.load(f)
+        ticket_role.pop(str(guild.id))
+        with open("jsons/ticket_roles.json", "w") as f:
+            json.dump(ticket_role, f, indent=4)
+    except:
+        pass
 
     #remove joins
-    with open("jsons/joins.json", "r") as f:
-        joins_channel = json.load(f)
-    joins_channel.pop(str(guild.id))
-    with open("jsons/joins.json", "w") as f:
-        json.dump(joins_channel, f, indent=4)
+    try:
+        with open("jsons/joins.json", "r") as f:
+            joins_channel = json.load(f)
+        joins_channel.pop(str(guild.id))
+        with open("jsons/joins.json", "w") as f:
+            json.dump(joins_channel, f, indent=4)
+    except:
+        pass
 
     #remove leaves
-    with open("jsons/leaves.json", "r") as f:
-        leaves_channel = json.load(f)
-    leaves_channel.pop(str(guild.id))
-    with open("jsons/leaves.json", "w") as f:
-        json.dump(leaves_channel, f, indent=4)
+    try:
+        with open("jsons/leaves.json", "r") as f:
+            leaves_channel = json.load(f)
+        leaves_channel.pop(str(guild.id))
+        with open("jsons/leaves.json", "w") as f:
+            json.dump(leaves_channel, f, indent=4)
+    except:
+        pass
 
     #remove deletes
-    with open("jsons/msg_deletes.json", "r") as f:
-        deletes_channel = json.load(f)
-    deletes_channel.pop(str(guild.id))
-    with open("jsons/msg_deletes.json", "w") as f:
-        json.dump(deletes_channel, f, indent=4)
+    try:
+        with open("jsons/msg_deletes.json", "r") as f:
+            deletes_channel = json.load(f)
+        deletes_channel.pop(str(guild.id))
+        with open("jsons/msg_deletes.json", "w") as f:
+            json.dump(deletes_channel, f, indent=4)
+    except:
+        pass
 
     #remove edits
-    with open("jsons/msg_edits.json", "r") as f:
-        edits_channel = json.load(f)
-    edits_channel.pop(str(guild.id))
-    with open("jsons/msg_edits.json", "w") as f:
-        json.dump(edits_channel, f, indent=4)
+    try:
+        with open("jsons/msg_edits.json", "r") as f:
+            edits_channel = json.load(f)
+        edits_channel.pop(str(guild.id))
+        with open("jsons/msg_edits.json", "w") as f:
+            json.dump(edits_channel, f, indent=4)
+    except:
+        pass
 
     #remove channels-log
-    with open("jsons/channels_log.json", "r") as f:
-        channels_log = json.load(f)
-    channels_log.pop(str(guild.id))
-    with open("jsons/channels_log.json", "w") as f:
-        json.dump(channels_log, f, indent=4)
+    try:
+        with open("jsons/channels_log.json", "r") as f:
+            channels_log = json.load(f)
+        channels_log.pop(str(guild.id))
+        with open("jsons/channels_log.json", "w") as f:
+            json.dump(channels_log, f, indent=4)
+    except:
+        pass
 
     #remove members-log
-    with open("jsons/members_log.json", "r") as f:
-        members_log = json.load(f)
-    members_log.pop(str(guild.id))
-    with open("jsons/members_log.json", "w") as f:
-        json.dump(members_log, f, indent=4)
+    try:
+        with open("jsons/members_log.json", "r") as f:
+            members_log = json.load(f)
+        members_log.pop(str(guild.id))
+        with open("jsons/members_log.json", "w") as f:
+            json.dump(members_log, f, indent=4)
+    except:
+        pass
 
     #remove roles-log
-    with open("jsons/roles_log.json", "r") as f:
-        roles_log = json.load(f)
-    roles_log.pop(str(guild.id))
-    with open("jsons/roles_log.json", "w") as f:
-        json.dump(roles_log, f, indent=4)
+    try:
+        with open("jsons/roles_log.json", "r") as f:
+            roles_log = json.load(f)
+        roles_log.pop(str(guild.id))
+        with open("jsons/roles_log.json", "w") as f:
+            json.dump(roles_log, f, indent=4)
+    except:
+        pass
 
     #remove server-log
-    with open("jsons/server_log.json", "r") as f:
-        server_log = json.load(f)
-    server_log.pop(str(guild.id))
-    with open("jsons/server_log.json", "w") as f:
-        json.dump(server_log, f, indent=4)
+    try:
+        with open("jsons/server_log.json", "r") as f:
+            server_log = json.load(f)
+        server_log.pop(str(guild.id))
+        with open("jsons/server_log.json", "w") as f:
+            json.dump(server_log, f, indent=4)
+    except:
+        pass
 
 
 #join voice
