@@ -1108,8 +1108,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def suggest(self, ctx):
         em = discord.Embed(title = "__**Suggestions**__", description = "Set channels for suggestions.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> suggestions <suggestions channel> <suggestions' review channel>")
-        em.add_field(name = "**Example:**", value = "> `suggestions #suggestions #suggestions-review`")
+        em.add_field(name = "**Syntax:**", value = "> suggestions <toggle> <suggestions channel> <suggestions' review channel>")
+        em.add_field(name = "**Example:**", value = "> `suggestions enable #suggestions #suggestions-review`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1117,8 +1117,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def joins(self, ctx):
         em = discord.Embed(title = "__**Joins**__", description = "Log members's joins and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> joins <channel>")
-        em.add_field(name = "**Example:**", value = "> `joins #channel`")
+        em.add_field(name = "**Syntax:**", value = "> joins <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `joins enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1126,8 +1126,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def leaves(self, ctx):
         em = discord.Embed(title = "__**Leaves**__", description = "Log members's leaves and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> leaves <channel>")
-        em.add_field(name = "**Example:**", value = "> `leaves #channel`")
+        em.add_field(name = "**Syntax:**", value = "> leaves <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `leaves enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1135,8 +1135,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def message_deletes(self, ctx):
         em = discord.Embed(title = "__**Deletes**__", description = "Log deleted messages and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> message-deletes <channel>")
-        em.add_field(name = "**Example:**", value = "> `message-deletes #channel`")
+        em.add_field(name = "**Syntax:**", value = "> message-deletes <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `message-deletes enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1144,8 +1144,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def message_edits(self, ctx):
         em = discord.Embed(title = "__**Edits**__", description = "Log edited messages and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> message-edits <channel>")
-        em.add_field(name = "**Example:**", value = "> `message-edits #channel`")
+        em.add_field(name = "**Syntax:**", value = "> message-edits <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `message-edits enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1153,8 +1153,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def channels_log(self, ctx):
         em = discord.Embed(title = "__**Channels Log**__", description = "Log channels' updates and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> channels-log <channel>")
-        em.add_field(name = "**Example:**", value = "> `channels-log #channel`")
+        em.add_field(name = "**Syntax:**", value = "> channels-log <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `channels-log enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1162,8 +1162,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def members_log(self, ctx):
         em = discord.Embed(title = "__**Members Log**__", description = "Log members' updates and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> members-log <channel>")
-        em.add_field(name = "**Example:**", value = "> `members-log #channel`")
+        em.add_field(name = "**Syntax:**", value = "> members-log <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `members-log enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1171,8 +1171,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def roles_log(self, ctx):
         em = discord.Embed(title = "__**Roles Log**__", description = "Log roles' updates and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> roles-log <channel>")
-        em.add_field(name = "**Example:**", value = "> `roles-log #channel`")
+        em.add_field(name = "**Syntax:**", value = "> roles-log <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `roles-log enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
@@ -1180,8 +1180,8 @@ class Help(commands.Cog):
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def server_log(self, ctx):
         em = discord.Embed(title = "__**Server Log**__", description = "Log server's updates and send them to a channel.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> server-log <channel>")
-        em.add_field(name = "**Example:**", value = "> `server-log #channel`")
+        em.add_field(name = "**Syntax:**", value = "> server-log <toggle> <channel>")
+        em.add_field(name = "**Example:**", value = "> `server-log enable #channel`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
