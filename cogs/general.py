@@ -194,22 +194,87 @@ class General(commands.Cog):
 
     #embed command
     @commands.hybrid_command(name = "embed", with_app_command = True, description = "Change your text into an embed.")
-    @app_commands.describe(text = "The text you want to transform.")
+    @app_commands.describe(title = "Title of the embed.", description = "Description of the embed.", footer = "Footer of the embed.", color = "Color of the embed. (default is black)")
+    @app_commands.choices(color=[
+        app_commands.Choice(name="dark theme", value="dark theme"),
+        app_commands.Choice(name="dark grey", value="dark grey"),
+        app_commands.Choice(name="light grey", value="light grey"),
+        app_commands.Choice(name="blue", value="blue"),
+        app_commands.Choice(name="red", value="red"),
+        app_commands.Choice(name="gold", value="gold"),
+        app_commands.Choice(name="orange", value="orange"),
+        app_commands.Choice(name="yellow", value="yellow"),
+        app_commands.Choice(name="green", value="green"),
+        app_commands.Choice(name="random", value="random")
+        ])
+    @app_commands.choices(thumbnail=[
+        app_commands.Choice(name="yes", value="yes"),
+    ])
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def embed(self, ctx, *, text):
-        icon = ctx.message.author.avatar.url
-        emb = discord.Embed(title=f"__**{ctx.author.name}**'s Embed__", description=f"{text}", color = 0x000000)
-        emb.set_footer(text=f"Embed by {ctx.message.author}", icon_url=icon)
-        emb.set_thumbnail(url=icon)
-        await ctx.send(embed=emb)
+    async def embed(self, ctx, *, title, description, footer = None, color: app_commands.Choice[str] = None, thumbnail: app_commands.Choice[str] = None):
+        if footer == None and color == None and thumbnail == None:
+            emb = discord.Embed(title=title, description=description, color = 0x000000)
+            await ctx.send(embed=emb)
+        elif footer != None and thumbnail == None and color == None:
+            icon = ctx.message.author.avatar.url
+            emb = discord.Embed(title=title, description=description, color = 0x000000)
+            emb.set_footer(text=footer, icon_url=icon)
+            await ctx.send(embed=emb)
+        elif footer != None and thumbnail != None and color == None:
+            icon = ctx.message.author.avatar.url
+            emb = discord.Embed(title=title, description=description, color = 0x000000)
+            emb.set_thumbnail(url = icon)
+            emb.set_footer(text=footer, icon_url=icon)
+            await ctx.send(embed=emb)
+        elif thumbnail != None and footer == None and color == None:
+            icon = ctx.message.author.avatar.url
+            emb = discord.Embed(title=title, description=description, color = 0x000000)
+            emb.set_thumbnail(url = icon)
+            await ctx.send(embed=emb)
+        elif color != None:
+            if (color.value == 'dark theme'):
+                true_color = discord.Colour.dark_theme()
+            elif (color.value == 'blue'):
+                true_color = discord.Colour.blue()
+            elif (color.value == 'red'):
+                true_color = discord.Colour.red()
+            elif (color.value == 'gold'):
+                true_color = discord.Colour.gold()
+            elif (color.value == 'orange'):
+                true_color = discord.Colour.orange()
+            elif (color.value == 'yellow'):
+                true_color = discord.Colour.yellow()
+            elif (color.value == 'green'):
+                true_color = discord.Colour.green()
+            elif (color.value == 'random'):
+                true_color = discord.Colour.random()
+            if footer == None and thumbnail == None:
+                emb = discord.Embed(title=title, description=description, colour = true_color)
+                await ctx.send(embed=emb)
+            elif footer != None and thumbnail == None:
+                icon = ctx.message.author.avatar.url
+                emb = discord.Embed(title=title, description=description, colour = true_color)
+                emb.set_footer(text=footer, icon_url=icon)
+                await ctx.send(embed=emb)
+            elif thumbnail != None and footer == None:
+                icon = ctx.message.author.avatar.url
+                emb = discord.Embed(title=title, description=description, colour = true_color)
+                emb.set_thumbnail(url = icon)
+                await ctx.send(embed=emb)
+            else:
+                icon = ctx.message.author.avatar.url
+                emb = discord.Embed(title=title, description=description, colour = true_color)
+                emb.set_footer(text=footer, icon_url=icon)
+                emb.set_thumbnail(url = icon)
+                await ctx.send(embed=emb)
 
     @embed.error
     async def embed_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            arg_error = discord.Embed(title="Missing Argument!", description=f"> Please check `_help embed` for more info",colour=discord.Colour.light_grey())
+            arg_error = discord.Embed(title="Missing Argument!", description=f"> Please check `_help embed` for more info", colour=discord.Colour.light_grey())
             await ctx.reply(embed=arg_error, ephemeral=True)
         if isinstance(error, commands.CommandOnCooldown):
-            cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
+            cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.", colour=discord.Colour.light_grey())
             await ctx.reply(embed=cool_error, ephemeral=True)
 
 
