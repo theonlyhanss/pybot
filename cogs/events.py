@@ -85,7 +85,7 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                 embed.set_author(name = f"{role.guild.name}", icon_url = f"{role.guild.icon.url}")
-                embed.add_field(name = f"**:family: Role Created:**", value=f"`{role}`")
+                embed.add_field(name = f"**:family: Role Created: **", value=role)
                 embed.set_footer(text = role.guild.name)
                 channel = self.bot.get_channel(roles_log)
                 await channel.send(embed=embed)
@@ -105,7 +105,7 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                 embed.set_author(name = f"{user.name}", icon_url = f"{user.avatar.url}")
-                embed.add_field(name = f"**:airplane: Member Unbanned:**", value=f"`{user}`")
+                embed.add_field(name = f"**:airplane: Member Unbanned: **", value=user)
                 embed.set_thumbnail(url = user.avatar.url)
                 embed.set_footer(text = guild.name)
                 channel = self.bot.get_channel(members_log)
@@ -126,7 +126,7 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                 embed.set_author(name = f"{user.name}", icon_url = f"{user.avatar.url}")
-                embed.add_field(name = f"**:airplane: Member Banned:**", value=f"`{user}`")
+                embed.add_field(name = f"**:airplane: Member Banned: **", value=user)
                 embed.set_thumbnail(url = user.avatar.url)
                 embed.set_footer(text = guild.name)
                 channel = self.bot.get_channel(members_log)
@@ -148,7 +148,7 @@ class Events(commands.Cog):
                 if member_before.nick != member_after.nick:
                     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                     embed.set_author(name = f"{member_after.name}", icon_url = f"{member_after.avatar.url}")
-                    embed.add_field(name = f"**:house: Member's Nickname Updated:**", value=f"`{member_after}`")
+                    embed.add_field(name = f"**:house: Member's Nickname Updated: **", value=member_after)
                     embed.add_field(name = f"**Old Nickname:**", value=f"`{member_before.nick}`")
                     embed.add_field(name = f"**New Nickname:**", value=f"`{member_after.nick}`")
                     embed.set_thumbnail(url = member_after.avatar.url)
@@ -158,7 +158,7 @@ class Events(commands.Cog):
                 elif member_before.roles != member_after.roles:
                     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                     embed.set_author(name = f"{member_after.name}", icon_url = f"{member_after.avatar.url}")
-                    embed.add_field(name = f"**:house: Member's Roles Updated:**", value=f"`{member_after}`")
+                    embed.add_field(name = f"**:house: Member's Roles Updated: **", value=member_after)
                     embed.set_thumbnail(url = member_after.avatar.url)
                     embed.set_footer(text = member_after.guild.name)
                     channel = self.bot.get_channel(members_log)
@@ -166,7 +166,7 @@ class Events(commands.Cog):
                 elif member_before.display_avatar.url != member_after.display_avatar.url:
                     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                     embed.set_author(name = f"{member_after.name}", icon_url = f"{member_after.avatar.url}")
-                    embed.add_field(name = f"**:house: Member's Server Avatar Updated:**", value=f"`{member_after}`")
+                    embed.add_field(name = f"**:house: Member's Server Avatar Updated: **", value=member_after)
                     embed.set_thumbnail(url = member_after.display_avatar.url)
                     embed.set_footer(text = member_after.guild.name)
                     channel = self.bot.get_channel(members_log)
@@ -187,7 +187,7 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                 embed.set_author(name = f"{guild.name}", icon_url = f"{guild.icon.url}")
-                embed.add_field(name = f"**:house: Guild Emojis Updated:**", value=f"`{guild}`")
+                embed.add_field(name = f"**:house: Guild Emojis Updated:**", value=guild)
                 embed.set_footer(text = guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -207,7 +207,7 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
                 embed.set_author(name = f"{guild.name}", icon_url = f"{guild.icon.url}")
-                embed.add_field(name = f"**:house: Guild Stickers Updated:**", value=f"`{guild}`")
+                embed.add_field(name = f"**:house: Guild Stickers Updated:**", value=guild)
                 embed.set_footer(text = guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -227,7 +227,7 @@ class Events(commands.Cog):
             else:
                 if guild_before.name != guild_after.name:
                     embed=discord.Embed(title = ":house: Server Name Updated:", color = 0x000000, timestamp = datetime.now())
-                    embed.set_author(name = f"{guild_after.name}", icon_url = f"{guild_after.icon.url}")
+                    embed.set_author(name = guild_after.name, icon_url = guild_after.icon.url)
                     embed.add_field(name = "Old:", value=f"`{guild_before.name}`")
                     embed.add_field(name = "New:", value=f"`{guild_after.name}`")
                     embed.set_footer(text = guild_after.name)
@@ -235,8 +235,8 @@ class Events(commands.Cog):
                     await channel.send(embed=embed)
                 elif guild_before.icon.url != guild_after.icon.url:
                     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                    embed.set_author(name = f"{guild_after.name}", icon_url = f"{guild_after.icon.url}")
-                    embed.add_field(name = f"**:house: Server Icon Updated:**", value=f"`{guild_after}`")
+                    embed.set_author(name = guild_after.name, icon_url = guild_after.icon.url)
+                    embed.add_field(name = f"**:house: Server Icon Updated: **", value=guild_after)
                     embed.set_thumbnail(url = guild_after.icon.url)
                     embed.set_footer(text = guild_after.name)
                     channel = self.bot.get_channel(channels_log)
@@ -256,8 +256,8 @@ class Events(commands.Cog):
                 return
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{channel.guild.name}", icon_url = f"{channel.guild.icon.url}")
-                embed.add_field(name = f"**:house: Private Channel Pins Updated:**", value=f"`{channel}`")
+                embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+                embed.add_field(name = f"**:house: Private Channel Pins Updated:**", value=channel)
                 embed.set_footer(text = channel.guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -276,8 +276,8 @@ class Events(commands.Cog):
                 return
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
-                embed.add_field(name = f"**:house: Private Channel Updated:**", value=f"`{channel_after}`")
+                embed.set_author(name = channel_after.guild.name, icon_url = channel_after.guild.icon.url)
+                embed.add_field(name = f"**:house: Private Channel Updated:**", value=channel_after)
                 embed.set_footer(text = channel_after.guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -296,8 +296,8 @@ class Events(commands.Cog):
                 return
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{channel.guild.name}", icon_url = f"{channel.guild.icon.url}")
-                embed.add_field(name = f"**:house: Channel Pins Updated:**", value=f"`{channel}`")
+                embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+                embed.add_field(name = f"**:house: Channel Pins Updated:**", value=channel)
                 embed.set_footer(text = channel.guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -319,7 +319,7 @@ class Events(commands.Cog):
                 perm_after = channel_after.overwrites_for(channel_after.guild.default_role)
                 if channel_before.name != channel_after.name:
                     embed=discord.Embed(title = ":house: Channel Name Updated:",color = 0x000000, timestamp = datetime.now())
-                    embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
+                    embed.set_author(name = channel_after.guild.name, icon_url = channel_after.guild.icon.url)
                     embed.add_field(name = "Old:", value=f"`{channel_before.name}`")
                     embed.add_field(name = "New:", value=f"`{channel_after.name}`")
                     embed.set_footer(text = channel_after.guild.name)
@@ -327,8 +327,8 @@ class Events(commands.Cog):
                     await channel.send(embed=embed)
                 elif perm_before != perm_after:
                     embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                    embed.set_author(name = f"{channel_after.guild.name}", icon_url = f"{channel_after.guild.icon.url}")
-                    embed.add_field(name = f"**:house: Channel Permissions Updated:**", value=f"`{channel_after.name}`")
+                    embed.set_author(name = channel_after.guild.name, icon_url = channel_after.guild.icon.url)
+                    embed.add_field(name = f"**:house: Channel Permissions Updated:**", value=channel_after.name)
                     embed.set_footer(text = channel_after.guild.name)
                     channel = self.bot.get_channel(channels_log)
                     await channel.send(embed=embed)
@@ -347,8 +347,8 @@ class Events(commands.Cog):
                 return
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{channel.guild.name}", icon_url = f"{channel.guild.icon.url}")
-                embed.add_field(name = f"**:house: Channel Deleted:**", value=f"`{channel.name}`")
+                embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+                embed.add_field(name = f"**:house: Channel Deleted:**", value=channel.name)
                 embed.set_footer(text = channel.guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -367,8 +367,8 @@ class Events(commands.Cog):
                 return
             else:
                 embed=discord.Embed(color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{channel.guild.name}", icon_url = f"{channel.guild.icon.url}")
-                embed.add_field(name = f"**:house: Channel Created:**", value=f"`{channel.name}`")
+                embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+                embed.add_field(name = f"**:house: Channel Created:**", value=channel.name)
                 embed.set_footer(text = channel.guild.name)
                 channel = self.bot.get_channel(channels_log)
                 await channel.send(embed=embed)
@@ -388,8 +388,8 @@ class Events(commands.Cog):
             else:
                 embed=discord.Embed(description = f"**:wastebasket: Message sent by {message.author.mention} deleted in {message.channel.mention}**",
                                     color = 0x000000, timestamp = datetime.now())
-                embed.set_author(name = f"{message.author}", icon_url = f"{message.author.avatar.url}")
-                embed.add_field(name = "Message:", value=f"`{message.content}`")
+                embed.set_author(name = message.author, icon_url = message.author.avatar.url)
+                embed.add_field(name = "Message:", value=f"```{message.content}```")
                 embed.set_footer(text = message.guild.name)
                 channel = self.bot.get_channel(deletes_channel)
                 await channel.send(embed=embed)
@@ -412,9 +412,9 @@ class Events(commands.Cog):
                 try:
                     embed=discord.Embed(description = f"**:pencil2: Message sent by {message_after.author.mention} edited in {message_after.channel.mention}. [Jump to Message]({message_after.jump_url})**",
                                         color = 0x000000, timestamp = datetime.now())
-                    embed.set_author(name = f"{message_after.author}", icon_url = f"{message_after.author.avatar.url}")
-                    embed.add_field(name = "Old:", value=f"`{message_before.content}`")
-                    embed.add_field(name = "New:", value=f"`{message_after.content}`")
+                    embed.set_author(name = message_after.author, icon_url = message_after.author.avatar.url)
+                    embed.add_field(name = "Old:", value=f"```{message_before.content}```")
+                    embed.add_field(name = "New:", value=f"```{message_after.content}```")
                     embed.set_footer(text = message_after.guild.name)
                     channel=self.bot.get_channel(edits_channel)
                     await channel.send(embed=embed)
