@@ -1070,9 +1070,9 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def embed(self, ctx):
-        em = discord.Embed(title = "__**Embed**__", description = "Converts your words to an embed.", color = 0x000000)
-        em.add_field(name = "**Syntax:**", value = "> embed <words>")
-        em.add_field(name = "**Example:**", value = "> `embed this will be an embed`")
+        em = discord.Embed(title = "__**Embed**__", description = "Converts your text into an embed.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> embed <title> <description> [footer] [color] [thumbnail]")
+        em.add_field(name = "**Example:**", value = "> `embed title description footer red yes`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
