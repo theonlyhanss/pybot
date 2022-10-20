@@ -234,6 +234,10 @@ class General(commands.Cog):
         elif color != None:
             if (color.value == 'dark theme'):
                 true_color = discord.Colour.dark_theme()
+            elif (color.value == 'dark grey'):
+                true_color = discord.Colour.dark_grey()
+            elif (color.value == 'light grey'):
+                true_color = discord.Colour.light_grey()
             elif (color.value == 'blue'):
                 true_color = discord.Colour.blue()
             elif (color.value == 'red'):
