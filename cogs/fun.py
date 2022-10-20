@@ -64,8 +64,36 @@ class Fun(commands.Cog):
     #     await ctx.send(embed = e)
 
 
+    #dog reddit
+    @commands.hybrid_command(name = "dog", with_app_command = True, description = "Dogs. [BETA]")
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def dog(self, ctx):
+        reddit = praw.Reddit(
+                    client_id = "9bb7uOB_UHhLVDm7NIdCMw",
+                    client_secret = "U9XEuutRjZKhaLAVJ1Z-iObYuVOuNQ",
+                    user_agent = "ShinobiBot",
+                    check_for_async=False
+                    )
+        subreddit = reddit.subreddit("rarepuppers")
+        all_subs = []
+        hot = subreddit.hot(limit=50)
+        for submission in hot:
+            all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            em = discord.Embed(colour=discord.Colour.dark_theme())
+            em.set_image(url = url)
+        await ctx.send(embed = em)
+
+    @dog.error
+    async def dog_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            cool_error = discord.Embed(title=f"Slow it down bro!",description=f"> Try again in {error.retry_after:.2f}s.",colour=discord.Colour.light_grey())
+            await ctx.reply(embed=cool_error)
+
+
     #cat reddit
-    @commands.hybrid_command(name = "cat", with_app_command = True, description = "Cats.")
+    @commands.hybrid_command(name = "cat", with_app_command = True, description = "Cats. [BETA]")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def cat(self, ctx):
         reddit = praw.Reddit(
@@ -81,7 +109,7 @@ class Fun(commands.Cog):
             all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            em = discord.Embed()
+            em = discord.Embed(colour=discord.Colour.dark_theme())
             em.set_image(url = url)
         await ctx.send(embed = em)
 
@@ -93,7 +121,7 @@ class Fun(commands.Cog):
 
 
     #headpat reddit
-    @commands.hybrid_command(name = "headpat", aliases = ["headp"], with_app_command = True, description = "Headpats.")
+    @commands.hybrid_command(name = "headpat", aliases = ["headp"], with_app_command = True, description = "Headpats. [BETA]")
     @app_commands.describe(member = "Member you want to pat.")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def headpat(self, ctx, member: discord.Member = None):
@@ -110,7 +138,7 @@ class Fun(commands.Cog):
             all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            em = discord.Embed()
+            em = discord.Embed(colour=discord.Colour.dark_theme())
             em.set_image(url = url)
         if member == None:
             await ctx.send(embed = em)
@@ -193,7 +221,7 @@ class Fun(commands.Cog):
 
 
     #meme reddit
-    @commands.hybrid_command(name = "meme", with_app_command = True, description = "Memes.")
+    @commands.hybrid_command(name = "meme", with_app_command = True, description = "Memes. [BETA]")
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def meme(self, ctx):
         reddit = praw.Reddit(
@@ -210,7 +238,7 @@ class Fun(commands.Cog):
             random_sub = random.choice(all_subs)
             name = random_sub.title
             url = random_sub.url
-            em = discord.Embed(title = name)
+            em = discord.Embed(title = name, colour=discord.Colour.dark_theme())
             em.set_image(url = url)
         global author
         author = ctx.author
