@@ -74,7 +74,7 @@ class Dropdown(discord.ui.Select):
                             description = "Fun commands to have fun!",
                             color = 0x000000)
             embed.add_field(name = "**Commands**" ,
-                            value = "> meme , rate , f , coinflip , reverse , slot , choose , emojify , wyr , headpat , cat")
+                            value = "> meme , rate , f , coinflip , reverse , slot , choose , emojify , wyr , headpat , cat , dog")
             embed.set_footer(text = "Use `fun <command>` for extended information on a command.")
             await interaction.message.edit(embed=embed)
             await interaction.response.defer()
@@ -398,7 +398,8 @@ class Help(commands.Cog):
         app_commands.Choice(name="emojify", value="emojify"),
         app_commands.Choice(name="wyr", value="wyr"),
         app_commands.Choice(name="headpat", value="headpat"),
-        app_commands.Choice(name="cat", value="cat")
+        app_commands.Choice(name="cat", value="cat"),
+        app_commands.Choice(name="dog", value="dog")
         ])
     async def fun(self, ctx, command: app_commands.Choice[str]):
         if (command.value == 'meme'):
@@ -425,6 +426,8 @@ class Help(commands.Cog):
             await ctx.invoke(self.bot.get_command('help headpat'))
         elif (command.value == 'cat'):
             await ctx.invoke(self.bot.get_command('help cat'))
+        elif (command.value == 'dog'):
+            await ctx.invoke(self.bot.get_command('help dog'))
 
 
     #games commands help
@@ -888,7 +891,7 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def headpat(self, ctx):
-        em = discord.Embed(title = "__**Headpat**__", description = "Get a random headpat.", color = 0x000000)
+        em = discord.Embed(title = "__**Headpat**__", description = "Gets a random headpat.", color = 0x000000)
         em.add_field(name = "**Syntax:**", value = "> headpat [member]")
         em.add_field(name = "**Example:**", value = "> `headpat @member`")
         em.set_footer(text = "<> means requird, [] means optional")
@@ -897,9 +900,18 @@ class Help(commands.Cog):
     @help.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def cat(self, ctx):
-        em = discord.Embed(title = "__**Cat**__", description = "Get a random cat.", color = 0x000000)
+        em = discord.Embed(title = "__**Cat**__", description = "Gets a random cat image.", color = 0x000000)
         em.add_field(name = "**Syntax:**", value = "> cat")
         em.add_field(name = "**Example:**", value = "> `cat`")
+        em.set_footer(text = "<> means requird, [] means optional")
+        await ctx.send(embed = em)
+
+    @help.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def dog(self, ctx):
+        em = discord.Embed(title = "__**Dog**__", description = "Gets a random dog image.", color = 0x000000)
+        em.add_field(name = "**Syntax:**", value = "> dog")
+        em.add_field(name = "**Example:**", value = "> `dog`")
         em.set_footer(text = "<> means requird, [] means optional")
         await ctx.send(embed = em)
 
