@@ -22,7 +22,7 @@ class MyBot(commands.Bot):
         self.session = aiohttp.ClientSession()
         for cogs in self.initial_extensions: await self.load_extension(cogs)
         await self.tree.sync() # Sync app commands
-        print(f"Synced Successfully")
+        print("Synced Successfully")
     async def close(self):
         await super().close()
         await self.session.close()
