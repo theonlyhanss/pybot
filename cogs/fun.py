@@ -139,7 +139,7 @@ class Fun(commands.Cog):
         await interaction.response.send_message(f">>> {text} **{random.choice(thing)}** rate is **{random.randint(0, 100)}%!** {random.choice(emoji)}")
 
     #meme reddit
-    @app_commands.command(name = "meme", description = "Memes. [BETA]")
+    @app_commands.command(name = "meme", description = "Memes.")
     @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
     async def meme(self, interaction: discord.Interaction):
         reddit = praw.Reddit(
