@@ -23,7 +23,7 @@ class Dropdown(discord.ui.Select):
         # The placeholder is what will be shown when no option is chosen
         # The min and max values indicate we can only pick one of the three options
         # The options parameter defines the dropdown options. We defined this above
-        super().__init__(placeholder = 'Select category.', min_values = 1, max_values = 1, options = options)
+        super().__init__(placeholder = "Select category.", min_values = 1, max_values = 1, options = options)
 
     async def callback(self, interaction: discord.Interaction):
         # Use the interaction object to send a response message containing
@@ -32,12 +32,12 @@ class Dropdown(discord.ui.Select):
         # selected options. We only want the first one.
 
         # Check user
-        if interaction.user != author: return await interaction.response.send_message("> Use your own help command!", ephemeral = True)
+        if interaction.user != author: return await interaction.response.send_message("Use your own help command.", ephemeral = True)
 
         # Index page
         if self.values[0] == "Index":
             em = discord.Embed(title = "**Shinobi Bot Help**",
-                           description = "Hello! Welcome to the help page.\n\nUse </feedback:1029148522790015086> to send your feedback directly to the developers.\nUse `/help <category> <command>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
+                           description = "Hello! Welcome to the help page.\n\nUse </feedback:1027218853127794780> to send your feedback directly to the developers.\nUse `/help <category> <command>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                            color = 0x2F3136)
             em.add_field(name = "**Who are you?**", value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do _almost_ anything. You can get more info using the dropdown menu below.\n\nI'm also open source. You can see my code on [GitHub](https://github.com/Shinobi7k/ShinobiBot)!")
             em.add_field(name = "**Features**", value = "- Advanced Ticket System\n- Anti-Spam System\n- Logging System\n- Suggestions\n- Moderation\n- Games\n- Utility")
@@ -47,72 +47,72 @@ class Dropdown(discord.ui.Select):
         # Moderation page
         if self.values[0] == "Moderation":
             embed = discord.Embed(title = "**Moderation**", description = "Moderation commands that helps in moderating the server", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /kick , /multikick , /mute , /multimute , /unmute , /warn , /multiwarn , /unwarn , /warnings , /jail , /multijail , /unjail , /ban , /multiban , /unban , /unbanall , /timeout , /multitimeout , /clear , /addrole , /removerole")
-            embed.set_footer(text = "Use `/help moderation <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </kick:1017544215586164819> , </multikick:1025865754790350848> , </mute:1017544215586164823> , </multimute:1025855722308784128> , </unmute:1017544215586164824> , </warn:1020339992851140679> , </multiwarn:1025860023001284608> , </unwarn:1020347964528541726> , </warnings:1020339992851140680> , </ban:1017544215586164820> , </multiban:1025871989627424828> , </unban:1022308950579880046> , </unbanall:1024382428359434260> , </timeout:1020114423026810901> , </multitimeout:1025863838001795133> , </clear:1017544215586164817> , </addrole:1081342436112081019> , </removerole:1081342436112081020>")
+            embed.set_footer(text = "Use /help moderation <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Utility page
         elif self.values[0] == "Utility":
             embed = discord.Embed(title = "**Utility**", description = "Utility commands contains varies types of commands to use", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /poll , /ping , /serverlink , /invite , /vote , /timer , /tax , /nick , /embed , /calculator , /giveaway , /translate , /search , /quote , /affirmation , /advice , /chatgpt")
-            embed.set_footer(text = "Use `/help utility <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </poll:1017544215762317331> , </ping:1012416649825112084> , </serverlink:1017544215762317329> , </invite:1017544215762317330> , </vote:1027208511911895111> , </timer:1026825814525882428> , </tax:1029148523851169840> , </nick:1017544215762317323> , </embed:1020114423026810902> , </calculator:1081342436112081025> , </giveaway:1020114423026810903> , </translate:1021765874358698045> , </search:1020808368069292133> , </quote:1081342436112081024> , </affirmation:1081342436112081023> , </advice:1081342436112081022> , </chatgpt:1081342436112081021>")
+            embed.set_footer(text = "Use /help utility <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Fun page
         elif self.values[0] == "Fun":
             embed = discord.Embed(title = "**Fun**", description = "Fun commands to have fun", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /meme , /rate , /f , /coinflip , /reverse , /slot , /choose , /emojify , /wyr , /cat , /dog , /dadjoke , /geekjoke")
-            embed.set_footer(text = "Use `/help fun <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </meme:1017544215871373393> , </rate:1017544215871373392> , </f:1017544215871373396> , </coinflip:1017544215871373395> , </reverse:1017544215871373397> , </slot:1017544215871373398> , </choose:1017544215871373394> , </emojify:1020114423026810904> , </wyr:1021052870231085106> , </cat:1021770303979917436> , </dog:1032658220730294313> , </dadjoke:1081342436292427877> , </geekjoke:1081342436112081028>")
+            embed.set_footer(text = "Use /help fun <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Logs page
         elif self.values[0] == "Logging":
-            embed = discord.Embed(title = "**Logging**", description = "Server logger", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /log joins , /log leaves , /log message deletes , /log message edits , /log channel create , /log channel delete , /log channel updates , /log role create , /log role delete , /log role updates , /log role given , /log role remove , /log channel create , /log channel delete , /log channel updates , /log member ban , /log member unban , /log member timeout , /log member nickname , /log server updates")
-            embed.set_footer(text = "Use `/help logs <command>` for extended information on a command.")
+            embed = discord.Embed(title = "**Logging**", description = "Log everything in your server", color = 0x2F3136)
+            embed.add_field(name = "**Commands**", value = "> </log joins:1081342436292427878> , </log leaves:1081342436292427878> , </log message deletes:1081342436292427878> , </log message edits:1081342436292427878> , </log channel create:1081342436292427878> , </log channel delete:1081342436292427878> , </log channel updates:1081342436292427878> , </log role create:1081342436292427878> , </log role delete:1081342436292427878> , </log role updates:1081342436292427878> , </log role given:1081342436292427878> , </log role remove:1081342436292427878> , </log member ban:1081342436292427878> , </log member unban:1081342436292427878> , </log member timeout:1081342436292427878> , </log member nickname:1081342436292427878> , </log server_updates:1081342436292427878> , </log show_settings:1081342436292427878>")
+            embed.set_footer(text = "Use /help logs <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Tickets page
         elif self.values[0] == "Tickets":
             embed = discord.Embed(title = "**Tickets**", description = "Create and moderate tickets", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /ticket launch , /ticket close , /ticket add , /ticket remove , /ticket role, ticket transcript")
-            embed.set_footer(text = "Use `/help tickets <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </ticket launch:1020114423026810906> , </ticket close:1020114423026810906> , </ticket add:1020114423026810906> , </ticket remove:1020114423026810906> , </ticket role:1020114423026810906> , </ticket transcript:1020114423026810906>")
+            embed.set_footer(text = "Use /help tickets <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Anti-Spam page
         elif self.values[0] == "Anti-Spam":
             embed = discord.Embed(title = "**Anti-Spam**", description = "Create an Anti-Spam system", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /antispam enable , /antispam disable , /antispam punishment , /antispam whitelist")
-            embed.set_footer(text = "Use `/help antispam <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </antispam enable:1081342436292427879> , </antispam disable:1081342436292427879> , </antispam punishment:1081342436292427879> , </antispam whitelist:1081342436292427879>")
+            embed.set_footer(text = "Use /help antispam <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Settings page
         elif self.values[0] == "Channels Settings":
             embed = discord.Embed(title = "**Channels Settings**", description = "Easily control channels settings", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /lock , /lockall , /unlock , /unloackall , /hide , /hideall , /show , /showall , /suggestions , /prvchannel")
-            embed.set_footer(text = "Use `/help settings <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </lock:1017544215661649935> , </lockall:1025405253966897263> , </unlock:1017544215661649936> , </unlockall:1025414043751690381> , </hide:1017544215661649933> , </hideall:1025419518358597652> , </show:1017544215661649934> , </showall:1025419518358597653> , </suggestions:1029113875783766157> , </prvchannel:1017544215586164822>")
+            embed.set_footer(text = "Use /help settings <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Games page
         elif self.values[0] == "Games":
             embed = discord.Embed(title = "**Games**", description = "Challange others in games", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /connect4 , /tictactoe , /rps")
-            embed.set_footer(text = "Use `/help games <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </connect4:1017544216089468943> , </tictactoe:1020114423026810905> , </rps:1020114423169425429>")
+            embed.set_footer(text = "Use /help games <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
         # Serverinfo page
         elif self.values[0] == "Server Information":
             embed = discord.Embed(title = "**Server Information**", description = "Know more about your server and members", color = 0x2F3136)
-            embed.add_field(name = "**Commands**", value = "> /server , /owner , /id , /members , /channels , /user , /icon , /roles , /avatar , /banner")
-            embed.set_footer(text = "Use `/help serverinformation <command>` for extended information on a command.")
+            embed.add_field(name = "**Commands**", value = "> </server:1017544215871373400> , </owner:1017544215871373401> , </id:1017544216089468938> , </members:1017544216089468939> , </channels:1081342436112081026> , </user:1017544216089468942> , </icon:1017544216089468941> , </roles:1017544215871373399> , </avatar:1017544215762317326> , </banner:1017544215661649939>")
+            embed.set_footer(text = "Use /help serverinformation <command> for extended information on a command.")
             await interaction.message.edit(embed = embed)
             await interaction.response.defer()
 
@@ -139,7 +139,7 @@ class Help(commands.GroupCog, name = "help"):
     @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
     async def sbhelp(self, interaction: discord.Interaction):
         em = discord.Embed(title = "**Shinobi Bot Help**",
-                           description = f"Hello! Welcome to the help page.\n\nUse </feedback:1029148522790015086> to send your feedback directly to the developers.\nUse `/help <category> <command>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
+                           description = "Hello! Welcome to the help page.\n\nUse </feedback:1027218853127794780> to send your feedback directly to the developers.\nUse `/help <category> <command>` for more info on a command.\nUse the dropdown menu below to select a category.\n\n",
                            color = 0x2F3136)
         em.add_field(name = "**Who are you?**", value = "I'm a bot developed by Shinobi#8010. I'm a multipurpose bot than can do _almost_ anything. You can get more info using the dropdown menu below.\n\nI'm also open source. You can see my code on [GitHub](https://github.com/Shinobi7k/ShinobiBot)!")
         em.add_field(name = "**Features**", value = "- Advanced Ticket System\n- Anti-Spam System\n- Logging System\n- Suggestions\n- Moderation\n- Games\n- Utility")
