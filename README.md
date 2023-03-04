@@ -26,7 +26,7 @@
 <dd>Have fun with fun commands</dd>
 
 <dt><h3>Server Information</h3></dt>
-<dd>Know more about your server and members!</dd>
+<dd>Know more about your server and members</dd>
 </dl>
 <hr>
 
