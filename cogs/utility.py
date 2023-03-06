@@ -102,11 +102,11 @@ class Utility(commands.Cog):
     async def chatgpt(self, interaction: discord.Interaction, question: str):
         await interaction.response.defer()
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://api.angryman.repl.co/ask?question={question}&conv={interaction.user.id}") as response:
+            async with session.get(f"https://api.angryman.repl.co/ask?question={question}&conv={int(str(interaction.user.id)[-4:])}") as response:
                 try:
                     data = await response.json()
                     reply = data["answer"]
-                    await interaction.followup.send(content = f"**{interaction.user.name}**: {question}\n**ChatGPT:** {reply}")
+                    await interaction.followup.send(content = f"**{interaction.user.name}:** {question}\n**ChatGPT:** {reply}")
                 except:
                     await interaction.followup.send(content = "This command is temprory down due to some issues.", ephemeral = True)
 
