@@ -102,7 +102,7 @@ class Utility(commands.Cog):
     async def chatgpt(self, interaction: discord.Interaction, question: str):
         await interaction.response.defer()
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://api.angryman.repl.co/ask?question={question}&conv={int(str(interaction.user.id)[-4:])}") as response:
+            async with session.get(f"https://api.angryman.repl.co/ask2?question={question}&id={int(str(interaction.user.id)[-4:])}") as response:
                 try:
                     data = await response.json()
                     reply = data["answer"]
