@@ -12,12 +12,13 @@ class hideallConfirm(discord.ui.View):
     @discord.ui.button(label = "Confirm", style = discord.ButtonStyle.green)
     async def hideall_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != author: return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        await interaction.response.defer()
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = False
             await channel.set_permissions(interaction.guild.default_role, overwrite = overwrite)
         emb = discord.Embed(title = f":closed_lock_with_key: ┃ All Channels Hid! ┃ :closed_lock_with_key:", description = f"> {interaction.user.mention} had hid all channels in the server.")
-        await interaction.response.send_message(embed = emb)
+        await interaction.followup.send(embed = emb)
         for child in self.children:
             child.disabled = True
         await interaction.message.edit(view = self)
@@ -37,14 +38,14 @@ class showallConfirm(discord.ui.View):
         super().__init__(timeout = timeout)
     @discord.ui.button(label = "Confirm", style = discord.ButtonStyle.green)
     async def showall_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user != author:
-            return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        if interaction.user != author: return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        await interaction.response.defer()
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.read_messages = True
             await channel.set_permissions(interaction.guild.default_role, overwrite = overwrite)
         emb = discord.Embed(title = f"👁️ ┃ Channels Showed! ┃ 👁️", description = f"> {interaction.user.mention} had unhid all channels in the server.")
-        await interaction.response.send_message(embed = emb)
+        await interaction.followup.send(embed = emb)
         for child in self.children:
             child.disabled = True
         await interaction.message.edit(view = self)
@@ -64,14 +65,14 @@ class lockallConfirm(discord.ui.View):
         super().__init__(timeout = timeout)
     @discord.ui.button(label = "Confirm", style = discord.ButtonStyle.green)
     async def lockall_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user != author:
-            return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        if interaction.user != author: return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        await interaction.response.defer()
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = False
             await channel.set_permissions(interaction.guild.default_role, overwrite = overwrite)
         emb = discord.Embed(title = f"🔒 ┃ All Channels Locked! ┃ 🔒", description = f"{interaction.user.mention} had locked all channels in the server.")
-        await interaction.response.send_message(embed = emb)
+        await interaction.followup.send(embed = emb)
         for child in self.children:
             child.disabled = True
         await interaction.message.edit(view = self)
@@ -91,14 +92,14 @@ class unlockallConfirm(discord.ui.View):
         super().__init__(timeout = timeout)
     @discord.ui.button(label = "Confirm", style = discord.ButtonStyle.green)
     async def unlockall_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user != author:
-            return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        if interaction.user != author: return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        await interaction.response.defer()
         for channel in interaction.guild.channels:
             overwrite = channel.overwrites_for(interaction.guild.default_role)
             overwrite.send_messages = True
             await channel.set_permissions(interaction.guild.default_role, overwrite = overwrite)
         emb = discord.Embed(title = f"🔓 ┃ All Channels Unlocked! ┃ 🔓", description = f"{interaction.user.mention} had unlocked all channels in the server.")
-        await interaction.response.send_message(embed = emb)
+        await interaction.followup.send(embed = emb)
         for child in self.children:
             child.disabled = True
         await interaction.message.edit(view = self)
