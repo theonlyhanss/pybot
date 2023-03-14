@@ -107,7 +107,7 @@ class Fun(commands.Cog):
         msg = await interaction.channel.send(embed = e)
         await msg.add_reaction("🇦")
         await msg.add_reaction("🇧")
-        await interaction.response.defer()
+        await interaction.response.send_message("Embed sent.", ephemeral = True)
 
     #emojify
     @app_commands.command(name = "emojify", description = "Convert your words to emojis!")
@@ -146,7 +146,7 @@ class Fun(commands.Cog):
                     client_id = "9bb7uOB_UHhLVDm7NIdCMw",
                     client_secret = "U9XEuutRjZKhaLAVJ1Z-iObYuVOuNQ",
                     user_agent = "ShinobiBot",
-                    check_for_async=False
+                    check_for_async = False
                     )
         subreddit = reddit.subreddit("Animemes")
         all_subs = []
