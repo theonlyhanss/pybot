@@ -4,7 +4,7 @@
 <dt><h3>Tickets</h3></dt>
 <dd>
 <p>Our bot's ticket system makes communication with your community more streamlined and organized, allowing you to quickly respond to requests and inquiries.</p>
-<img src = "ticket.png" width = 450>
+<img src = "https://imgur.com/MA8pOJ7" width = 450>
 </dd>
 
 <dt><h3>Logging</h3></dt>
