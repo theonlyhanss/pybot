@@ -74,4 +74,4 @@ Get a quick overview of your server's status, members, and more with Shinobi Bot
 
 <hr>
 Use `/help start` for info about how to use. <br>
-You can vote and add the bot from [here](https://top.gg/bot/855437723166703616).
+You can vote and add the bot from here: https://top.gg/bot/855437723166703616
