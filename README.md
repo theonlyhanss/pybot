@@ -1,4 +1,4 @@
-# Shinobi Bot
+# Features
 
 ### **Tickets**
 
