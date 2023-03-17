@@ -1,3 +1,5 @@
+![](https://dcbadge.vercel.app/api/shield/855437723166703616)
+
 # Features
 
 ### **Tickets**
