@@ -13,7 +13,7 @@ from datetime import datetime
 class giveawayButton(discord.ui.View):
     def __init__(self, *, timeout = None):
         super().__init__(timeout = timeout)
-    @discord.ui.button(label = "Participate", style = discord.ButtonStyle.blurple, emoji = "🎉")
+    @discord.ui.button(label = "Join", style = discord.ButtonStyle.green, emoji = "🎉")
     async def giveaway_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         global give_clicked, give_author, give_prize, give_timer, give_icon
         if interaction.user in give_clicked:
@@ -39,7 +39,7 @@ class giveawayButton(discord.ui.View):
 class pollButtons(discord.ui.View):
     def __init__(self, *, timeout = None):
         super().__init__(timeout = timeout)
-    @discord.ui.button(label = "Yes", style = discord.ButtonStyle.blurple, emoji = "<:pepeyes:1070834912782987424>")
+    @discord.ui.button(label = "Yes", style = discord.ButtonStyle.green)
     async def poll_yes_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         global upvotes, downvotes, voted
         if interaction.user in voted:
@@ -54,7 +54,7 @@ class pollButtons(discord.ui.View):
             await interaction.message.edit(embed = emb, view = view)
             await interaction.response.send_message("Voted.", ephemeral = True)
     #no button
-    @discord.ui.button(label = "No", style = discord.ButtonStyle.blurple, emoji = "<:pepeno:1070834894537773087>")
+    @discord.ui.button(label = "No", style = discord.ButtonStyle.red)
     async def sugg_downvote(self, interaction: discord.Interaction, button: discord.ui.Button):
         global upvotes, downvotes, voted
         if interaction.user in voted:
@@ -93,7 +93,7 @@ class Utility(commands.Cog):
     @app_commands.command(name = "ping", description = "Checks Shinobi bot's response time.")
     @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
     async def ping(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f">>> _**Pong!**_\n{round(self.bot.latency * 1000)}ms")
+        await interaction.response.send_message(f"_**Pong!**_\n{round(self.bot.latency * 1000)}ms")
 
     # chatgpt
     @app_commands.command(name = "chatgpt", description = "Ask ChatGPT.")
@@ -179,8 +179,8 @@ class Utility(commands.Cog):
             urlsearch = str(wikipedia.search(search, suggestion = True)).replace('(', '').replace(')', '').replace("'", "").replace('[', '').replace(']', '') 
             url = f"I can't find what you're talking about, did you mean: {urlsearch}"
         seach_embed = discord.Embed(title="Search", description=f"{url}", color = 0x2F3136)
-        seach_embed.add_field(name = "**Definition**", value = f">>> {searchsearch}")
-        seach_embed.add_field(name = "**Summery**", value = f">>> {summ}")
+        seach_embed.add_field(name = "**Definition**", value = f"{searchsearch}")
+        seach_embed.add_field(name = "**Summery**", value = f"{summ}")
         await interaction.response.send_message(embed=seach_embed)
 
     #translate command
@@ -190,8 +190,8 @@ class Utility(commands.Cog):
     async def translate(self, interaction: discord.Interaction, to_language: str, to_translate: str):
         translated = GoogleTranslator(source = 'auto', target = to_language).translate(to_translate)
         em = discord.Embed(title = "Translated", color = 0x2F3136)
-        em.add_field(name="Original", value = f"> {to_translate}")
-        em.add_field(name="Translation", value = f"> {translated}")
+        em.add_field(name="Original", value = f"{to_translate}")
+        em.add_field(name="Translation", value = f"{translated}")
         await interaction.response.send_message(embed = em)
 
     #calculator command
@@ -208,7 +208,7 @@ class Utility(commands.Cog):
         elif operator == "/" or operator == "÷":
             await interaction.response.send_message(f"Result: **{first_number/second_number}**")
         else:
-            await interaction.response.send_message(f"> You entered a wrong operator.", ephemeral = True)
+            await interaction.response.send_message(f"You entered a wrong operator.", ephemeral = True)
 
     #embed command
     @app_commands.command(name = "embed", description = "Change your text into an embed.")
@@ -290,13 +290,13 @@ class Utility(commands.Cog):
     @app_commands.checks.has_permissions(manage_nicknames = True)
     async def nick(self, interaction: discord.Interaction, member: discord.Member, nick: str):
         if interaction.user.top_role <= member.top_role:
-            return await interaction.response.send_message(f"> Your role must be higher than {member.mention}'s nickname!", ephemeral = True)
+            return await interaction.response.send_message(f"Your role must be higher than {member.mention}'s nickname!", ephemeral = True)
         elif interaction.guild.me.top_role <= member.top_role:
-                return await interaction.response.send_message(f"> My role must be higher than {member.mention}!", ephemeral = True)
+                return await interaction.response.send_message(f"My role must be higher than {member.mention}!", ephemeral = True)
         if member.nick == None: oldn = member.name
         else: oldn = member.nick
         await member.edit(nick = nick)
-        await interaction.response.send_message(f"> {member.mention}'s nickname has been changed from **{oldn}** to **{nick}**")
+        await interaction.response.send_message(f"{member.mention}'s nickname has been changed from **{oldn}** to **{nick}**")
 
     #giveaway
     @app_commands.command(name = "giveaway", description = "Set a giveaway.")
@@ -313,9 +313,9 @@ class Utility(commands.Cog):
             b = get_time.get(a)
             c = time[:-1]
             try: int(c)
-            except: return await interaction.response.send_message("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", ephemeral = True)
+            except: return await interaction.response.send_message("Type time and time unit [s,m,h,d,w,mo,y] correctly.", ephemeral = True)
             try: sleep = int(b) * int(c)
-            except: return await interaction.response.send_message("> Type time and time unit [s,m,h,d,w,mo,y] correctly.", ephemeral = True)
+            except: return await interaction.response.send_message("Type time and time unit [s,m,h,d,w,mo,y] correctly.", ephemeral = True)
         global give_clicked, give_author, give_prize, give_timer, give_icon
         give_clicked = []
         give_author = interaction.user.mention
@@ -333,7 +333,7 @@ class Utility(commands.Cog):
         #Check if User list is not empty
         if len(give_clicked) <= 0:
             emptyEmbed = discord.Embed(title = "__*🎉GIVEAWAY🎉*__",
-                                       description = f"No one participated in the giveaway\nHosted by: {give_author}\nPrize: **{give_prize}**\nEnded at: {give_timer}")
+                                       description = f"<:reply_black:1088142582187577476> No one participated in the giveaway\nHosted by: {give_author}\nPrize: **{give_prize}**\nEnded at: {give_timer}")
             emptyEmbed.set_thumbnail(url = give_icon)
             await msg.edit(embed = emptyEmbed, view = None)
         else:
@@ -380,7 +380,7 @@ class Utility(commands.Cog):
         await interaction.response.send_message("**Time over**")
         member_dm = await interaction.user.create_dm()
         #await channel.send("**Time over**")
-        emb = discord.Embed(title = "**Time over**", description = f"> Your Timer '{timer}' has been ended", color = discord.Colour.random())
+        emb = discord.Embed(title = "**Time over**", description = f"<:reply_black:1088142582187577476> Your Timer '{timer}' has been ended", color = discord.Colour.random())
         await member_dm.send(embed = emb)
 
     #server link
@@ -401,21 +401,21 @@ class Utility(commands.Cog):
     async def invite(self, interaction: discord.Interaction):
         view=Invite()
         view.add_item(discord.ui.Button(label = "Invite", style = discord.ButtonStyle.link,
-                                        url = "https://discord.com/api/oauth2/authorize?client_id=855437723166703616&permissions=8&scope=bot%20applications.commands"))
+                                        url = "https://discord.com/api/oauth2/authorize?client_id=1088068115377692775&permissions=8&scope=bot%20applications.commands"))
         emb = discord.Embed(title = "Bot's invite link",
-                            description = "[Invite Link](https://discord.com/api/oauth2/authorize?client_id=855437723166703616&permissions=8&scope=bot%20applications.commands)",
+                            description = "[Invite Link](https://discord.com/api/oauth2/authorize?client_id=1088068115377692775&permissions=8&scope=bot%20applications.commands)",
                             colour = 0x2F3136)
         await interaction.response.send_message(embed = emb, view = view)
 
     # vote command
-    @app_commands.command(name = "vote", description = "Vote Shinobi Bot!")
-    @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
-    async def vote(self, interaction: discord.Interaction):
-        view = Vote()
-        view.add_item(discord.ui.Button(label = "top.gg", style = discord.ButtonStyle.link, url = "https://top.gg/bot/855437723166703616/vote"))
-        view.add_item(discord.ui.Button(label = "discordbotlist", style = discord.ButtonStyle.link, url = "https://discordbotlist.com/bots/shinobi-bot/upvote"))
-        emb = discord.Embed(title = "Shinobi Bot's Vote links", description = "https://top.gg/bot/855437723166703616/vote\nhttps://discordbotlist.com/bots/shinobi-bot/upvote")
-        await interaction.response.send_message(embed = emb, view = view)
+ #   @app_commands.command(name = "vote", description = "Vote Pybot!")
+ #   @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
+  #  async def vote(self, interaction: discord.Interaction):
+    #    view = Vote()
+ #       view.add_item(discord.ui.Button(label = "top.gg", style = discord.ButtonStyle.link, url = "https://top.gg/bot/855437723166703616/vote"))
+ #       view.add_item(discord.ui.Button(label = "discordbotlist", style = discord.ButtonStyle.link, url = "https://discordbotlist.com/bots/shinobi-bot/upvote"))
+ #       emb = discord.Embed(title = "Shinobi Bot's Vote links", description = "https://top.gg/bot/855437723166703616/vote\nhttps://discordbotlist.com/bots/shinobi-bot/upvote")
+ #       await interaction.response.send_message(embed = emb, view = view)
 
     #poll command
     @app_commands.command(name = "poll", description = "Make a poll.")

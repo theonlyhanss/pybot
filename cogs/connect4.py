@@ -219,7 +219,7 @@ class Connect4(commands.Cog):
 				)
 			except asyncio.TimeoutError:
 				game.forfeit()
-				await message.reply("> Game was ended due to running out of time!")
+				await message.reply("Game was ended due to running out of time!")
 				break
 			await asyncio.sleep(0.2)
 			try:
@@ -251,3 +251,4 @@ class Connect4(commands.Cog):
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Connect4(bot))
+  

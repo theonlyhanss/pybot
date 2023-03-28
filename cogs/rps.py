@@ -12,7 +12,7 @@ class Player1Buttons(discord.ui.View):
     @discord.ui.button(label = "Rock", style = discord.ButtonStyle.blurple, emoji = "🪨") # or .primary
     async def p1_rock(self, interaction:discord.Interaction, button:discord.ui.Button):
         if interaction.user != player1:
-            await interaction.response.send_message("> This is not your turn/game!", ephemeral = True)
+            await interaction.response.send_message("This is not your turn/game!", ephemeral = True)
         else:
             global player1_choice
             player1_choice = "rock 🪨"
@@ -62,7 +62,7 @@ class Player1Buttons(discord.ui.View):
     @discord.ui.button(label = "Scissors", style = discord.ButtonStyle.blurple, emoji = "✂️") # or .success
     async def p1_scissors(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != player1:
-            await interaction.response.send_message("> This is not your turn/game!", ephemeral = True)
+            await interaction.response.send_message("This is not your turn/game!", ephemeral = True)
         else:
             global player1_choice
             player1_choice = "scissors ✂️"
@@ -109,7 +109,7 @@ class Player2Buttons(discord.ui.View):
     @discord.ui.button(label = "Paper", style = discord.ButtonStyle.blurple, emoji = "🧻") # or .secondary/.grey
     async def p2_paper(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != enemy:
-            await interaction.response.send_message("> This is not your turn/game!", ephemeral = True)
+            await interaction.response.send_message("This is not your turn/game!", ephemeral = True)
         else:
             global player2_choice
             player2_choice = "paper"
@@ -126,7 +126,7 @@ class Player2Buttons(discord.ui.View):
     @discord.ui.button(label = "Scissors", style = discord.ButtonStyle.blurple, emoji = "✂️") # or .success
     async def p2_scissors(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != enemy:
-            await interaction.response.send_message("> This is not your turn/game!", ephemeral = True)
+            await interaction.response.send_message("This is not your turn/game!", ephemeral = True)
         else:
             global player2_choice
             player2_choice = "scissors ✂️"
@@ -147,14 +147,14 @@ class playAgain(discord.ui.View):
     @discord.ui.button(label = "Play Again", style = discord.ButtonStyle.green) # or .primary
     async def play_again(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != player1:
-            await interaction.response.send_message("> Only player 1 can click the button", ephemeral = True)
+            await interaction.response.send_message("Only player 1 can click the button", ephemeral = True)
         else:
             if enemy == None or enemy == playerbot:
                 view = Player1Buttons()
                 embed = discord.Embed(description="Rock, paper, or scissors? Choose wisely...", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed, view = view) #main message
             elif enemy.bot:
-                return await interaction.response.send_message("> You can play with me or with another member. Not another bot!", ephemeral = True)
+                return await interaction.response.send_message("You can play with me or with another member. Not another bot!", ephemeral = True)
             else:
                 #player 1 msg
                 view = Player1Buttons()
@@ -185,7 +185,7 @@ class RPS(commands.Cog):
         enemy = player2
         rpsGame = ['rock 🪨', 'paper 🧻', 'scissors ✂️']
         if player2 == player1:
-            return await interaction.response.send_message(">>> You can not play with yourself!\nYou can play with me if you are that lonely...", ephemeral = True)
+            return await interaction.response.send_message("You can not play with yourself!\nYou can play with me if you are that lonely...", ephemeral = True)
         elif player2 == None or player2 == self.bot.user:
             view = Player1Buttons()
             embed = discord.Embed(description = "Rock, paper, or scissors? Choose wisely...", color = 0x2F3136)
@@ -195,9 +195,9 @@ class RPS(commands.Cog):
             try:
                 await self.bot.wait_for('interaction', check = lambda interaction: interaction.data["component_type"] == 2 and "custom_id" in interaction.data.keys(), timeout = self.GAME_TIMEOUT_THRESHOLD)
             except asyncio.TimeoutError:
-                await interaction.response.send_message(f"> {player1.mention} ran out of time and lost.")
+                await interaction.response.send_message(f"{player1.mention} ran out of time and lost.")
         elif player2.bot:
-            return await interaction.response.send_message("> You can play with me or with another member. Not another bot!", ephemeral=True)
+            return await interaction.response.send_message("You can play with me or with another member. Not another bot!", ephemeral=True)
         else:
             #player 1 msg
             view = Player1Buttons()
@@ -208,7 +208,8 @@ class RPS(commands.Cog):
             try:
                 await self.bot.wait_for('interaction', check=lambda interaction: interaction.data["component_type"] == 2 and "custom_id" in interaction.data.keys(), timeout = self.GAME_TIMEOUT_THRESHOLD)
             except asyncio.TimeoutError:
-                await interaction.response.send_message(f"> {player1.mention} ran out of time and lost.")
+                await interaction.response.send_message(f"{player1.mention} ran out of time and lost.")
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(RPS(bot))
+  

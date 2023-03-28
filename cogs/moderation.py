@@ -16,7 +16,7 @@ class unbanallConfirm(discord.ui.View):
         await interaction.response.defer()
         for ban_entry in bans:
             await interaction.guild.unban(user = ban_entry.user)
-        unbanall_embed = discord.Embed(title = "✅ ┃ Unban All! ┃ ✅", description = f"{author.mention} has unbanned all banned users! (total {len(bans)})", colour = discord.Colour.green())
+        unbanall_embed = discord.Embed(title = "<:security:1078838547781525515> Unban All!", description = f"<:reply_black:1088142582187577476> {author.mention} has unbanned all banned users! (total {len(bans)})", colour = discord.Colour.green())
         await interaction.followup.send(embed = unbanall_embed)
 
 # Moderation Class
@@ -61,7 +61,7 @@ class Moderation(commands.Cog):
                 if data: await cursor.execute("UPDATE warnings SET warns = ? WHERE member = ? AND guild = ?", (data[0] + 1, member.id, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO warnings (warns, member, guild) VALUES (?, ?, ?)", (1, member.id, interaction.guild.id,))
             await db.commit()
-        warn_embed = discord.Embed(title = "⚠️ ┃ Warn!", description = f"{member.mention} has been warned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        warn_embed = discord.Embed(title = "<:security:1078838547781525515> Warn!", description = f"<:reply_black:1088142582187577476> {member.mention} has been warned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = warn_embed)
 
     #Multi-Warn
@@ -99,7 +99,7 @@ class Moderation(commands.Cog):
                 await db.commit()
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        warn_embed = discord.Embed(title = "⚠️ ┃ Multi-Warn! ┃ ⚠️", description = f"{memberstext} have been warned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        warn_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Warn!", description = f"<:reply_black:1088142582187577476> {memberstext} have been warned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.followup.send(embed = warn_embed)
 
     #unwarn commands
@@ -131,7 +131,7 @@ class Moderation(commands.Cog):
                         else: await cursor.execute("UPDATE warnings SET warns = ? WHERE member = ? AND guild = ?", (warns - amount, member.id, interaction.guild.id,))
                     else: return await interaction.response.send_message(f"{member.mention} doesn't have any warnings.", ephemeral = True)
                 await db.commit()
-                warn_embed = discord.Embed(title = "✅ ┃ Unwarn!", description = f"**{amount}** warnings has been removed from {member.mention} by {interaction.user.mention}", colour = discord.Colour.green())
+                warn_embed = discord.Embed(title = "<:security:1078838547781525515> Unwarn!", description = f"<:reply_black:1088142582187577476> **{amount}** warnings has been removed from {member.mention} by {interaction.user.mention}", colour = discord.Colour.green())
                 await interaction.response.send_message(embed = warn_embed)
 
     #warnings list commands
@@ -180,7 +180,7 @@ class Moderation(commands.Cog):
         #check reason
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        timeout_embed = discord.Embed(title = "Timeout!", description = f"{member.mention} has been timed out by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
+        timeout_embed = discord.Embed(title = "<:security:1078838547781525515> Timeout!", description = f"<:reply_black:1088142582187577476> {member.mention} has been timed out by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = timeout_embed)
         #timeout over message
         await asyncio.sleep(int(sleep))
@@ -230,12 +230,12 @@ class Moderation(commands.Cog):
         #check reason
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        timeout_embed = discord.Embed(title = "Multi-Time out!", description = f"{memberstext} have been timed out by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
+        timeout_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Time out!", description = f"<:reply_black:1088142582187577476> {memberstext} have been timed out by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
         await interaction.followup.send(embed = timeout_embed)
         #timeout over message
         await asyncio.sleep(int(sleep))
-        untimeout_embed = discord.Embed(title = "Multi-Timeout over!",
-        description = f"{memberstext}'s timeout is over",
+        untimeout_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Timeout over!",
+        description = f"<:reply_black:1088142582187577476> {memberstext}'s timeout is over",
         colour = discord.Colour.green())
         await interaction.followup.send(embed = untimeout_embed)
 
@@ -254,7 +254,7 @@ class Moderation(commands.Cog):
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
         await member.kick(reason = reason)
-        kick_embed = discord.Embed(title = "🦵 ┃ Kick!", description = f"{member.mention} has been kicked by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        kick_embed = discord.Embed(title = "<:security:1078838547781525515> Kick!", description = f"<:reply_black:1088142582187577476> {member.mention} has been kicked by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = kick_embed)
         await member.send(f"You have been kicked from **{interaction.guild.name}**{reason}")
 
@@ -286,7 +286,7 @@ class Moderation(commands.Cog):
             await member.send(f"You have been kicked from **{interaction.guild.name}**{reason}")
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        kick_embed = discord.Embed(title = "🦵 ┃ Multi-Kick! ┃ 🦵", description = f"**{memberstext}** have been kicked by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        kick_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Kick!", description = f"<:reply_black:1088142582187577476> **{memberstext}** have been kicked by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.followup.send(embed = kick_embed)
 
     #ban command
@@ -304,7 +304,7 @@ class Moderation(commands.Cog):
         await member.ban(reason = reason)
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        ban_embed = discord.Embed(title = "🚫 ┃ Ban!", description = f"{member.mention} has been banned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        ban_embed = discord.Embed(title = "<:security:1078838547781525515> Ban!", description = f"<:reply_black:1088142582187577476> {member.mention} has been banned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = ban_embed)
         await member.send(f"You have been banned from **{interaction.guild.name}**{reason}")
 
@@ -336,7 +336,7 @@ class Moderation(commands.Cog):
             if not member.bot: await member.send(f"You have been banned from **{interaction.guild.name}**{reason}")
         if reason == None: reason = ""
         else: reason = f"\nReason: {reason}"
-        ban_embed = discord.Embed(title = "🚫 ┃ Multi-Ban! ┃ 🚫", description = f"{memberstext} have been banned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
+        ban_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Ban!", description = f"<:reply_black:1088142582187577476> {memberstext} have been banned by {interaction.user.mention}{reason}", colour = discord.Colour.red())
         await interaction.followup.send(embed = ban_embed)
 
     #unban all command
@@ -352,7 +352,7 @@ class Moderation(commands.Cog):
         bans = [ban_entry async for ban_entry in interaction.guild.bans()]   # list of discord.BanEntry
         for ban_entry in bans:
             await interaction.guild.unban(user = ban_entry.user)
-        unbanall_embed = discord.Embed(title = "Confirm", description = "Are you sure that you want to unban all banned users?")
+        unbanall_embed = discord.Embed(title = "Confirm", description = "<:reply_black:1088142582187577476> Are you sure that you want to unban all banned users?")
         view = unbanallConfirm()
         await interaction.followup.send(embed = unbanall_embed, view = view, ephemeral = True)
 
@@ -369,7 +369,7 @@ class Moderation(commands.Cog):
             except: return await interaction.response.send_message(f"{user.mention} is not banned", ephemeral = True)
         except:
             return await interaction.response.send_message("Enter a valid id.", ephemeral = True)
-        unban_embed = discord.Embed(title = "✅ ┃ Unban!", description = f"{user} has been unbanned by {interaction.user.mention}", colour = discord.Colour.green())
+        unban_embed = discord.Embed(title = "<:security:1078838547781525515> Unban!", description = f"<:reply_black:1088142582187577476> {user} has been unbanned by {interaction.user.mention}", colour = discord.Colour.green())
         await interaction.response.send_message(embed = unban_embed)
 
     #TIMED MUTE!!!!!
@@ -406,12 +406,12 @@ class Moderation(commands.Cog):
             try: sleep = int(b) * int(c)
             except: return await interaction.response.send_message("Type time and time unit (s,m,h,d,w,mo,y) correctly.", ephemeral = True)
         await member.add_roles(mutedRole) # Add role
-        mute_embed = discord.Embed(title = "🔇 ┃ Mute!", description = f"{member.mention} has been muted by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
+        mute_embed = discord.Embed(title = "<:security:1078838547781525515> Mute!", description = f"<:reply_black:1088142582187577476> {member.mention} has been muted by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = mute_embed) # Send embed
         if time: # If time
             await asyncio.sleep(sleep) # Wait for the time
             await member.remove_roles(mutedRole) # Remove role
-            unmute_embed = discord.Embed(title = "🔊 ┃ Mute over!", description = f"{member.mention}'s mute is over", colour = discord.Colour.green())
+            unmute_embed = discord.Embed(title = "<:security:1078838547781525515> Mute over!", description = f"<:reply_black:1088142582187577476> {member.mention}'s mute is over", colour = discord.Colour.green())
             await interaction.followup.send(embed = unmute_embed) # Send embed
 
     #Multi-Mute
@@ -460,12 +460,12 @@ class Moderation(commands.Cog):
             try: sleep = int(b) * int(c)
             except: return await interaction.response.send_message("Type time and time unit (s,m,h,d,w,mo,y) correctly.", ephemeral = True)
         for member in members: await member.add_roles(mutedRole) # Add the role to all the members
-        mute_embed = discord.Embed(title = "🔇 ┃ Multi-Mute! ┃ 🔇", description = f"{memberstext} have been muted by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
+        mute_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Mute!", description = f"<:reply_black:1088142582187577476> {memberstext} have been muted by {interaction.user.mention}{time_string}{reason}", colour = discord.Colour.red())
         await interaction.followup.send(embed = mute_embed) # Send the embed
         if time: # If time
             await asyncio.sleep(sleep) # Wait for the time
             for member in members: await member.remove_roles(mutedRole) # Remove the roles from all the members
-            unmute_embed = discord.Embed(title = "🔊 ┃ Multi-Mute over! ┃ 🔊", description = f"{memberstext}'s mute is over", colour = discord.Colour.green())
+            unmute_embed = discord.Embed(title = "<:security:1078838547781525515> Multi-Mute over!", description = f"<:reply_black:1088142582187577476> {memberstext}'s mute is over", colour = discord.Colour.green())
             await interaction.followup.send(embed = unmute_embed) # Send the embed
 
     #unmute command
@@ -481,7 +481,7 @@ class Moderation(commands.Cog):
         if interaction.guild.me.top_role <= member.top_role: return await interaction.response.send_message(f"My role must be higher than {member.mention}!", ephemeral = True) # Check bot role
         await member.remove_roles(mutedRole) # Remove the role
         if not member.bot: await member.send(f"You have been unmuted from **{interaction.guild.name}**.") # DM the member if not bot
-        embed = discord.Embed(title = "🔊 ┃ Unmute!", description = f"{member.mention} has been unmuted", colour = discord.Colour.green())
+        embed = discord.Embed(title = "<:security:1078838547781525515> Unmute!", description = f"<:reply_black:1088142582187577476> {member.mention} has been unmuted", colour = discord.Colour.green())
         await interaction.response.send_message(embed = embed) # Send the embed
 
     # #JAIL COMMAND!!!!!
@@ -610,7 +610,7 @@ class Moderation(commands.Cog):
             return await interaction.response.send_message(f"{member.mention} already has that role.", ephemeral = True)
         #add the role
         await member.add_roles(role)
-        addrole_embed = discord.Embed(title = "Role added!", description = f"{member.mention} has been given the role {role.mention}", colour = discord.Colour.green())
+        addrole_embed = discord.Embed(title = "<:security:1078838547781525515> Role added!", description = f"<:reply_black:1088142582187577476> {member.mention} has been given the role {role.mention}", colour = discord.Colour.green())
         await interaction.response.send_message(embed = addrole_embed)
 
     #remove role command
@@ -631,8 +631,9 @@ class Moderation(commands.Cog):
             return await interaction.response.send_message(f"{member.mention} doesn't have that role.", ephemeral = True)
         #add the role
         await member.remove_roles(role)
-        addrole_embed = discord.Embed(title = "Role removed!", description = f"{member.mention} no longer has the role {role.mention}", colour = discord.Colour.red())
+        addrole_embed = discord.Embed(title = "<:security:1078838547781525515 Role removed!", description = f"<:reply_black:1088142582187577476> {member.mention} no longer has the role {role.mention}", colour = discord.Colour.red())
         await interaction.response.send_message(embed = addrole_embed)
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Moderation(bot))
+  

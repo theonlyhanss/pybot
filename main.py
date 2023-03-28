@@ -8,12 +8,13 @@ import logging
 import logging.handlers
 import aiosqlite
 import os
+import keep_alive
 
 
 #MyBot Class
 class MyBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix = None, intents = discord.Intents.all(), application_id = YOUR_APP_ID)
+        super().__init__(command_prefix = None, intents = discord.Intents.all(), application_id = "1088068115377692775") #here appllication id :?
         self.initial_extensions = [ "cogs.moderation", "cogs.utility", "cogs.serverinfo", "cogs.help", "cogs.fun", # Load cogs
                                     "cogs.connect4", "cogs.tictactoe", "cogs.rps","cogs.settings", "cogs.ticket",
                                     "cogs.logs", "cogs.logs_events", "cogs.antispam" ]
@@ -31,6 +32,7 @@ class MyBot(commands.Bot):
         if not self.added:
             self.add_view(ticket_launcher())
             self.add_view(main())
+          
             self.added = True
             await bot.change_presence(activity = discord.Game(name = "/help start")) # Setting `Playing` status
         if not os.path.exists("db"): os.makedirs("db") # Create db dir if not there
@@ -74,13 +76,13 @@ async def open_ticket_context_menu(interaction: discord.Interaction, member: dis
     embed = discord.Embed(description = member.mention, color = 0x2F3136)
     embed.set_author(name = str(member), icon_url = member.avatar.url)
     embed.set_thumbnail(url = member.avatar.url)
-    embed.add_field(name = "**Joined**", value = f"> {member.joined_at.strftime(date_format)}")
+    embed.add_field(name = "**Joined**", value = f" {member.joined_at.strftime(date_format)}")
     members = sorted(interaction.guild.members, key = lambda m: m.joined_at)
-    embed.add_field(name = "**Join position**", value = f"> {str(members.index(member)+1)}")
-    embed.add_field(name = "**Registered**", value = f"> {member.created_at.strftime(date_format)}")
+    embed.add_field(name = "**Join position**", value = f" {str(members.index(member)+1)}")
+    embed.add_field(name = "**Registered**", value = f" {member.created_at.strftime(date_format)}")
     if len(member.roles) > 1:
         role_string = ' '.join([r.mention for r in member.roles][1:])
-        embed.add_field(name = "**Roles [{}]**".format(len(member.roles)-1), value = f"> {role_string}", inline = False)
+        embed.add_field(name = "**Roles [{}]**".format(len(member.roles)-1), value = f" {role_string}", inline = False)
     perm_string = ', '.join([str(p[0]).replace("_", " ").title() for p in member.guild_permissions if p[1]])
     embed.add_field(name = "**Guild permissions**", value = f"> {perm_string}", inline = False)
     embed.set_footer(text = 'ID: ' + str(member.id))
@@ -126,9 +128,9 @@ class feedbackButton(discord.ui.View):
     def __init__(self, *, timeout = 180):
         super().__init__(timeout = timeout)
         self.cooldown = commands.CooldownMapping.from_cooldown(1, 600, commands.BucketType.member)
-    @discord.ui.button(label = "Send Feedback", style = discord.ButtonStyle.blurple)
+    @discord.ui.button(label = "Feedback Us", style = discord.ButtonStyle.blurple)
     async def feedback_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user != author: return await interaction.response.send_message("> This is not for you!", ephemeral = True)
+        if interaction.user != author: return await interaction.response.send_message("This is not for you!", ephemeral = True)
         retry = self.cooldown.get_bucket(interaction.message).update_rate_limit()
         if retry: return await interaction.response.send_message(f"Slow down! Try again in {round(retry, 1)} seconds!", ephemeral = True)
         await interaction.response.send_modal(feedbackModal())
@@ -139,17 +141,17 @@ class feedbackModal(ui.Modal, title = "Send Your Feedback"):
     fdes = ui.TextInput(label = "Long Description", style = discord.TextStyle.short, placeholder = "Descripe the issue/suggestion.", required = True, max_length = 1000)
     fsol = ui.TextInput(label = "Solution (optional)", style = discord.TextStyle.short, placeholder = "Write a solution for the issue.", required = False, max_length = 1000)
     async def on_submit(self, interaction: discord.Interaction):
-        channel = bot.get_channel(1027230751651012659)
+        channel = bot.get_channel(1088597948226613338)
         invite = await interaction.channel.create_invite(max_age = 300)
         try:
-            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now(), color = 0x2F3136)
             embed.add_field(name = "Description", value = self.fdes)
             embed.add_field(name = "Solution", value = self.fsol)
             embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
             await channel.send(embed = embed)
             await interaction.response.send_message("Your feedback has been sent succesfully!", ephemeral = True)
         except:
-            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now())
+            embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now(), color = 0x2F3136)
             embed.add_field(name = "Description", value = self.fdes)
             embed.set_author(name = interaction.user, icon_url = interaction.user.avatar)
             await channel.send(embed = embed)
@@ -161,7 +163,7 @@ async def feedback(interaction: discord.Interaction):
     global author
     author = interaction.user
     view = feedbackButton()
-    embed = discord.Embed(title = "If you had faced any problems or have any suggestions, feel free to send your feedback!")
+    embed = discord.Embed(title = "If you had faced any problems or have any suggestions, feel free to send your feedback!", color = 0x2F3136)
     await interaction.response.send_message(embed = embed, view = view, ephemeral = True)
 
 #on leave
@@ -200,4 +202,6 @@ async def on_guild_remove(guild: discord.Guild):
                 if data: await cursor.execute("DELETE FROM log WHERE guild = ?", (guild.id,))
             await db.commit()
 
-bot.run(TOUR_TOKEN)
+keep_alive.keep_alive()
+
+bot.run("MTA4ODA2ODExNTM3NzY5Mjc3NQ.G6EkWN.8fKk18TqKCWzGVOptClOj740nufWpYsrttiNHk") #here put the token

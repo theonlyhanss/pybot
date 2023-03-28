@@ -1,0 +1,102 @@
+[2023-03-25 21:30:42] [INFO    ] discord.client: logging in using static token
+[2023-03-25 21:30:45] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: cc414f9471121688be5fe0357df6eff9).
+[2023-03-25 21:32:07] [INFO    ] discord.client: logging in using static token
+[2023-03-25 21:32:08] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 2e92fab397f12d01f7966355a33a2520).
+[2023-03-25 23:00:32] [INFO    ] discord.client: logging in using static token
+[2023-03-25 23:00:37] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 0d008d6b22682c6f804175eb64ce7ce2).
+[2023-03-26 00:42:52] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 02:47:21] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 04:19:33] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_create
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 310, in on_guild_channel_create
+    embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-26 04:19:59] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_delete
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 293, in on_guild_channel_delete
+    embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-26 04:50:25] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_create
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 310, in on_guild_channel_create
+    embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-26 04:50:36] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_delete
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 293, in on_guild_channel_delete
+    embed.set_author(name = channel.guild.name, icon_url = channel.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-26 05:31:50] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 08:49:56] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 10:07:14] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 10:28:18] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 11:48:00] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 14:29:18] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 14:33:08] [ERROR   ] discord.client: Ignoring exception in on_guild_role_delete
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 64, in on_guild_role_delete
+    embed.set_author(name = role.guild.name, icon_url = role.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-26 16:12:15] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 16:34:06] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 19:47:15] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 0d008d6b22682c6f804175eb64ce7ce2.
+[2023-03-26 20:26:16] [INFO    ] discord.client: logging in using static token
+[2023-03-26 20:26:25] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 1e7bb18378d6feb86d1814257d79ab72).
+[2023-03-26 20:48:47] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 1e7bb18378d6feb86d1814257d79ab72.
+[2023-03-26 21:32:57] [INFO    ] discord.client: logging in using static token
+[2023-03-26 21:33:01] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 75f64f698c2f7cc783405a7912c1bcc7).
+[2023-03-26 23:19:55] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-26 23:53:04] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-27 00:33:20] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-27 01:51:39] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-27 02:24:07] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-27 03:26:29] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 75f64f698c2f7cc783405a7912c1bcc7.
+[2023-03-27 04:12:46] [INFO    ] discord.client: logging in using static token
+[2023-03-27 05:55:54] [INFO    ] discord.client: logging in using static token
+[2023-03-27 05:55:58] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 404948ec6ee841f3edcd7abb2d5e129d).
+[2023-03-27 06:25:46] [INFO    ] discord.client: logging in using static token
+[2023-03-27 06:25:49] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: c85aae733c8d590dde27fac9eab0d200).
+[2023-03-27 11:20:52] [INFO    ] discord.client: logging in using static token
+[2023-03-27 11:20:57] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 4f168a1f6141d939470866e268c9e87b).
+[2023-03-27 14:25:29] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 4f168a1f6141d939470866e268c9e87b.
+[2023-03-27 16:40:10] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 4f168a1f6141d939470866e268c9e87b.
+[2023-03-27 20:01:29] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 4f168a1f6141d939470866e268c9e87b.
+[2023-03-27 22:12:39] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 4f168a1f6141d939470866e268c9e87b.
+[2023-03-28 00:16:20] [INFO    ] discord.client: logging in using static token
+[2023-03-28 00:16:24] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 35cccb0ac69e767dd88aca968a666875).
+[2023-03-28 00:32:11] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 35cccb0ac69e767dd88aca968a666875.
+[2023-03-28 02:00:04] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 35cccb0ac69e767dd88aca968a666875.
+[2023-03-28 03:07:15] [INFO    ] discord.client: logging in using static token
+[2023-03-28 03:07:20] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 333d95cc72622daf1112b1d2a304d265).
+[2023-03-28 05:33:07] [INFO    ] discord.client: logging in using static token
+[2023-03-28 05:33:12] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: f61772a4d91450154a912d35b164b3ab).
+[2023-03-28 06:04:01] [INFO    ] discord.client: logging in using static token
+[2023-03-28 06:04:10] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: d066435f73cb34834dcf27970a005a68).
+[2023-03-28 09:28:39] [INFO    ] discord.client: logging in using static token
+[2023-03-28 09:28:44] [INFO    ] discord.gateway: Shard ID None has connected to Gateway (Session ID: 6bbe0bab9fd24829bb980e1e6247e3dc).
+[2023-03-28 10:26:56] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 6bbe0bab9fd24829bb980e1e6247e3dc.
+[2023-03-28 12:33:52] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_update
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 234, in on_guild_channel_update
+    embed.set_author(name = channel_after.guild.name, icon_url = channel_after.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-28 12:33:53] [ERROR   ] discord.client: Ignoring exception in on_guild_channel_update
+Traceback (most recent call last):
+  File "/home/runner/Mochi-Anime/venv/lib/python3.10/site-packages/discord/client.py", line 441, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/Mochi-Anime/cogs/logs_events.py", line 234, in on_guild_channel_update
+    embed.set_author(name = channel_after.guild.name, icon_url = channel_after.guild.icon.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+[2023-03-28 12:34:38] [INFO    ] discord.gateway: Shard ID None has successfully RESUMED session 6bbe0bab9fd24829bb980e1e6247e3dc.

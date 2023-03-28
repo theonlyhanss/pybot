@@ -4,7 +4,6 @@ from discord.ext import commands
 import aiosqlite
 from datetime import timedelta
 
-
 # Antispam Class
 class Antispam(commands.GroupCog, name = "antispam"):
     def __init__(self, bot: commands.Bot) -> None:
@@ -28,10 +27,10 @@ class Antispam(commands.GroupCog, name = "antispam"):
                 await cursor.execute("SELECT switch FROM antispam WHERE guild = ?", (interaction.guild.id,))
                 data = await cursor.fetchone()
                 if data:
-                    await interaction.response.send_message("Your antispam is already enabled.", ephemeral = True)
+                    await interaction.response.send_message("<:no:1078306195191906376> Your antispam is already enabled.", ephemeral = True)
                 else:
                     await cursor.execute("INSERT INTO antispam (switch, punishment, whitelist, guild) VALUES (?, ?, ?, ?)", (1, "none", "0", interaction.guild.id,))
-                    embed = discord.Embed(title = "⛔ ┃ Anti-Spam Enable", description = "Anti-Spam is now enabled", color = 0x000000)
+                    embed = discord.Embed(title = "<:muted:1078842636099670087> Anti-Spam Enable", description = "<:reply_black:1088142582187577476> Anti-Spam is now enabled", color = 0x2F3136)
                     await interaction.response.send_message(embed = embed)
             await db.commit()
 
@@ -47,10 +46,10 @@ class Antispam(commands.GroupCog, name = "antispam"):
                 data = await cursor.fetchone()
                 if data:
                     await cursor.execute("DELETE FROM antispam WHERE guild = ?", (interaction.guild.id,))
-                    embed = discord.Embed(title = "⛔ ┃ Anti-Spam Disable", description = "Anti-Spam is now disabled", color = 0x000000)
+                    embed = discord.Embed(title = "<:muted:1078842636099670087> Anti-Spam Disable", description = "<:reply_black:1088142582187577476> Anti-Spam is now disabled", color = 0x2F3136)
                     await interaction.response.send_message(embed = embed)
                 else:
-                    await interaction.response.send_message("Anti-Spam is already disabled.", ephemeral = True)
+                    await interaction.response.send_message("<:no:1078306195191906376> Anti-Spam is already disabled.", ephemeral = True)
             await db.commit()
 
     # Anti-Spam punishment command
@@ -73,7 +72,7 @@ class Antispam(commands.GroupCog, name = "antispam"):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE antispam SET punishment = ? WHERE guild = ?", (punishment.value, interaction.guild.id,))
                 else: return await interaction.response.send_message("Anti-Spam System is not enabled in this server.", ephemeral = True)
-                embed = discord.Embed(title = "⛔ ┃ Anti-Spam Punishment", description = f"Anti-Spam punishment has been updated to {punishment.value}", color = 0x000000)
+                embed = discord.Embed(title = "<:muted:1078842636099670087> Anti-Spam Punishment", description = f"<:reply_black:1088142582187577476> Anti-Spam punishment has been updated to {punishment.value}", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
 
@@ -90,7 +89,7 @@ class Antispam(commands.GroupCog, name = "antispam"):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE antispam SET whitelist = ? WHERE guild = ?", (str(channel.id), interaction.guild.id,))
                 else: return await interaction.response.send_message("Anti-Spam System is not enabled in this server.", ephemeral = True)
-                embed = discord.Embed(title = "⛔ ┃ Anti-Spam Whitelist", description = f"{channel.mention} is now whitelisted", color = 0x000000)
+                embed = discord.Embed(title = "<:muted:1078842636099670087> Anti-Spam Whitelist", description = f"<:reply_black:1088142582187577476> {channel.mention} is now whitelisted", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
 
@@ -122,7 +121,7 @@ class Antispam(commands.GroupCog, name = "antispam"):
                                 data = await cursor.fetchone()
                                 if data[0] != "none":
                                     if message.guild.me.top_role <= message.author.top_role:
-                                        return await message.channel.send(f"> I cann't punish {message.author.mention}. Check my role.")
+                                        return await message.channel.send(f"<:no:1078306195191906376> I cann't punish {message.author.mention}. Check my role.")
                                     if data[0] == "mute":
                                         mutedRole = discord.utils.get(message.guild.roles, name = "SB-Muted")
                                         if not mutedRole:
@@ -152,3 +151,4 @@ class Antispam(commands.GroupCog, name = "antispam"):
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Antispam(bot))
+  

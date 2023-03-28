@@ -11,7 +11,7 @@ class ticket_launcher(discord.ui.View):
         super().__init__(timeout = None)
         self.cooldown = commands.CooldownMapping.from_cooldown(1, 600, commands.BucketType.member)
 
-    @discord.ui.button(label = "Create a Ticket", style = discord.ButtonStyle.blurple, custom_id = "ticket_button", emoji = "📩")
+    @discord.ui.button(label = "Create a Ticket", style = discord.ButtonStyle.green, custom_id = "ticket_button", emoji = "<:ticket:1089156675581251724>")
     async def ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
         ticket = utils.get(interaction.guild.text_channels, name = f"ticket-for-{interaction.user.name.lower().replace(' ', '-')}-{interaction.user.discriminator}")
         if ticket is not None: await interaction.response.send_message(f"You already have a ticket open at {ticket.mention}!", ephemeral = True)
@@ -57,7 +57,7 @@ class main(discord.ui.View):
         super().__init__(timeout = None)
     @discord.ui.button(label = "Close Ticket", style = discord.ButtonStyle.red, custom_id = "close")
     async def close(self, interaction: discord.Interaction, button: discord.ui.Button):
-        embed = discord.Embed(title = "Are you sure you want to close this ticket?", color = discord.Colour.blurple())
+        embed = discord.Embed(title = "Are you sure you want to close this ticket?", color = 0x2F3136)
         await interaction.response.send_message(embed = embed, view = confirm(), ephemeral = True)
 
 class transcript(discord.ui.View):
@@ -103,7 +103,8 @@ class Ticket(commands.GroupCog, name = "ticket"):
     @app_commands.checks.cooldown(3, 60, key = lambda i: (i.guild_id))
     @app_commands.checks.has_permissions(manage_channels = True)
     async def launch(self, interaction: discord.Interaction):
-        embed = discord.Embed(title = "Ticket!", description = "If you need support, click the button below and create a ticket!", color = discord.Colour.blue())
+        embed = discord.Embed(title = "<:ticket:1089156675581251724> Ticket!", description = "<:reply_black:1088142582187577476> If you need support, click the button below and create a ticket!", color = discord.Colour.blue())
+        embed.set_footer(text = "Ticket are manage by pybot")
         await interaction.response.send_message(embed = embed, view = ticket_launcher())
 
     #close ticket
@@ -111,10 +112,10 @@ class Ticket(commands.GroupCog, name = "ticket"):
     @app_commands.checks.has_permissions(manage_channels = True)
     async def close(self, interaction: discord.Interaction):
         if "ticket-for-" in interaction.channel.name:
-            embed = discord.Embed(title = "> Are you sure that you want to close this ticket?", color = discord.Colour.blurple())
+            embed = discord.Embed(title = "Are you sure that you want to close this ticket?", color = 0x2F3136)
             await interaction.response.send_message(embed = embed, view = confirm(), ephemeral = True)
         else:
-            await interaction.response.send_message("> This isn't a ticket!", ephemeral = True)
+            await interaction.response.send_message("This isn't a ticket!", ephemeral = True)
 
     #add a member to ticket
     @app_commands.command(name = "add", description = "Adds a member to the ticket.")
@@ -127,7 +128,7 @@ class Ticket(commands.GroupCog, name = "ticket"):
             await interaction.channel.set_permissions(member, view_channel = True, send_messages = True, attach_files = True, embed_links = True)
             await interaction.response.send_message(f"{member.mention} has been added to the ticket by {interaction.user.mention}.")
         else:
-            await interaction.response.send_message("> This isn't a ticket!", ephemeral = True)
+            await interaction.response.send_message("This isn't a ticket!", ephemeral = True)
 
     #remove a member from ticket
     @app_commands.command(name = "remove", description = "Removes a member from the ticket.")
@@ -183,14 +184,14 @@ class Ticket(commands.GroupCog, name = "ticket"):
                         await cursor.execute("UPDATE roles SET role = ? WHERE guild = ?", (role.id, interaction.guild.id,)) # Update it
                     else: # If not
                         await cursor.execute("INSERT INTO roles (role, guild) VALUES (?, ?)", (role.id, interaction.guild.id,)) # Insert it
-                    role_embed = discord.Embed(title = "Ticket Role Updated!", description = f"The role **{role}** has been addded to tickets", colour = discord.Colour.blue())
+                    role_embed = discord.Embed(title = "Ticket Role Updated!", description = f"<:reply_black:1088142582187577476> The role **{role}** has been addded to tickets", colour = 0x2F3136)
                     await interaction.response.send_message(embed = role_embed)
                 else: # Remove data
                     await cursor.execute("SELECT role FROM roles WHERE guild = ?", (interaction.guild.id,)) # Select role from the same row that has guild.id
                     data = await cursor.fetchone() # Fetch that row
                     if data: # If the row has data (already has a role id)
                         await cursor.execute("DELETE FROM roles WHERE guild = ?", (interaction.guild.id,)) # Delete it
-                        role_embed = discord.Embed(title = "Ticket Role Removed!", description = f"The ticket role has been removed.", colour = discord.Colour.blue())
+                        role_embed = discord.Embed(title = "Ticket Role Removed!", description = f"<:reply_black:1088142582187577476> The ticket role has been removed.", colour = 0x2F3136)
                         await interaction.response.send_message(embed = role_embed)
                     else: # If not
                         await interaction.response.send_message("I didn't find a ticket role for this server.", ephemeral = True)
@@ -220,3 +221,4 @@ class Ticket(commands.GroupCog, name = "ticket"):
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Ticket(bot))
+  

@@ -3,7 +3,6 @@ from discord import app_commands
 from discord.ext import commands
 import aiosqlite
 
-
 #edits confirm button
 class editsConfirm(discord.ui.View):
     def __init__(self, *, timeout = 180):
@@ -18,7 +17,7 @@ class editsConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (edits_log_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (edits_log_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Edited Messages Log", description = "Your edited messages log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Edited Messages Log", description = "<:reply_black:1088142582187577476> Your edited messages log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -47,7 +46,7 @@ class deletesConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (deletes_log_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (deletes_log_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Deleted Messages Log", description = "Your deleted messages log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Deleted Messages Log", description = "<:reply_black:1088142582187577476> Your deleted messages log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -76,7 +75,7 @@ class joinsConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (joins_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (joins_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Joins Log", description = "Your members' joins log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Joins Log", description = "<:reply_black:1088142582187577476> Your members' joins log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -105,7 +104,7 @@ class leavesConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (leaves_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (leaves_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Leaves Log", description = "Your members' leaves log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Leaves Log", description = "<:reply_black:1088142582187577476> Your members' leaves log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -134,7 +133,7 @@ class roleCreateConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (roles_create_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (roles_create_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Role Create Log", description = "Your role create log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Role Create Log", description = "<:reply_black:1088142582187577476> Your role create log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -163,7 +162,7 @@ class roleDeleteConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (roles_delete_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (roles_delete_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Role Delete Log", description = "Your role delete log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Role Delete Log", description = "<:reply_black:1088142582187577476> Your role delete log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -192,7 +191,7 @@ class roleUpdatesConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (roles_updates_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (roles_updates_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Role Updates Log", description = "Your role updates log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Role Updates Log", description = "<:reply_black:1088142582187577476> Your role updates log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -221,7 +220,7 @@ class roleGivenConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (roles_given_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (roles_given_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Role Given Log", description = "Your role given log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Role Given Log", description = "<:reply_black:1088142582187577476> Your role given log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -250,7 +249,7 @@ class roleRemoveConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (roles_removed_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (roles_removed_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Role Remove Log", description = "Your role remove log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Role Remove Log", description = "<:reply_black:1088142582187577476> Your role remove log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -279,7 +278,7 @@ class memberBanConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (member_ban_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (member_ban_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Member Ban Log", description = "Your member ban log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Member Ban Log", description = "<:reply_black:1088142582187577476> Your member ban log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -308,7 +307,7 @@ class memberUnbanConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (member_unban_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (member_unban_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Member Unban Log", description = "Your member unban log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Member Unban Log", description = "<:reply_black:1088142582187577476> Your member unban log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -337,7 +336,7 @@ class memberTimeoutConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (member_timeout_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (member_timeout_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Member Timeout Log", description = "Your member timeout log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Member Timeout Log", description = "<:reply_black:1088142582187577476> Your member timeout log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -366,7 +365,7 @@ class nicknameChangeConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (nickname_change_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (nickname_change_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Nickname Change Log", description = "Your nickname change log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Nickname Change Log", description = "<:reply_black:1088142582187577476> Your nickname change log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -395,7 +394,7 @@ class channelCreateConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (channel_create_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (channel_create_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Channel Create Log", description = "Your channel create log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Channel Create Log", description = "<:reply_black:1088142582187577476> Your channel create log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -424,7 +423,7 @@ class channelDeleteConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (channel_delete_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (channel_delete_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Channel Delete Log", description = "Your channel delete log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Channel Delete Log", description = "<:reply_black:1088142582187577476> Your channel delete log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -453,7 +452,7 @@ class channelUpdatesConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (channel_updates_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (channel_updates_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Channel Updates Log", description = "Your channel updates log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Channel Updates Log", description = "<:reply_black:1088142582187577476> Your channel updates log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -482,7 +481,7 @@ class serverUpdatesConfirm(discord.ui.View):
                 data = await cursor.fetchone()
                 if data: await cursor.execute("UPDATE log SET channel = ? WHERE guild = ?", (server_updates_channel, interaction.guild.id,))
                 else: await cursor.execute("INSERT INTO log (channel, guild) VALUES (?, ?)", (server_updates_channel, interaction.guild.id,))
-                embed = discord.Embed(title = "📝 ┃ Server Updates Log", description = "Your server updates log channel has been updated succesfully!", color = 0x000000)
+                embed = discord.Embed(title = "<:log:1089164358686363668> Server Updates Log", description = "<:reply_black:1088142582187577476> Your server updates log channel has been updated succesfully!", color = 0x2F3136)
                 await interaction.response.send_message(embed = embed)
             await db.commit()
             for child in self.children:
@@ -535,7 +534,7 @@ class DisableAll(discord.ui.View):
     @discord.ui.button(label = "Disable All", style = discord.ButtonStyle.red)
     async def disable_all(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != disable_all_author: return await interaction.response.send_message("This is not for you!", ephemeral = True)
-        embed = discord.Embed(title = "Disabling all logs", description = "Are you sure that you want to disable all logs in this server?", color = discord.Colour.red())
+        embed = discord.Embed(title = "<:log:1089164358686363668> Disabling all logs", description = "<:reply_black:1088142582187577476> Are you sure that you want to disable all logs in this server?", color = discord.Colour.red())
         await interaction.response.send_message(embed = embed, view = ConfirmDisableAll())
         for child in self.children:
             child.disabled = True
@@ -573,7 +572,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data: log_channels_list.append(self.bot.get_channel(data[0]).mention)
                     else: log_channels_list.append("Disabled")
-        embed = discord.Embed(title = "Logs Settings", description = "All current settings", color = 0x000000)
+        embed = discord.Embed(title = "<:log:1089164358686363668> Logs Settings", description = "<:reply_black:1088142582187577476> All current settings", color = 0x2F3136)
         embed.add_field(name = "Channel Create", value = log_channels_list[0])
         embed.add_field(name = "Channel Delete", value = log_channels_list[1])
         embed.add_field(name = "Channel Updates", value = log_channels_list[2])
@@ -608,7 +607,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data: 
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Joins Log", description = "Your members' joins log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668> Joins Log", description = "<:reply_black:1088142582187577476> Your members' joins log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Members' joins log is already disabled in your server.", ephemeral = True)
@@ -621,7 +620,7 @@ class Logs(commands.GroupCog, name = "log"):
             joins_channel = channel.id
             view = joinsConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your joins log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your joins log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -640,7 +639,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data: 
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Leaves Log", description = "Your members' leaves log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Leaves Log", description = "<:reply_black:1088142582187577476> Your members' leaves log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Members' joins log is already disabled in your server.", ephemeral = True)
@@ -653,7 +652,7 @@ class Logs(commands.GroupCog, name = "log"):
             leaves_channel = channel.id
             view = leavesConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your leaves log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your leaves log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -672,7 +671,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data: 
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Edited Messages Log", description = "Your edited messages log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Edited Messages Log", description = "<:reply_black:1088142582187577476> Your edited messages log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Edited messages' log is already disabled in your server.", ephemeral = True)
@@ -685,7 +684,7 @@ class Logs(commands.GroupCog, name = "log"):
             edits_log_channel = channel.id
             view = editsConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your edited messages log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your edited messages log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -704,7 +703,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data: 
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Deleted Messages Log", description = "Your deleted messages log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Deleted Messages Log", description = "<:reply_black:1088142582187577476> Your deleted messages log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Deleted messages' log is already disabled in your server.", ephemeral = True)
@@ -717,7 +716,7 @@ class Logs(commands.GroupCog, name = "log"):
             deletes_log_channel = channel.id
             view = deletesConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your deleted messages log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your deleted messages log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -736,7 +735,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Role Create Log", description = "Your role created log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Role Create Log", description = "<:reply_black:1088142582187577476> Your role created log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Roles create log is already disabled in your server.", ephemeral = True)
@@ -749,7 +748,7 @@ class Logs(commands.GroupCog, name = "log"):
             roles_create_channel = channel.id
             view = roleCreateConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your roles create log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your roles create log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -768,7 +767,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Role Delete Log", description = "Your role deleted log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Role Delete Log", description = "<:reply_black:1088142582187577476> Your role deleted log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Roles delete log is already disabled in your server.", ephemeral = True)
@@ -781,7 +780,7 @@ class Logs(commands.GroupCog, name = "log"):
             roles_delete_channel = channel.id
             view = roleDeleteConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your roles delete log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your roles delete log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -800,7 +799,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Role Updates Log", description = "Your role updates log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Role Updates Log", description = "<:reply_black:1088142582187577476> Your role updates log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Roles updates log is already disabled in your server.", ephemeral = True)
@@ -813,7 +812,7 @@ class Logs(commands.GroupCog, name = "log"):
             roles_updates_channel = channel.id
             view = roleUpdatesConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your roles updates log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your roles updates log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -832,7 +831,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Role Given Log", description = "Your given role log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Role Given Log", description = "<:reply_black:1088142582187577476> Your given role log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Roles given log is already disabled in your server.", ephemeral = True)
@@ -845,7 +844,7 @@ class Logs(commands.GroupCog, name = "log"):
             roles_given_channel = channel.id
             view = roleGivenConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your roles given log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your roles given log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -864,7 +863,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Role Removed Log", description = "Your removed role log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Role Removed Log", description = "<:reply_black:1088142582187577476> Your removed role log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Roles removed log is already disabled in your server.", ephemeral = True)
@@ -877,7 +876,7 @@ class Logs(commands.GroupCog, name = "log"):
             roles_removed_channel = channel.id
             view = roleRemoveConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your roles removed log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your roles removed log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -896,7 +895,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Member Ban Log", description = "Your member ban log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Member Ban Log", description = "<:reply_black:1088142582187577476> Your member ban log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Member ban log is already disabled in your server.", ephemeral = True)
@@ -909,7 +908,7 @@ class Logs(commands.GroupCog, name = "log"):
             member_ban_channel = channel.id
             view = memberBanConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your member ban log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your member ban log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -928,7 +927,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Member Unban Log", description = "Your member unban log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Member Unban Log", description = "<:reply_black:1088142582187577476> Your member unban log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Member unban log is already disabled in your server.", ephemeral = True)
@@ -941,7 +940,7 @@ class Logs(commands.GroupCog, name = "log"):
             member_unban_channel = channel.id
             view = memberUnbanConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your member unban log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your member unban log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -960,7 +959,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Member Timeout Log", description = "Your member timeout log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Member Timeout Log", description = "<:reply_black:1088142582187577476> Your member timeout log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Member timeout log is already disabled in your server.", ephemeral = True)
@@ -973,7 +972,7 @@ class Logs(commands.GroupCog, name = "log"):
             member_timeout_channel = channel.id
             view = memberTimeoutConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your member timeout log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your member timeout log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -992,7 +991,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Nickname Change Log", description = "Your nickname change log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Nickname Change Log", description = "<:reply_black:1088142582187577476> Your nickname change log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Nickname change log is already disabled in your server.", ephemeral = True)
@@ -1005,7 +1004,7 @@ class Logs(commands.GroupCog, name = "log"):
             nickname_change_channel = channel.id
             view = nicknameChangeConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your nickname change log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your nickname change log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -1024,7 +1023,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Channel Create Log", description = "Your channel create log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Channel Create Log", description = "<:reply_black:1088142582187577476> Your channel create log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Channel create log is already disabled in your server.", ephemeral = True)
@@ -1037,7 +1036,7 @@ class Logs(commands.GroupCog, name = "log"):
             channel_create_channel = channel.id
             view = channelCreateConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your channel create log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your channel create log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -1056,7 +1055,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Channel Delete Log", description = "Your channel delete log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Channel Delete Log", description = "<:reply_black:1088142582187577476> Your channel delete log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Channel delete log is already disabled in your server.", ephemeral = True)
@@ -1069,7 +1068,7 @@ class Logs(commands.GroupCog, name = "log"):
             channel_delete_channel = channel.id
             view = channelDeleteConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your channel delete log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your channel delete log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
@@ -1088,7 +1087,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Channel Updates Log", description = "Your channel updates log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Channel Updates Log", description = "<:reply_black:1088142582187577476> Your channel updates log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Channel updates log is already disabled in your server.", ephemeral = True)
@@ -1120,7 +1119,7 @@ class Logs(commands.GroupCog, name = "log"):
                     data = await cursor.fetchone()
                     if data:
                         await cursor.execute("DELETE FROM log WHERE guild = ?", (interaction.guild.id,))
-                        embed = discord.Embed(title = "📝 ┃ Server Updates Log", description = "Your server updates log has been disabled succesfully.", color = 0x000000)
+                        embed = discord.Embed(title = "<:log:1089164358686363668 Server Updates Log", description = "<:reply_black:1088142582187577476> Your server updates log has been disabled succesfully.", color = 0x2F3136)
                         await interaction.response.send_message(embed = embed)
                     else:
                         await interaction.response.send_message("Channel updates log is already disabled in your server.", ephemeral = True)
@@ -1133,9 +1132,10 @@ class Logs(commands.GroupCog, name = "log"):
             server_updates_channel = channel.id
             view = serverUpdatesConfirm()
             em = discord.Embed(title = "Confirmation",
-            description = f"Are you sure that you want {channel.mention} to be your server updates log channel?",
+            description = f"<:reply_black:1088142582187577476> Are you sure that you want {channel.mention} to be your server updates log channel?",
             colour = 0x2F3136)
             await interaction.response.send_message(embed = em, view = view)
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Logs(bot))
+  
