@@ -11,7 +11,6 @@ import os
 import keep_alive
 
 
-#MyBot Class
 class MyBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix = None, intents = discord.Intents.all(), application_id = "1088068115377692775") #here appllication id :?
@@ -22,7 +21,7 @@ class MyBot(commands.Bot):
     async def setup_hook(self):
         self.session = aiohttp.ClientSession()
         for cogs in self.initial_extensions: await self.load_extension(cogs)
-        await self.tree.sync() # Sync app commands
+        await self.tree.sync()       
         print("Synced Successfully")
     async def close(self):
         await super().close()
@@ -41,7 +40,6 @@ class MyBot(commands.Bot):
 bot = MyBot()
 bot.remove_command("help")
 
-#logging stuff
 logger = logging.getLogger("discord")
 logger.setLevel(logging.INFO)
 handler = logging.handlers.RotatingFileHandler(
@@ -55,15 +53,15 @@ formatter = logging.Formatter("[{asctime}] [{levelname:<8}] {name}: {message}", 
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-# Errors handling
+
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CommandOnCooldown):
-        cool_error = discord.Embed(title = f"Slow it down bro!", description = f"Try again in {error.retry_after:.2f}s.", colour = discord.Colour.light_grey())
+        cool_error = discord.Embed(title = f"Slow it down bro!", description = f"Try again in {error.retry_after:.2f}s.", colour = discord.Colour.red())
         await interaction.response.send_message(embed = cool_error, ephemeral = True)
     elif isinstance(error, app_commands.MissingPermissions):
         missing_perm = error.missing_permissions[0].replace("_", " ").title()
-        per_error = discord.Embed(title = f"Missing Permissions!", description = f"You don't have {missing_perm} permission.", colour = discord.Colour.light_grey())
+        per_error = discord.Embed(title = f"Missing Permissions!", description = f"You don't have {missing_perm} permission.", colour = discord.Colour.red())
         await interaction.response.send_message(embed = per_error, ephemeral = True)
     else:
         raise error
@@ -141,7 +139,7 @@ class feedbackModal(ui.Modal, title = "Send Your Feedback"):
     fdes = ui.TextInput(label = "Long Description", style = discord.TextStyle.short, placeholder = "Descripe the issue/suggestion.", required = True, max_length = 1000)
     fsol = ui.TextInput(label = "Solution (optional)", style = discord.TextStyle.short, placeholder = "Write a solution for the issue.", required = False, max_length = 1000)
     async def on_submit(self, interaction: discord.Interaction):
-        channel = bot.get_channel(1088597948226613338)
+        channel = bot.get_channel(1088597948226613338) #Channel id
         invite = await interaction.channel.create_invite(max_age = 300)
         try:
             embed = discord.Embed(title = f"User: {interaction.user}\nServer: {interaction.guild.name}\n{invite}", description = f"**{self.ftitle}**", timestamp = datetime.now(), color = 0x2F3136)
