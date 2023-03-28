@@ -202,4 +202,4 @@ async def on_guild_remove(guild: discord.Guild):
 
 keep_alive.keep_alive()
 
-bot.run("MTA4ODA2ODExNTM3NzY5Mjc3NQ.G6EkWN.8fKk18TqKCWzGVOptClOj740nufWpYsrttiNHk") #here put the token
+bot.run("PUT_YOUR_TOKEN_HERE") #here put the token
