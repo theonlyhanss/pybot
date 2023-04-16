@@ -319,7 +319,6 @@ class Help(commands.GroupCog, name = "help"):
         app_commands.Choice(name = "poll", value = "poll"),
         app_commands.Choice(name = "invite", value = "invite"),
         app_commands.Choice(name = "serverlink", value = "serverlink"),
-        app_commands.Choice(name = "vote", value = "vote"),
         app_commands.Choice(name = "calculator", value = "calculator"),
         app_commands.Choice(name = "tax", value = "tax"),
         app_commands.Choice(name = "nick", value = "nick"),
@@ -352,13 +351,6 @@ class Help(commands.GroupCog, name = "help"):
             em.add_field(name = "**Example:**", value = "`/serverlink`")
             em.set_footer(text = "<> means requird, [] means optional")
             await interaction.response.send_message(embed = em)
-          
-   #     elif command.value == "vote":
-     #       em = discord.Embed(title = "__**Vote**__", description = "Sends pybot vote link.", color = 0x2F3136)
-     #       em.add_field(name = "**Syntax:**", value = "vote")
-     #       em.add_field(name = "**Example:**", value = "`/vote`")
-     #       em.set_footer(text = "<> means requird, [] means optional")
-     #       await interaction.response.send_message(embed = em)
         elif command.value == "calculator":
             em = discord.Embed(title = "__**Calculator**__", description = "<:reply_black:1088142582187577476> Calculates for you.", color = 0x2F3136)
             em.add_field(name = "**Syntax:**", value = "calculator <first number> <operator> <second number>")
