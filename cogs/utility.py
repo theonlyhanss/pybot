@@ -407,16 +407,6 @@ class Utility(commands.Cog):
                             colour = 0x2F3136)
         await interaction.response.send_message(embed = emb, view = view)
 
-    # vote command
- #   @app_commands.command(name = "vote", description = "Vote Pybot!")
- #   @app_commands.checks.cooldown(1, 10, key = lambda i: (i.user.id))
-  #  async def vote(self, interaction: discord.Interaction):
-    #    view = Vote()
- #       view.add_item(discord.ui.Button(label = "top.gg", style = discord.ButtonStyle.link, url = "https://top.gg/bot/855437723166703616/vote"))
- #       view.add_item(discord.ui.Button(label = "discordbotlist", style = discord.ButtonStyle.link, url = "https://discordbotlist.com/bots/shinobi-bot/upvote"))
- #       emb = discord.Embed(title = "Shinobi Bot's Vote links", description = "https://top.gg/bot/855437723166703616/vote\nhttps://discordbotlist.com/bots/shinobi-bot/upvote")
- #       await interaction.response.send_message(embed = emb, view = view)
-
     #poll command
     @app_commands.command(name = "poll", description = "Make a poll.")
     @app_commands.describe(title = "The title of the poll.", description = "The description of the poll.")
