@@ -9,7 +9,8 @@ import logging.handlers
 import aiosqlite
 import os
 import keep_alive
-
+from dotenv import load_dotenv
+load_dotenv()
 
 class MyBot(commands.Bot):
     def __init__(self):
@@ -202,4 +203,4 @@ async def on_guild_remove(guild: discord.Guild):
 
 keep_alive.keep_alive()
 
-bot.run("PUT_YOUR_TOKEN_HERE") #here put the token
+bot.run(os.getenv("BOT_TOKEN"))
