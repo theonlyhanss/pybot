@@ -12,3 +12,5 @@
 <br>
 
 [`Invite Pybot Here.`](https://discord.com/api/oauth2/authorize?client_id=1088068115377692775&permissions=8&scope=bot%20applications.commands)
+
+[`Support Server`](https://discord.gg/nQCHGbRdhb)
